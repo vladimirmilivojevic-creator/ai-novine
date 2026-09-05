@@ -4,15 +4,15 @@
 > zašto, šta vlasnik treba da proveri, i status faze. Pun plan je u `docs/plan.md`.
 
 **Poslednje ažuriranje:** 6. septembar 2026.
-**Trenutno stanje:** Faza 0 završena i potvrđena. Faza 1 u radu.
+**Trenutno stanje:** Faza 1 završena, čeka potvrdu vlasnika (koje izvore izbacujemo). Faza 2 sledeća.
 
 ## Pregled faza
 
 | Faza | Naziv                                | Status              |
 | ---- | ------------------------------------ | ------------------- |
 | 0    | Priprema i kostur                    | ✅ Gotovo, potvrđeno |
-| 1    | RSS discovery izveštaj               | 🔄 U radu           |
-| 2    | Engine 1 na 3 test izvora            | ⬜ Čeka             |
+| 1    | RSS discovery izveštaj               | ✅ Gotovo, čeka potvrdu |
+| 2    | Engine 1 na 3 test izvora            | 🔜 Sledeća          |
 | 3    | Engine 1 na sve izvore               | ⬜ Čeka             |
 | 4    | Klasterovanje i trending (Engine 2)  | ⬜ Čeka             |
 | 5    | AI generisanje teksta ⚠️ kritična kapija | ⬜ Čeka          |
@@ -82,18 +82,67 @@ Kodom:
 
 ---
 
-## Faza 1 — RSS discovery izveštaj 🔄
+## Faza 1 — RSS discovery izveštaj ✅
 
-**Status:** u radu.
+**Status:** gotovo, čeka potvrdu vlasnika (koje izvore izbacujemo).
+**Izveštaj:** `reports/rss-discovery.md` (i `reports/rss-discovery.json` za mašinsku obradu).
 
-### Cilj
+### Šta je urađeno
 
-Za svih 26 domena iz `config/sources.json` proveriti da li postoji RSS feed i na kom URL-u:
-standardne putanje (`/feed`, `/rss`, `/feed/rss2`, `/rss.xml`), `<link rel="alternate">` u HTML-u
-početne strane, i `sitemap.xml`. Rezultat je markdown izveštaj: koji sajt ima RSS, koji nema,
-koji blokira botove, i za svaki bez RSS-a predlog scraping fallback-a uz proveru `robots.txt`.
+- `npm run pipeline -- discover` proverava svih 26 domena: `robots.txt` → `<link rel="alternate">`
+  u HTML-u početne strane → standardne RSS putanje (`/feed`, `/rss`, `/rss.xml`, `/feed/rss2`,
+  `/atom.xml`, `/index.xml`, `/?feed=rss2`) → `sitemap.xml` i sitemap-ovi koje `robots.txt`
+  prijavljuje, uključujući jedan nivo dece sitemap indeksa.
+- Svaki kandidat se stvarno preuzima i parsira. Sajt koji na `/feed` vrati HTML stranu ne računa
+  se kao RSS — a takvih je bilo šest.
+- Zajednički HTTP sloj u `packages/core`: korektan User-Agent, timeout, najviše jedan zahtev u
+  sekundi po domenu (redosled po domenu, paralelno između domena), gzip i `charset` dekodiranje.
+- Poštovanje `robots.txt` preko `robots-parser`, sa kešom po originu.
+- Parser feed-ova (RSS 2.0, Atom, RDF) u `packages/core/src/feed.ts` — koristi se ponovo u Fazi 2.
+- Opcija `--apply` upisuje pronađene feed-ove u `config/sources.json`.
+- 31 test ukupno (20 novih za feed parser, HTML ekstrakciju i izbor feed-ova).
 
-### Šta vlasnik proverava na kraju faze
+### Rezultat
 
-Pročita izveštaj i kaže koje izvore izbacujemo. Politika i Tanjug su kandidati — u planskoj fazi
-su vraćali HTTP 403 (Cloudflare) čak i na `/robots.txt`.
+| Ishod | Broj | Izvori |
+| --- | --- | --- |
+| RSS radi | 16 | Pink, Kurir, Happy TV, Srbija Danas, N1, Nova, Danas, Vreme, Insajder, Južne vesti, KRIK, Cenzolovka, Telegraf, Mondo, B92, Beta |
+| Bez RSS-a, ima news sitemap | 5 | Informer, Alo, Večernje novosti, Blic, Tanjug |
+| Bez RSS-a i bez sitemap-a | 4 | Prva, BIRN, RTS, Euronews Srbija |
+| Blokira botove | 1 | Politika |
+
+Po uglovima: provladin 4 RSS + 3 sitemap + 1 scrape + 1 blokiran, kritički 8 RSS + 1 scrape,
+mejnstrim 3 RSS + 1 sitemap + 2 scrape, agencije 1 RSS + 1 sitemap. Kapija „najmanje dva različita
+ugla" ima pokriće u svakoj grupi.
+
+### Odluke i razlozi
+
+| Odluka | Zašto |
+| --- | --- |
+| News sitemap je ravnopravan izvor, ne nužno zlo | Uredan XML sa svežim člancima i vremenom objave. Bolji je od scraping-a i za Informer, Alo, Novosti, Blic i Tanjug rešava problem bez ijedne HTML heuristike. |
+| Najviše 5 feed-ova po izvoru | Kurir nudi 22, Mondo 28 feed-ova (glavni plus po jedan za svaku rubriku). Svi zajedno su višestruko veći saobraćaj ka istom sajtu za skoro isti sadržaj. Bira se najplići URL (glavni feed), pa oni sa najviše stavki. |
+| WordPress `/comments/feed/` se izbacuje | To su komentari čitalaca, ne vesti. Ušli su kod pet izvora dok filter nije dodat. |
+| Politika se ne zaobilazi | Odbija i sam `robots.txt` sa HTTP 403. Probijanje Cloudflare zaštite je kršenje uslova korišćenja i ne radi se. |
+| Tanjug NIJE blokiran | U planskoj fazi je vraćao 403; u ovoj proveri `robots.txt` radi i news sitemap sa 420 unosa je dostupan. Ostaje u igri. |
+| Prazan news sitemap ne računa se kao pokriće | Vreme ima `sitemap-news.xml` sa nula unosa. |
+
+### Tri greške nađene i popravljene tokom faze
+
+1. **HTML autodiscovery je bio mrtav.** U regularni izraz se, kroz automatsku izmenu fajla,
+   upisao pravi backspace bajt (0x08) umesto dva znaka `\b`. Funkcija je tiho vraćala praznu
+   listu na svakom sajtu. Uhvatio ga je tek jedinični test sa fiksnim HTML uzorkom. Posle
+   popravke Pink i Mondo dobijaju RSS koji ranije nije nađen.
+2. **Zabranjeni URL je gutao dozvoljenu varijantu.** `robots.txt` sajta Vreme zabranjuje
+   `/feed/`, ali dozvoljava `/feed`. Pošto se u evidenciji već proverenih URL-ova čuva putanja
+   bez završne kose crte, zabranjeni URL je zauzimao mesto dozvoljenom i Vreme je ispadalo bez
+   RSS-a. Provera `robots.txt` sada ide pre upisa u evidenciju.
+3. **Gzipovani sitemap-ovi su čitani kao smeće.** Blic servira news sitemap kao `.gz`. HTTP sloj
+   sada raspakuje gzip po magičnim bajtovima i poštuje `charset` iz zaglavlja.
+
+### Šta vlasnik proverava
+
+1. Pročita `reports/rss-discovery.md` — pre svega tabelu „Svi izvori".
+2. Odluči šta sa četiri izvora bez RSS-a i bez sitemap-a (Prva, BIRN, RTS, Euronews Srbija):
+   scraping po predlogu iz izveštaja, ili izbacivanje.
+3. Odluči šta sa Politikom (blokira botove).
+4. Pogleda `git diff config/sources.json` — 16 izvora je dobilo `feeds` polje.

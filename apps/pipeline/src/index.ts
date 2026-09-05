@@ -2,6 +2,7 @@
 import { Command } from 'commander';
 import { logger } from '@ai-novine/core';
 import { runConfigCheck } from './commands/config-check.js';
+import { runDiscover } from './commands/discover.js';
 
 const program = new Command();
 
@@ -19,9 +20,19 @@ program
 
 program
   .command('discover')
-  .description('Trazi RSS feed za svaki izvor i pravi izvestaj (Faza 1)')
-  .action(() => {
-    notYet('discover', 1);
+  .description('Trazi RSS feed za svaki izvor i pravi izvestaj u reports/')
+  .option('--only <ids>', 'proveri samo zadate izvore, npr. --only n1,danas,kurir')
+  .option('--concurrency <broj>', 'koliko domena istovremeno (podrazumevano 4)', '4')
+  .option('--apply', 'upisi pronadjene feed-ove u config/sources.json', false)
+  .action(async (options: { only?: string; concurrency: string; apply: boolean }) => {
+    await runDiscover({
+      only: options.only
+        ?.split(',')
+        .map((id) => id.trim())
+        .filter(Boolean),
+      concurrency: Math.max(1, Number.parseInt(options.concurrency, 10) || 4),
+      apply: options.apply,
+    });
   });
 
 program
@@ -51,8 +62,8 @@ function notYet(command: string, phase: number): never {
 }
 
 try {
-  program.parse();
+  await program.parseAsync();
 } catch (error) {
-  logger.error('Pipeline je pukao.', { error: (error as Error).message });
+  logger.error('Pipeline je pukao.', { greska: (error as Error).message });
   process.exit(1);
 }

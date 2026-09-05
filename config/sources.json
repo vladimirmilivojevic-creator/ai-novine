@@ -43,7 +43,7 @@
       "homepage": "https://pink.rs",
       "angle": "provladin",
       "enabled": true,
-      "feeds": [],
+      "feeds": ["https://pink.rs/rss-feed"],
       "scrape": null,
       "notes": "Probno merenje: RSS postoji."
     },
@@ -53,7 +53,13 @@
       "homepage": "https://www.kurir.rs",
       "angle": "provladin",
       "enabled": true,
-      "feeds": [],
+      "feeds": [
+        "https://www.kurir.rs/rss",
+        "https://www.kurir.rs/rss/najnovije-vesti",
+        "https://www.kurir.rs/rss/vesti",
+        "https://www.kurir.rs/rss/stars",
+        "https://www.kurir.rs/rss/sport"
+      ],
       "scrape": null,
       "notes": "Probno merenje: RSS postoji. Test izvor za Fazu 2."
     },
@@ -83,7 +89,7 @@
       "homepage": "https://happytv.rs",
       "angle": "provladin",
       "enabled": true,
-      "feeds": [],
+      "feeds": ["https://happytv.rs/feed/"],
       "scrape": null,
       "notes": "Brief navodi happy.rs; zvanicni portal je happytv.rs — Faza 1 proverava oba."
     },
@@ -93,7 +99,7 @@
       "homepage": "https://www.srbijadanas.com",
       "angle": "provladin",
       "enabled": true,
-      "feeds": [],
+      "feeds": ["https://www.sd.rs/rss.xml"],
       "scrape": null,
       "notes": ""
     },
@@ -113,7 +119,7 @@
       "homepage": "https://n1info.rs",
       "angle": "kriticki",
       "enabled": true,
-      "feeds": [],
+      "feeds": ["https://n1info.rs/feed/"],
       "scrape": null,
       "notes": "Probno merenje: RSS postoji. Test izvor za Fazu 2."
     },
@@ -123,7 +129,7 @@
       "homepage": "https://nova.rs",
       "angle": "kriticki",
       "enabled": true,
-      "feeds": [],
+      "feeds": ["https://nova.rs/feed/"],
       "scrape": null,
       "notes": "Probno merenje: RSS postoji."
     },
@@ -133,7 +139,7 @@
       "homepage": "https://www.danas.rs",
       "angle": "kriticki",
       "enabled": true,
-      "feeds": [],
+      "feeds": ["https://www.danas.rs/feed/"],
       "scrape": null,
       "notes": "Probno merenje: RSS postoji. Test izvor za Fazu 2."
     },
@@ -143,7 +149,7 @@
       "homepage": "https://vreme.com",
       "angle": "kriticki",
       "enabled": true,
-      "feeds": [],
+      "feeds": ["https://vreme.com/feed/"],
       "scrape": null,
       "notes": "Probno merenje: RSS postoji."
     },
@@ -153,7 +159,7 @@
       "homepage": "https://insajder.net",
       "angle": "kriticki",
       "enabled": true,
-      "feeds": [],
+      "feeds": ["https://insajder.net/feed.xml", "https://insajder.net/feed"],
       "scrape": null,
       "notes": "Probno merenje: RSS postoji."
     },
@@ -173,7 +179,7 @@
       "homepage": "https://www.juznevesti.com",
       "angle": "kriticki",
       "enabled": true,
-      "feeds": [],
+      "feeds": ["https://www.juznevesti.com/feed/"],
       "scrape": null,
       "notes": "Regionalni (jug Srbije) fokus."
     },
@@ -183,7 +189,7 @@
       "homepage": "https://www.krik.rs",
       "angle": "kriticki",
       "enabled": true,
-      "feeds": [],
+      "feeds": ["https://www.krik.rs/feed/"],
       "scrape": null,
       "notes": "Probno merenje: RSS postoji. Istrazivacki medij — mali dnevni obim."
     },
@@ -193,7 +199,7 @@
       "homepage": "https://www.cenzolovka.rs",
       "angle": "kriticki",
       "enabled": true,
-      "feeds": [],
+      "feeds": ["https://www.cenzolovka.rs/feed/"],
       "scrape": null,
       "notes": "Tema: sloboda medija. Uzak fokus."
     },
@@ -213,7 +219,7 @@
       "homepage": "https://www.telegraf.rs",
       "angle": "mejnstrim",
       "enabled": true,
-      "feeds": [],
+      "feeds": ["https://www.telegraf.rs/rss"],
       "scrape": null,
       "notes": "Probno merenje: RSS postoji."
     },
@@ -223,7 +229,13 @@
       "homepage": "https://mondo.rs",
       "angle": "mejnstrim",
       "enabled": true,
-      "feeds": [],
+      "feeds": [
+        "https://mondo.rs/rss/629/Naslovna",
+        "https://mondo.rs/rss/644/Sport",
+        "https://mondo.rs/rss/631/Info",
+        "https://mondo.rs/rss/663/Zabava",
+        "https://mondo.rs/rss/678/Magazin"
+      ],
       "scrape": null,
       "notes": ""
     },
@@ -233,7 +245,7 @@
       "homepage": "https://www.b92.net",
       "angle": "mejnstrim",
       "enabled": true,
-      "feeds": [],
+      "feeds": ["https://www.b92.net/rss/latest", "https://www.b92.net/rss/b92"],
       "scrape": null,
       "notes": ""
     },
@@ -273,7 +285,7 @@
       "homepage": "https://beta.rs",
       "angle": "agencija",
       "enabled": true,
-      "feeds": [],
+      "feeds": ["https://beta.rs/rss"],
       "scrape": null,
       "notes": "Veci deo sadrzaja je iza pretplate — Faza 1 proverava koliko je javno dostupno."
     }

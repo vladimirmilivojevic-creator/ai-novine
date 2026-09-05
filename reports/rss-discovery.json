@@ -1,0 +1,3321 @@
+{
+  "generatedAt": "2026-09-05T22:59:26.775Z",
+  "reports": [
+    {
+      "id": "informer",
+      "name": "Informer",
+      "angle": "provladin",
+      "homepage": "https://informer.rs",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": [
+          "https://informer.rs/sitemap/news.xml"
+        ]
+      },
+      "homepageStatus": 200,
+      "feeds": [],
+      "sitemaps": [
+        {
+          "url": "https://informer.rs/sitemap/news.xml",
+          "isNewsSitemap": true,
+          "isIndex": false,
+          "entryCount": 1000
+        }
+      ],
+      "topSegments": [
+        {
+          "segment": "politika",
+          "count": 46,
+          "sample": "https://informer.rs/politika/vesti/1148079/ratko-mladic-izjave-hag-sudnica"
+        },
+        {
+          "segment": "magazin",
+          "count": 34,
+          "sample": "https://informer.rs/magazin/recepti"
+        },
+        {
+          "segment": "planeta",
+          "count": 32,
+          "sample": "https://informer.rs/planeta/vesti/1147133/nato-rusija-vojni-sukob-aleksandar-grusko"
+        },
+        {
+          "segment": "drustvo",
+          "count": 32,
+          "sample": "https://informer.rs/drustvo/vesti"
+        },
+        {
+          "segment": "dzet-set",
+          "count": 30,
+          "sample": "https://informer.rs/dzet-set/rijaliti/1148047/elita-10-pocetak"
+        },
+        {
+          "segment": "sport",
+          "count": 17,
+          "sample": "https://informer.rs/sport/fudbal/1148077/vinsent-vagner-trener-elverzberg"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://informer.rs/feed",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://informer.rs/rss",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://informer.rs/rss.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://informer.rs/feed/rss2",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://informer.rs/atom.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://informer.rs/index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://informer.rs/?feed=rss2",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://informer.rs/sitemap/news.xml",
+          "outcome": "sitemap (urlset, news, 1000 unosa)"
+        }
+      ],
+      "notes": [],
+      "verdict": "sitemap",
+      "elapsedMs": 10567
+    },
+    {
+      "id": "alo",
+      "name": "Alo",
+      "angle": "provladin",
+      "homepage": "https://www.alo.rs",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": [
+          "https://www.alo.rs/sitemap/sitemap-index.xml",
+          "https://www.alo.rs/sitemap/google-news-sitemap.xml"
+        ]
+      },
+      "homepageStatus": 200,
+      "feeds": [],
+      "sitemaps": [
+        {
+          "url": "https://www.alo.rs/sitemap/sitemap-index.xml",
+          "isNewsSitemap": false,
+          "isIndex": true,
+          "entryCount": 69
+        },
+        {
+          "url": "https://www.alo.rs/sitemap/google-news-sitemap.xml",
+          "isNewsSitemap": true,
+          "isIndex": false,
+          "entryCount": 437
+        }
+      ],
+      "topSegments": [
+        {
+          "segment": "vesti",
+          "count": 52,
+          "sample": "https://www.alo.rs/vesti/drustvo.html"
+        },
+        {
+          "segment": "razonoda",
+          "count": 26,
+          "sample": "https://www.alo.rs/razonoda/istorija.html"
+        },
+        {
+          "segment": "vip",
+          "count": 25,
+          "sample": "https://www.alo.rs/vip/estrada.html"
+        },
+        {
+          "segment": "biz",
+          "count": 22,
+          "sample": "https://www.alo.rs/biz/novac.html"
+        },
+        {
+          "segment": "hronika",
+          "count": 15,
+          "sample": "https://www.alo.rs/hronika/nesrece.html"
+        },
+        {
+          "segment": "sport-mobile",
+          "count": 9,
+          "sample": "https://www.alo.rs/sport-mobile/tenis/16934992/sta-se-ovo-desava-na-us-openu-ispao-jedan-od-favorita-iz-senke-a-onda-je-i-finalista-rolan-garosa-doziveo-debakl.html"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://rss.html/",
+          "outcome": "greska — Mrezna greska: fetch failed (getaddrinfo ENOTFOUND rss.html)"
+        },
+        {
+          "url": "https://www.alo.rs/feed",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.alo.rs/rss",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.alo.rs/rss.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.alo.rs/feed/rss2",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.alo.rs/atom.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.alo.rs/index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.alo.rs/?feed=rss2",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://www.alo.rs/sitemap/sitemap-index.xml",
+          "outcome": "sitemap (indeks, 69 unosa)"
+        },
+        {
+          "url": "https://www.alo.rs/sitemap/google-news-sitemap.xml",
+          "outcome": "sitemap (urlset, news, 437 unosa)"
+        }
+      ],
+      "notes": [],
+      "verdict": "sitemap",
+      "elapsedMs": 10685
+    },
+    {
+      "id": "pink",
+      "name": "Pink",
+      "angle": "provladin",
+      "homepage": "https://pink.rs",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": []
+      },
+      "homepageStatus": 200,
+      "feeds": [
+        {
+          "requestedUrl": "https://pink.rs/rss-feed",
+          "finalUrl": "https://pink.rs/rss-feed",
+          "kind": "atom",
+          "title": "pink.rs | Najbrži portal u Srbiji",
+          "itemCount": 50,
+          "newestItemAt": "2026-09-05T22:59:17.000Z",
+          "discoveredVia": "html"
+        }
+      ],
+      "sitemaps": [],
+      "topSegments": [
+        {
+          "segment": "domaci",
+          "count": 28,
+          "sample": "https://pink.rs/domaci/810293/elita-10-uzivo-iz-minuta-u-minut-gledajte-na-pinku-car-i-milan-milosevic-maze-fifi"
+        },
+        {
+          "segment": "zadruga",
+          "count": 7,
+          "sample": "https://pink.rs/zadruga/810380/izlazila-sam-sa-njim-laura-otkrila-miljani-s-kojim-bivsim-rijaliti-ucesnikom-se-vidala-a-evo-i-ko-joj-je-najprivlacniji-frajer-elite-10-video"
+        },
+        {
+          "segment": "horoskop",
+          "count": 3,
+          "sample": "https://pink.rs/horoskop/810253/ovi-horoskopski-znakovi-dozivece-ogroman-finansijski-preokret-u-septembru-bice-im-puni-dzepovi"
+        },
+        {
+          "segment": "drustvo",
+          "count": 2,
+          "sample": "https://pink.rs/drustvo/810269/guzve-na-granicama-srbije-automobili-cekaju-do-30-minuta-kamioni-i-do-cetiri-sata"
+        },
+        {
+          "segment": "extra",
+          "count": 1,
+          "sample": "https://pink.rs/extra/810337/veliki-praznik-je-sutra-pomolite-se-ovim-svetiteljima-za-bozju-milost-i-spas-od-nevolja"
+        },
+        {
+          "segment": "svet",
+          "count": 1,
+          "sample": "https://pink.rs/svet/810344/baron-tramp-zivi-potpuno-drugacije-od-brace-i-sestara-evo-kako-se-nosi-sa-teretom-slavnog-prezimena"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://pink.rs/rss-feed",
+          "outcome": "feed (atom, 50 stavki)"
+        },
+        {
+          "url": "https://pink.rs/feed",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://pink.rs/rss.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://pink.rs/atom.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://pink.rs/index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://pink.rs/?feed=rss2",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        }
+      ],
+      "notes": [],
+      "verdict": "rss",
+      "elapsedMs": 9932
+    },
+    {
+      "id": "kurir",
+      "name": "Kurir",
+      "angle": "provladin",
+      "homepage": "https://www.kurir.rs",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": [
+          "https://www.kurir.rs/sitemaps-v2/index.xml",
+          "https://www.kurir.rs/sitemaps-v2/news.xml"
+        ]
+      },
+      "homepageStatus": 200,
+      "feeds": [
+        {
+          "requestedUrl": "https://www.kurir.rs/rss",
+          "finalUrl": "https://www.kurir.rs/rss",
+          "kind": "rss",
+          "title": "Naslovna",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T22:51:00.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.kurir.rs/rss/najnovije-vesti",
+          "finalUrl": "https://www.kurir.rs/rss/najnovije-vesti",
+          "kind": "rss",
+          "title": "Naslovna",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T22:51:00.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.kurir.rs/rss/vesti",
+          "finalUrl": "https://www.kurir.rs/rss/vesti",
+          "kind": "rss",
+          "title": "Vesti",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T22:41:00.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.kurir.rs/rss/vesti/politika",
+          "finalUrl": "https://www.kurir.rs/rss/vesti/politika",
+          "kind": "rss",
+          "title": "Politika",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T20:24:41.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.kurir.rs/rss/vesti/drustvo",
+          "finalUrl": "https://www.kurir.rs/rss/vesti/drustvo",
+          "kind": "rss",
+          "title": "Društvo",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T21:45:00.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.kurir.rs/rss/vesti/srbija",
+          "finalUrl": "https://www.kurir.rs/rss/vesti/srbija",
+          "kind": "rss",
+          "title": "Srbija",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T22:41:00.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.kurir.rs/rss/vesti/beograd",
+          "finalUrl": "https://www.kurir.rs/rss/vesti/beograd",
+          "kind": "rss",
+          "title": "Beograd",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T16:25:07.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.kurir.rs/rss/stars",
+          "finalUrl": "https://www.kurir.rs/rss/stars",
+          "kind": "rss",
+          "title": "Stars",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T22:31:00.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.kurir.rs/rss/sport",
+          "finalUrl": "https://www.kurir.rs/rss/sport",
+          "kind": "rss",
+          "title": "Sport",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T21:58:00.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.kurir.rs/rss/sport/fudbal",
+          "finalUrl": "https://www.kurir.rs/rss/sport/fudbal",
+          "kind": "rss",
+          "title": "Fudbal",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T21:20:00.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.kurir.rs/rss/sport/kosarka",
+          "finalUrl": "https://www.kurir.rs/rss/sport/kosarka",
+          "kind": "rss",
+          "title": "Košarka",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T21:04:49.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.kurir.rs/rss/sport/tenis",
+          "finalUrl": "https://www.kurir.rs/rss/sport/tenis",
+          "kind": "rss",
+          "title": "Tenis",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T20:24:27.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.kurir.rs/rss/crna-hronika",
+          "finalUrl": "https://www.kurir.rs/rss/crna-hronika",
+          "kind": "rss",
+          "title": "Hronika",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T21:27:44.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.kurir.rs/rss/region",
+          "finalUrl": "https://www.kurir.rs/rss/region",
+          "kind": "rss",
+          "title": "Region",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T22:51:00.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.kurir.rs/rss/planeta",
+          "finalUrl": "https://www.kurir.rs/rss/planeta",
+          "kind": "rss",
+          "title": "Planeta",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T22:41:31.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.kurir.rs/rss/zabava",
+          "finalUrl": "https://www.kurir.rs/rss/zabava",
+          "kind": "rss",
+          "title": "Zabava",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T22:35:00.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.kurir.rs/rss/zabava/kultura",
+          "finalUrl": "https://www.kurir.rs/rss/zabava/kultura",
+          "kind": "rss",
+          "title": "Kultura",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T18:43:51.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.kurir.rs/rss/zabava/pop-kultura",
+          "finalUrl": "https://www.kurir.rs/rss/zabava/pop-kultura",
+          "kind": "rss",
+          "title": "Pop kultura",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T20:03:45.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.kurir.rs/rss/zabava/zena",
+          "finalUrl": "https://www.kurir.rs/rss/zabava/zena",
+          "kind": "rss",
+          "title": "Žena",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T22:35:00.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.kurir.rs/rss/zabava/tech",
+          "finalUrl": "https://www.kurir.rs/rss/zabava/tech",
+          "kind": "rss",
+          "title": "Tech",
+          "itemCount": 8,
+          "newestItemAt": "2026-08-30T22:32:00.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.kurir.rs/rss/biznis",
+          "finalUrl": "https://www.kurir.rs/rss/biznis",
+          "kind": "rss",
+          "title": "Naslovna",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T19:51:02.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.kurir.rs/rss/zdravlje",
+          "finalUrl": "https://www.kurir.rs/rss/zdravlje",
+          "kind": "rss",
+          "title": "Naslovna",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T15:00:00.000Z",
+          "discoveredVia": "html"
+        }
+      ],
+      "sitemaps": [
+        {
+          "url": "https://www.kurir.rs/sitemaps-v2/index.xml",
+          "isNewsSitemap": false,
+          "isIndex": true,
+          "entryCount": 29
+        },
+        {
+          "url": "https://www.kurir.rs/sitemaps-v2/news.xml",
+          "isNewsSitemap": true,
+          "isIndex": false,
+          "entryCount": 678
+        }
+      ],
+      "topSegments": [
+        {
+          "segment": "vesti",
+          "count": 12,
+          "sample": "https://www.kurir.rs/vesti/srbija/10096387/rast-turizma-u-srbiji-popularnost-planina-i-banja?utm_source=kurir&amp;utm_medium=web_ticker&amp;utm_campaign=adria_internal"
+        },
+        {
+          "segment": "Horoskop",
+          "count": 12,
+          "sample": "https://www.kurir.rs/Horoskop/9438728/Dnevni-horoskop"
+        },
+        {
+          "segment": "tv",
+          "count": 11,
+          "sample": "https://www.kurir.rs/tv/video/101003/Strucnjaci-upozoravanju-Svaki-komentar-na-drustvenoj-mrezi-utice-na-osobu"
+        },
+        {
+          "segment": "region",
+          "count": 9,
+          "sample": "https://www.kurir.rs/region/crna-gora/10096342/policija-u-niksicu-uhapsila-osumnjicenog-za-nasilje-kod-koga-su-pronadjeni-kokain-i-marihuana?utm_source=kurir&amp;utm_medium=web_ticker&amp;utm_campaign=adria_internal"
+        },
+        {
+          "segment": "stars",
+          "count": 6,
+          "sample": "https://www.kurir.rs/stars/rijaliti/10096557/laura-otkrila-miljani-da-je-bila-sa-stanislavom-krofakom?utm_source=kurir&amp;utm_medium=web_ticker&amp;utm_campaign=adria_internal"
+        },
+        {
+          "segment": "planeta",
+          "count": 4,
+          "sample": "https://www.kurir.rs/planeta/10096561/iranski-zvanicnik-u-egzistencijalnom-smo-ratu-sa-amerikom?utm_source=kurir&amp;utm_medium=web_ticker&amp;utm_campaign=adria_internal"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://www.kurir.rs/rss",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/rss/najnovije-vesti",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/rss/vesti",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/rss/vesti/politika",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/rss/vesti/drustvo",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/rss/vesti/srbija",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/rss/vesti/beograd",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/rss/stars",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/rss/sport",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/rss/sport/fudbal",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/rss/sport/kosarka",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/rss/sport/tenis",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/rss/crna-hronika",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/rss/region",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/rss/planeta",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/rss/zabava",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/rss/zabava/kultura",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/rss/zabava/pop-kultura",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/rss/zabava/zena",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/rss/zabava/tech",
+          "outcome": "feed (rss, 8 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/rss/biznis",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/rss/zdravlje",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.kurir.rs/sitemaps-v2/index.xml",
+          "outcome": "sitemap (indeks, 29 unosa)"
+        },
+        {
+          "url": "https://www.kurir.rs/sitemaps-v2/news.xml",
+          "outcome": "sitemap (urlset, news, 678 unosa)"
+        }
+      ],
+      "notes": [],
+      "verdict": "rss",
+      "elapsedMs": 25890
+    },
+    {
+      "id": "politika",
+      "name": "Politika",
+      "angle": "provladin",
+      "homepage": "https://www.politika.rs",
+      "enabled": true,
+      "robots": {
+        "state": "blokiran (HTTP 403)",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": []
+      },
+      "homepageStatus": null,
+      "feeds": [],
+      "sitemaps": [],
+      "topSegments": [],
+      "attempts": [],
+      "notes": [
+        "Sajt odbija i sam robots.txt sa HTTP 403 — aktivno blokira botove. Ne dohvatamo dalje; zaobilazenje te zastite bilo bi krsenje uslova koriscenja."
+      ],
+      "verdict": "blocked",
+      "elapsedMs": 286
+    },
+    {
+      "id": "novosti",
+      "name": "Vecernje novosti",
+      "angle": "provladin",
+      "homepage": "https://www.novosti.rs",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": [
+          "https://www.novosti.rs/sitemaps/xml/news"
+        ]
+      },
+      "homepageStatus": 200,
+      "feeds": [],
+      "sitemaps": [
+        {
+          "url": "https://www.novosti.rs/sitemaps/xml/news",
+          "isNewsSitemap": true,
+          "isIndex": false,
+          "entryCount": 254
+        }
+      ],
+      "topSegments": [
+        {
+          "segment": "vesti",
+          "count": 165,
+          "sample": "https://www.novosti.rs/vesti/politika"
+        },
+        {
+          "segment": "sport",
+          "count": 137,
+          "sample": "https://www.novosti.rs/sport/fudbal"
+        },
+        {
+          "segment": "planeta",
+          "count": 124,
+          "sample": "https://www.novosti.rs/planeta/svet"
+        },
+        {
+          "segment": "hronika",
+          "count": 53,
+          "sample": "https://www.novosti.rs/hronika/zlocin"
+        },
+        {
+          "segment": "ekonomija",
+          "count": 53,
+          "sample": "https://www.novosti.rs/ekonomija/vesti"
+        },
+        {
+          "segment": "drustvo",
+          "count": 51,
+          "sample": "https://www.novosti.rs/drustvo/vesti"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://www.novosti.rs/feed",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.novosti.rs/rss",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://www.novosti.rs/rss.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.novosti.rs/feed/rss2",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.novosti.rs/atom.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.novosti.rs/index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.novosti.rs/?feed=rss2",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://www.novosti.rs/sitemaps/xml/news",
+          "outcome": "sitemap (urlset, news, 254 unosa)"
+        }
+      ],
+      "notes": [],
+      "verdict": "sitemap",
+      "elapsedMs": 11665
+    },
+    {
+      "id": "happy",
+      "name": "Happy TV",
+      "angle": "provladin",
+      "homepage": "https://happytv.rs",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": [
+          "https://happytv.rs/sitemap_index.xml"
+        ]
+      },
+      "homepageStatus": 200,
+      "feeds": [
+        {
+          "requestedUrl": "https://happytv.rs/feed/",
+          "finalUrl": "https://happytv.rs/feed/",
+          "kind": "rss",
+          "title": "BSC Happy Portal",
+          "itemCount": 40,
+          "newestItemAt": "2026-09-04T20:45:14.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://happytv.rs/comments/feed/",
+          "finalUrl": "https://happytv.rs/comments/feed/",
+          "kind": "rss",
+          "title": "Komentari za BSC Happy Portal",
+          "itemCount": 40,
+          "newestItemAt": "2026-09-01T12:29:18.000Z",
+          "discoveredVia": "html"
+        }
+      ],
+      "sitemaps": [
+        {
+          "url": "https://happytv.rs/sitemap_index.xml",
+          "isNewsSitemap": false,
+          "isIndex": true,
+          "entryCount": 476
+        },
+        {
+          "url": "https://happytv.rs/post-sitemap.xml",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 1000
+        },
+        {
+          "url": "https://happytv.rs/post-sitemap2.xml",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 1000
+        }
+      ],
+      "topSegments": [
+        {
+          "segment": "vesti",
+          "count": 47,
+          "sample": "https://happytv.rs/vesti/politika/"
+        },
+        {
+          "segment": "zdravlje",
+          "count": 39,
+          "sample": "https://happytv.rs/zdravlje/fitnes/"
+        },
+        {
+          "segment": "glamur",
+          "count": 30,
+          "sample": "https://happytv.rs/glamur/vip/"
+        },
+        {
+          "segment": "sport",
+          "count": 24,
+          "sample": "https://happytv.rs/sport/fudbal/"
+        },
+        {
+          "segment": "ostalo",
+          "count": 24,
+          "sample": "https://happytv.rs/ostalo/astrologija/"
+        },
+        {
+          "segment": "svet",
+          "count": 19,
+          "sample": "https://happytv.rs/svet/tramp-trazi-od-evrope-novac-za-pomoc-ukrajini-vasington-ocekuje-nadoknadu-za-dosadasnju-podrsku/929374/"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://happytv.rs/feed/",
+          "outcome": "feed (rss, 40 stavki)"
+        },
+        {
+          "url": "https://happytv.rs/comments/feed/",
+          "outcome": "feed (rss, 40 stavki)"
+        },
+        {
+          "url": "https://happytv.rs/rss.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://happytv.rs/atom.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://happytv.rs/index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://happytv.rs/sitemap_index.xml",
+          "outcome": "sitemap (indeks, 476 unosa)"
+        },
+        {
+          "url": "https://happytv.rs/post-sitemap.xml",
+          "outcome": "sitemap (urlset, 1000 unosa)"
+        },
+        {
+          "url": "https://happytv.rs/post-sitemap2.xml",
+          "outcome": "sitemap (urlset, 1000 unosa)"
+        }
+      ],
+      "notes": [],
+      "verdict": "rss",
+      "elapsedMs": 15825
+    },
+    {
+      "id": "srbijadanas",
+      "name": "Srbija Danas",
+      "angle": "provladin",
+      "homepage": "https://www.srbijadanas.com",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": [
+          "https://www.sd.rs/sitemap/index.xml",
+          "https://www.sd.rs/sitemap/latest",
+          "https://www.sd.rs/googlenews.xml"
+        ]
+      },
+      "homepageStatus": 200,
+      "feeds": [
+        {
+          "requestedUrl": "https://www.sd.rs/rss.xml",
+          "finalUrl": "https://www.sd.rs/rss.xml",
+          "kind": "rss",
+          "title": "Srbija Danas",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T22:56:59.000Z",
+          "discoveredVia": "html"
+        }
+      ],
+      "sitemaps": [
+        {
+          "url": "https://www.sd.rs/sitemap/latest",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 7
+        },
+        {
+          "url": "https://www.sd.rs/googlenews.xml",
+          "isNewsSitemap": true,
+          "isIndex": false,
+          "entryCount": 482
+        }
+      ],
+      "topSegments": [
+        {
+          "segment": "vesti",
+          "count": 83,
+          "sample": "https://www.sd.rs/vesti/info"
+        },
+        {
+          "segment": "vip",
+          "count": 46,
+          "sample": "https://www.sd.rs/vip/zadruga"
+        },
+        {
+          "segment": "sport",
+          "count": 36,
+          "sample": "https://www.sd.rs/sport/fudbal"
+        },
+        {
+          "segment": "ukrajina",
+          "count": 12,
+          "sample": "https://www.sd.rs/ukrajina/vesti"
+        },
+        {
+          "segment": "zena",
+          "count": 12,
+          "sample": "https://www.sd.rs/zena/vesti"
+        },
+        {
+          "segment": "biz",
+          "count": 9,
+          "sample": "https://www.sd.rs/biz/vesti"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://www.sd.rs/rss.xml",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://www.srbijadanas.com/feed",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.srbijadanas.com/rss",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.srbijadanas.com/feed/rss2",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.srbijadanas.com/atom.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.srbijadanas.com/index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.srbijadanas.com/?feed=rss2",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://www.sd.rs/sitemap/index.xml",
+          "outcome": "HTTP 403"
+        },
+        {
+          "url": "https://www.sd.rs/sitemap/latest",
+          "outcome": "sitemap (urlset, 7 unosa)"
+        },
+        {
+          "url": "https://www.sd.rs/googlenews.xml",
+          "outcome": "sitemap (urlset, news, 482 unosa)"
+        }
+      ],
+      "notes": [],
+      "verdict": "rss",
+      "elapsedMs": 11430
+    },
+    {
+      "id": "prva",
+      "name": "Prva",
+      "angle": "provladin",
+      "homepage": "https://www.prva.rs",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": []
+      },
+      "homepageStatus": 200,
+      "feeds": [],
+      "sitemaps": [],
+      "topSegments": [
+        {
+          "segment": "zivot",
+          "count": 84,
+          "sample": "https://www.prva.rs/zivot/astro/3241/sta-svakom-horoskopskom-znaku-ne-ide-od-ruke/vest"
+        },
+        {
+          "segment": "formati",
+          "count": 75,
+          "sample": "https://www.prva.rs/formati/emisija"
+        },
+        {
+          "segment": "video",
+          "count": 36,
+          "sample": "https://www.prva.rs/video/serija/117513/igra-sudbine-1893-epizoda-sta-je-ovo-neko-resenje-o-privremenom-zatvaranju-objekta"
+        },
+        {
+          "segment": "showbiz",
+          "count": 14,
+          "sample": "https://www.prva.rs/showbiz/vesti/19913/premijere-domacih-serija-i-najgledaniji-svetski-tv-sou-ove-jeseni-na-prvoj/vest"
+        },
+        {
+          "segment": "horoskop",
+          "count": 12,
+          "sample": "https://www.prva.rs/horoskop/ovan"
+        },
+        {
+          "segment": "stranica",
+          "count": 9,
+          "sample": "https://www.prva.rs/stranica/1/prva"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://www.prva.rs/feed",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.prva.rs/rss",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://www.prva.rs/rss.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.prva.rs/feed/rss2",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.prva.rs/atom.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.prva.rs/index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.prva.rs/?feed=rss2",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://www.prva.rs/sitemap.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.prva.rs/sitemap_index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.prva.rs/sitemap-news.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.prva.rs/news-sitemap.xml",
+          "outcome": "HTTP 404"
+        }
+      ],
+      "notes": [],
+      "verdict": "scrape",
+      "elapsedMs": 13288
+    },
+    {
+      "id": "n1",
+      "name": "N1",
+      "angle": "kriticki",
+      "homepage": "https://n1info.rs",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": [
+          "https://n1info.rs/sitemap/sitemap_news_1.xml",
+          "https://n1info.rs/sitemap/sitemap_category_1.xml",
+          "https://n1info.rs/sitemap/sitemap_post_1.xml",
+          "https://n1info.rs/sitemap.xml"
+        ]
+      },
+      "homepageStatus": 200,
+      "feeds": [
+        {
+          "requestedUrl": "https://n1info.rs/feed",
+          "finalUrl": "https://n1info.rs/feed/",
+          "kind": "rss",
+          "title": "N1 Info RS - Feed",
+          "itemCount": 50,
+          "newestItemAt": "2026-09-05T21:54:56.000Z",
+          "discoveredVia": "putanja"
+        }
+      ],
+      "sitemaps": [
+        {
+          "url": "https://n1info.rs/sitemap/sitemap_news_1.xml",
+          "isNewsSitemap": true,
+          "isIndex": false,
+          "entryCount": 285
+        },
+        {
+          "url": "https://n1info.rs/sitemap/sitemap_category_1.xml",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 92
+        },
+        {
+          "url": "https://n1info.rs/sitemap/sitemap_post_1.xml",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 1000
+        }
+      ],
+      "topSegments": [
+        {
+          "segment": "magazin",
+          "count": 144,
+          "sample": "https://n1info.rs/magazin/zdravlje/"
+        },
+        {
+          "segment": "vesti",
+          "count": 81,
+          "sample": "https://n1info.rs/vesti/nase-price/"
+        },
+        {
+          "segment": "kolumne",
+          "count": 24,
+          "sample": "https://n1info.rs/kolumne/draza-petrovic/pismo-svim-srpskim-penzionerima-s-galapagosa/"
+        },
+        {
+          "segment": "svet",
+          "count": 23,
+          "sample": "https://n1info.rs/svet/iran-tvrdi-da-je-napao-tri-americka-broda-i-tri-tankera-u-ormuskom-moreuzu/komentari/"
+        },
+        {
+          "segment": "najave-emisija",
+          "count": 11,
+          "sample": "https://n1info.rs/najave-emisija/novi-dan-tenzije-u-odnosima-srbije-i-eu/"
+        },
+        {
+          "segment": "zeleni-kutak",
+          "count": 8,
+          "sample": "https://n1info.rs/zeleni-kutak/plag-in-hibridi-emituju-do-pet-puta-vise-co2-nego-sto-se-zvanicno-prikazuje/"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://n1info.rs/feed",
+          "outcome": "feed (rss, 50 stavki)"
+        },
+        {
+          "url": "https://n1info.rs/rss",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://n1info.rs/rss.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://n1info.rs/feed/rss2",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://n1info.rs/atom.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://n1info.rs/index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://n1info.rs/?feed=rss2",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://n1info.rs/sitemap/sitemap_news_1.xml",
+          "outcome": "sitemap (urlset, news, 285 unosa)"
+        },
+        {
+          "url": "https://n1info.rs/sitemap/sitemap_category_1.xml",
+          "outcome": "sitemap (urlset, 92 unosa)"
+        },
+        {
+          "url": "https://n1info.rs/sitemap/sitemap_post_1.xml",
+          "outcome": "sitemap (urlset, 1000 unosa)"
+        }
+      ],
+      "notes": [],
+      "verdict": "rss",
+      "elapsedMs": 12063
+    },
+    {
+      "id": "nova",
+      "name": "Nova.rs",
+      "angle": "kriticki",
+      "homepage": "https://nova.rs",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": [
+          "https://nova.rs/sitemap/sitemap_news_1.xml",
+          "https://nova.rs/sitemap/sitemap_category_1.xml",
+          "https://nova.rs/sitemap/sitemap_post_1.xml",
+          "https://nova.rs/sitemap.xml"
+        ]
+      },
+      "homepageStatus": 200,
+      "feeds": [
+        {
+          "requestedUrl": "https://nova.rs/feed",
+          "finalUrl": "https://nova.rs/feed/",
+          "kind": "rss",
+          "title": "Nova.rs - Feed",
+          "itemCount": 50,
+          "newestItemAt": "2026-09-05T22:16:38.000Z",
+          "discoveredVia": "putanja"
+        }
+      ],
+      "sitemaps": [
+        {
+          "url": "https://nova.rs/sitemap/sitemap_news_1.xml",
+          "isNewsSitemap": true,
+          "isIndex": false,
+          "entryCount": 335
+        },
+        {
+          "url": "https://nova.rs/sitemap/sitemap_category_1.xml",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 92
+        },
+        {
+          "url": "https://nova.rs/sitemap/sitemap_post_1.xml",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 1000
+        }
+      ],
+      "topSegments": [
+        {
+          "segment": "vesti",
+          "count": 205,
+          "sample": "https://nova.rs/vesti/politika/"
+        },
+        {
+          "segment": "magazin",
+          "count": 163,
+          "sample": "https://nova.rs/magazin/lifestyle/"
+        },
+        {
+          "segment": "sport",
+          "count": 107,
+          "sample": "https://nova.rs/sport/fudbal/"
+        },
+        {
+          "segment": "zabava",
+          "count": 98,
+          "sample": "https://nova.rs/zabava/showbiz/"
+        },
+        {
+          "segment": "emisije",
+          "count": 24,
+          "sample": "https://nova.rs/emisije/dnevnik-cela-emisija-492026/komentari/"
+        },
+        {
+          "segment": "kultura",
+          "count": 8,
+          "sample": "https://nova.rs/kultura/rade-serbedzija-ja-sam-srbin-iz-like-i-zelim-nacionalistima-ovo-da-porucim-video/komentari/"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://nova.rs/feed",
+          "outcome": "feed (rss, 50 stavki)"
+        },
+        {
+          "url": "https://nova.rs/rss",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://nova.rs/rss.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://nova.rs/feed/rss2",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://nova.rs/atom.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://nova.rs/index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://nova.rs/?feed=rss2",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://nova.rs/sitemap/sitemap_news_1.xml",
+          "outcome": "sitemap (urlset, news, 335 unosa)"
+        },
+        {
+          "url": "https://nova.rs/sitemap/sitemap_category_1.xml",
+          "outcome": "sitemap (urlset, 92 unosa)"
+        },
+        {
+          "url": "https://nova.rs/sitemap/sitemap_post_1.xml",
+          "outcome": "sitemap (urlset, 1000 unosa)"
+        }
+      ],
+      "notes": [],
+      "verdict": "rss",
+      "elapsedMs": 12253
+    },
+    {
+      "id": "danas",
+      "name": "Danas",
+      "angle": "kriticki",
+      "homepage": "https://www.danas.rs",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": []
+      },
+      "homepageStatus": 200,
+      "feeds": [
+        {
+          "requestedUrl": "https://www.danas.rs/feed/",
+          "finalUrl": "https://www.danas.rs/feed/",
+          "kind": "rss",
+          "title": "Dnevni list Danas",
+          "itemCount": 50,
+          "newestItemAt": "2026-09-05T21:53:18.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.danas.rs/comments/feed/",
+          "finalUrl": "https://www.danas.rs/comments/feed/",
+          "kind": "rss",
+          "title": "Komentari za Dnevni list Danas",
+          "itemCount": 50,
+          "newestItemAt": "2026-09-05T21:59:25.000Z",
+          "discoveredVia": "html"
+        }
+      ],
+      "sitemaps": [],
+      "topSegments": [
+        {
+          "segment": "rubrika",
+          "count": 144,
+          "sample": "https://www.danas.rs/rubrika/podkast/"
+        },
+        {
+          "segment": "vesti",
+          "count": 70,
+          "sample": "https://www.danas.rs/vesti/drustvo/vucic-plasi-srbiju-srbijom-bez-vucica-predsednik-tvrdi-da-ce-ako-se-vlast-promeni-gradjani-morati-da-slusaju-tompsona-i-vicu-za-dom-spremni/"
+        },
+        {
+          "segment": "dijalog",
+          "count": 20,
+          "sample": "https://www.danas.rs/dijalog/licni-stavovi/izlaznost-glasanje-izbori-poraz/"
+        },
+        {
+          "segment": "sport",
+          "count": 17,
+          "sample": "https://www.danas.rs/sport/srbija-poljska-evropsko-prvenstvo-trece-mesto-uzivo-prenos-livestream/"
+        },
+        {
+          "segment": "kultura",
+          "count": 15,
+          "sample": "https://www.danas.rs/kultura/goran-markovic-odgovorio-vucicu/"
+        },
+        {
+          "segment": "svet",
+          "count": 13,
+          "sample": "https://www.danas.rs/svet/iran-tvrdi-da-je-napao-tri-americka-broda-i-tri-tankera-u-ormuskom-moreuzu/"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://www.danas.rs/feed/",
+          "outcome": "feed (rss, 50 stavki)"
+        },
+        {
+          "url": "https://www.danas.rs/comments/feed/",
+          "outcome": "feed (rss, 50 stavki)"
+        },
+        {
+          "url": "https://www.danas.rs/rss.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.danas.rs/atom.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.danas.rs/index.xml",
+          "outcome": "HTTP 404"
+        }
+      ],
+      "notes": [],
+      "verdict": "rss",
+      "elapsedMs": 10416
+    },
+    {
+      "id": "vreme",
+      "name": "Vreme",
+      "angle": "kriticki",
+      "homepage": "https://vreme.com",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": [
+          "https://vreme.com/sitemaps.xml"
+        ]
+      },
+      "homepageStatus": 200,
+      "feeds": [
+        {
+          "requestedUrl": "https://vreme.com/feed",
+          "finalUrl": "https://vreme.com/feed/",
+          "kind": "rss",
+          "title": "Vreme",
+          "itemCount": 12,
+          "newestItemAt": "2026-09-05T20:02:12.000Z",
+          "discoveredVia": "putanja"
+        }
+      ],
+      "sitemaps": [
+        {
+          "url": "https://vreme.com/sitemaps.xml",
+          "isNewsSitemap": false,
+          "isIndex": true,
+          "entryCount": 110
+        },
+        {
+          "url": "https://vreme.com/post-sitemap1.xml",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 1001
+        },
+        {
+          "url": "https://vreme.com/post-sitemap2.xml",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 1000
+        }
+      ],
+      "topSegments": [
+        {
+          "segment": "category",
+          "count": 28,
+          "sample": "https://vreme.com/category/vesti/"
+        },
+        {
+          "segment": "drustvo",
+          "count": 24,
+          "sample": "https://vreme.com/drustvo/beograd-prajd-neka-bude-mesta-za-sve-nas/"
+        },
+        {
+          "segment": "komentar",
+          "count": 22,
+          "sample": "https://vreme.com/komentar/vucic-sam-protiv-svih-ali-stvarno/"
+        },
+        {
+          "segment": "vesti",
+          "count": 20,
+          "sample": "https://vreme.com/vesti/izbori-koalicije-liste/"
+        },
+        {
+          "segment": "svet",
+          "count": 19,
+          "sample": "https://vreme.com/svet/zbog-opasnog-otpada-u-gospicu-odrzan-najmasovniji-protest-u-hrvatskoj/"
+        },
+        {
+          "segment": "kultura",
+          "count": 17,
+          "sample": "https://vreme.com/kultura/macutova-vlada-odlucila-da-istorijski-muzej-srbije-postane-srpski-istorijski-muzej/"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://vreme.com/feed/",
+          "outcome": "preskoceno — robots.txt zabranjuje"
+        },
+        {
+          "url": "https://vreme.com/feed",
+          "outcome": "feed (rss, 12 stavki)"
+        },
+        {
+          "url": "https://vreme.com/rss.xml",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://vreme.com/feed/rss2",
+          "outcome": "preskoceno — robots.txt zabranjuje"
+        },
+        {
+          "url": "https://vreme.com/sitemaps.xml",
+          "outcome": "sitemap (indeks, 110 unosa)"
+        },
+        {
+          "url": "https://vreme.com/post-sitemap1.xml",
+          "outcome": "sitemap (urlset, 1001 unosa)"
+        },
+        {
+          "url": "https://vreme.com/post-sitemap2.xml",
+          "outcome": "sitemap (urlset, 1000 unosa)"
+        }
+      ],
+      "notes": [],
+      "verdict": "rss",
+      "elapsedMs": 19562
+    },
+    {
+      "id": "insajder",
+      "name": "Insajder",
+      "angle": "kriticki",
+      "homepage": "https://insajder.net",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": [
+          "https://insajder.net/sitemap.xml",
+          "https://insajder.net/news-sitemap.xml"
+        ]
+      },
+      "homepageStatus": 200,
+      "feeds": [
+        {
+          "requestedUrl": "https://insajder.net/feed.xml",
+          "finalUrl": "https://insajder.net/feed.xml",
+          "kind": "rss",
+          "title": "Insajder - Najnovije vesti",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T21:52:00.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://insajder.net/feed",
+          "finalUrl": "https://insajder.net/feed",
+          "kind": "rss",
+          "title": "Insajder - Najnovije vesti",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T21:52:00.000Z",
+          "discoveredVia": "putanja"
+        }
+      ],
+      "sitemaps": [
+        {
+          "url": "https://insajder.net/sitemap.xml",
+          "isNewsSitemap": false,
+          "isIndex": true,
+          "entryCount": 996
+        },
+        {
+          "url": "https://insajder.net/news-sitemap.xml",
+          "isNewsSitemap": true,
+          "isIndex": false,
+          "entryCount": 131
+        }
+      ],
+      "topSegments": [
+        {
+          "segment": "vesti",
+          "count": 40,
+          "sample": "https://insajder.net/vesti/markovic-za-insajder-zasto-gorivo-poskupljuje-i-pored-ogranicenja-cena-i-sta-ceka-nis-video"
+        },
+        {
+          "segment": "emisije",
+          "count": 20,
+          "sample": "https://insajder.net/emisije/insajder-dokument"
+        },
+        {
+          "segment": "serijali",
+          "count": 10,
+          "sample": "https://insajder.net/serijali/hronologija"
+        },
+        {
+          "segment": "tv-najava",
+          "count": 6,
+          "sample": "https://insajder.net/tv-najava/letnji-insajderov-3d-tri-sata-nove-dimenzije-dana"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://insajder.net/feed.xml",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://insajder.net/feed",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://insajder.net/rss",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://insajder.net/rss.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://insajder.net/feed/rss2",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://insajder.net/atom.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://insajder.net/index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://insajder.net/?feed=rss2",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://insajder.net/sitemap.xml",
+          "outcome": "sitemap (indeks, 996 unosa)"
+        },
+        {
+          "url": "https://insajder.net/news-sitemap.xml",
+          "outcome": "sitemap (urlset, news, 131 unosa)"
+        }
+      ],
+      "notes": [],
+      "verdict": "rss",
+      "elapsedMs": 14780
+    },
+    {
+      "id": "birn",
+      "name": "BIRN Srbija",
+      "angle": "kriticki",
+      "homepage": "https://birn.rs",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": [
+          "https://birn.rs/sitemaps.xml",
+          "https://birn.rs/post-sitemap1.xml",
+          "https://birn.rs/page-sitemap1.xml",
+          "https://birn.rs/category-sitemap1.xml",
+          "https://birn.rs/post_tag-sitemap1.xml"
+        ]
+      },
+      "homepageStatus": 200,
+      "feeds": [],
+      "sitemaps": [
+        {
+          "url": "https://birn.rs/sitemaps.xml",
+          "isNewsSitemap": false,
+          "isIndex": true,
+          "entryCount": 4
+        },
+        {
+          "url": "https://birn.rs/post-sitemap1.xml",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 992
+        },
+        {
+          "url": "https://birn.rs/post_tag-sitemap1.xml",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 36
+        },
+        {
+          "url": "https://birn.rs/page-sitemap1.xml",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 29
+        },
+        {
+          "url": "https://birn.rs/sitemaps.xml",
+          "isNewsSitemap": false,
+          "isIndex": true,
+          "entryCount": 4
+        },
+        {
+          "url": "https://birn.rs/sitemaps.xml",
+          "isNewsSitemap": false,
+          "isIndex": true,
+          "entryCount": 4
+        }
+      ],
+      "topSegments": [
+        {
+          "segment": "novinar",
+          "count": 21,
+          "sample": "https://birn.rs/novinar/sasa-dragojlo/"
+        },
+        {
+          "segment": "kategorija",
+          "count": 13,
+          "sample": "https://birn.rs/kategorija/odbrana/"
+        },
+        {
+          "segment": "u-fokusu",
+          "count": 6,
+          "sample": "https://birn.rs/u-fokusu/digitalna-prava/"
+        },
+        {
+          "segment": "vrsta-clanka",
+          "count": 4,
+          "sample": "https://birn.rs/vrsta-clanka/vesti/"
+        },
+        {
+          "segment": "projekat",
+          "count": 1,
+          "sample": "https://birn.rs/projekat/kako-se-planiraju-i-izvode-javna-ulaganja/"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://birn.rs/feed",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://birn.rs/rss.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://birn.rs/atom.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://birn.rs/index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://birn.rs/sitemaps.xml",
+          "outcome": "sitemap (indeks, 4 unosa)"
+        },
+        {
+          "url": "https://birn.rs/post-sitemap1.xml",
+          "outcome": "sitemap (urlset, 992 unosa)"
+        },
+        {
+          "url": "https://birn.rs/post_tag-sitemap1.xml",
+          "outcome": "sitemap (urlset, 36 unosa)"
+        },
+        {
+          "url": "https://birn.rs/page-sitemap1.xml",
+          "outcome": "sitemap (urlset, 29 unosa)"
+        },
+        {
+          "url": "https://birn.rs/sitemap.xml",
+          "outcome": "sitemap (indeks, 4 unosa)"
+        },
+        {
+          "url": "https://birn.rs/sitemap_index.xml",
+          "outcome": "sitemap (indeks, 4 unosa)"
+        },
+        {
+          "url": "https://birn.rs/sitemap-news.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://birn.rs/news-sitemap.xml",
+          "outcome": "HTTP 404"
+        }
+      ],
+      "notes": [],
+      "verdict": "scrape",
+      "elapsedMs": 21876
+    },
+    {
+      "id": "juznevesti",
+      "name": "Juzne vesti",
+      "angle": "kriticki",
+      "homepage": "https://www.juznevesti.com",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": [
+          "https://www.juznevesti.com/sitemap_index.xml"
+        ]
+      },
+      "homepageStatus": 200,
+      "feeds": [
+        {
+          "requestedUrl": "https://www.juznevesti.com/feed/",
+          "finalUrl": "https://www.juznevesti.com/feed/",
+          "kind": "rss",
+          "title": "Južne vesti",
+          "itemCount": 10,
+          "newestItemAt": "2026-09-05T18:17:46.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.juznevesti.com/comments/feed/",
+          "finalUrl": "https://www.juznevesti.com/comments/feed/",
+          "kind": "rss",
+          "title": "Komentari za Južne vesti",
+          "itemCount": 10,
+          "newestItemAt": "2026-09-05T21:28:06.000Z",
+          "discoveredVia": "html"
+        }
+      ],
+      "sitemaps": [
+        {
+          "url": "https://www.juznevesti.com/sitemap_index.xml",
+          "isNewsSitemap": false,
+          "isIndex": true,
+          "entryCount": 157
+        },
+        {
+          "url": "https://www.juznevesti.com/post-sitemap1.xml",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 1001
+        },
+        {
+          "url": "https://www.juznevesti.com/post-sitemap2.xml",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 1000
+        }
+      ],
+      "topSegments": [
+        {
+          "segment": "gradovi-i-opstine",
+          "count": 69,
+          "sample": "https://www.juznevesti.com/gradovi-i-opstine/nis/"
+        },
+        {
+          "segment": "kultura",
+          "count": 29,
+          "sample": "https://www.juznevesti.com/kultura/medijana-fest-otvoren-uz-marka-luisa-u-nisu-uvek-gori-i-vrela-je-krv/"
+        },
+        {
+          "segment": "drustvo",
+          "count": 27,
+          "sample": "https://www.juznevesti.com/drustvo/niski-start-kampanje-za-jos-neraspisane-izbore-zasedace-glavni-odbor-sns-studentski-skup-vucic-stigao-i-obecava/"
+        },
+        {
+          "segment": "politika",
+          "count": 11,
+          "sample": "https://www.juznevesti.com/politika/niski-studenti-kazu-da-ih-policija-poziva-na-razgovore-zbog-okupljanja-tokom-skupa-sns-a-na-koji-je-dolazi-vucic/"
+        },
+        {
+          "segment": "sport",
+          "count": 9,
+          "sample": "https://www.juznevesti.com/sport/radnicki-u-lucanima-pobeda-u-mislima/"
+        },
+        {
+          "segment": "bbc-news-na-srpskom",
+          "count": 7,
+          "sample": "https://www.juznevesti.com/bbc-news-na-srpskom/zapis-sa-terena-ko-je-pravi-heroj-ratko-mladic-ili-luk-skajvoker/"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://www.juznevesti.com/feed/",
+          "outcome": "feed (rss, 10 stavki)"
+        },
+        {
+          "url": "https://www.juznevesti.com/comments/feed/",
+          "outcome": "feed (rss, 10 stavki)"
+        },
+        {
+          "url": "https://www.juznevesti.com/rss.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.juznevesti.com/atom.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.juznevesti.com/index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.juznevesti.com/sitemap_index.xml",
+          "outcome": "sitemap (indeks, 157 unosa)"
+        },
+        {
+          "url": "https://www.juznevesti.com/post-sitemap1.xml",
+          "outcome": "sitemap (urlset, 1001 unosa)"
+        },
+        {
+          "url": "https://www.juznevesti.com/post-sitemap2.xml",
+          "outcome": "sitemap (urlset, 1000 unosa)"
+        }
+      ],
+      "notes": [],
+      "verdict": "rss",
+      "elapsedMs": 19698
+    },
+    {
+      "id": "krik",
+      "name": "KRIK",
+      "angle": "kriticki",
+      "homepage": "https://www.krik.rs",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": [
+          "https://www.krik.rs/sitemap_index.xml"
+        ]
+      },
+      "homepageStatus": 200,
+      "feeds": [
+        {
+          "requestedUrl": "https://www.krik.rs/feed/",
+          "finalUrl": "https://www.krik.rs/feed/",
+          "kind": "rss",
+          "title": "KRIK",
+          "itemCount": 10,
+          "newestItemAt": "2026-09-04T09:11:47.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.krik.rs/comments/feed/",
+          "finalUrl": "https://www.krik.rs/comments/feed/",
+          "kind": "rss",
+          "title": "Komentari za KRIK",
+          "itemCount": 10,
+          "newestItemAt": "2020-12-09T13:05:21.000Z",
+          "discoveredVia": "html"
+        }
+      ],
+      "sitemaps": [
+        {
+          "url": "https://www.krik.rs/sitemap_index.xml",
+          "isNewsSitemap": false,
+          "isIndex": true,
+          "entryCount": 17
+        },
+        {
+          "url": "https://www.krik.rs/post-sitemap.xml",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 1000
+        },
+        {
+          "url": "https://www.krik.rs/post-sitemap2.xml",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 1000
+        }
+      ],
+      "topSegments": [],
+      "attempts": [
+        {
+          "url": "https://www.krik.rs/feed/",
+          "outcome": "feed (rss, 10 stavki)"
+        },
+        {
+          "url": "https://www.krik.rs/comments/feed/",
+          "outcome": "feed (rss, 10 stavki)"
+        },
+        {
+          "url": "https://www.krik.rs/rss.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.krik.rs/atom.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.krik.rs/index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.krik.rs/sitemap_index.xml",
+          "outcome": "sitemap (indeks, 17 unosa)"
+        },
+        {
+          "url": "https://www.krik.rs/post-sitemap.xml",
+          "outcome": "sitemap (urlset, 1000 unosa)"
+        },
+        {
+          "url": "https://www.krik.rs/post-sitemap2.xml",
+          "outcome": "sitemap (urlset, 1000 unosa)"
+        }
+      ],
+      "notes": [],
+      "verdict": "rss",
+      "elapsedMs": 21823
+    },
+    {
+      "id": "cenzolovka",
+      "name": "Cenzolovka",
+      "angle": "kriticki",
+      "homepage": "https://www.cenzolovka.rs",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": [
+          "https://www.cenzolovka.rs/sitemap_index.xml"
+        ]
+      },
+      "homepageStatus": 200,
+      "feeds": [
+        {
+          "requestedUrl": "https://www.cenzolovka.rs/feed/",
+          "finalUrl": "https://www.cenzolovka.rs/feed/",
+          "kind": "rss",
+          "title": "Cenzolovka",
+          "itemCount": 20,
+          "newestItemAt": "2026-09-04T15:37:26.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://www.cenzolovka.rs/comments/feed/",
+          "finalUrl": "https://www.cenzolovka.rs/comments/feed/",
+          "kind": "rss",
+          "title": "Коментари за Cenzolovka",
+          "itemCount": 20,
+          "newestItemAt": "2023-08-25T08:11:54.000Z",
+          "discoveredVia": "html"
+        }
+      ],
+      "sitemaps": [
+        {
+          "url": "https://www.cenzolovka.rs/sitemap_index.xml",
+          "isNewsSitemap": false,
+          "isIndex": true,
+          "entryCount": 46
+        },
+        {
+          "url": "https://www.cenzolovka.rs/post-sitemap.xml",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 1001
+        },
+        {
+          "url": "https://www.cenzolovka.rs/post-sitemap2.xml",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 1000
+        }
+      ],
+      "topSegments": [
+        {
+          "segment": "drzava-i-mediji",
+          "count": 24,
+          "sample": "https://www.cenzolovka.rs/drzava-i-mediji/dogovora-o-predsedniku-rem-a-i-dalje-nema-koce-ga-kontroverze-i-interesi-sa-strane/"
+        },
+        {
+          "segment": "pritisci-i-napadi",
+          "count": 16,
+          "sample": "https://www.cenzolovka.rs/pritisci-i-napadi/umesto-n1-i-nove-s-katanac-yettel-i-sbb-bez-najave-gase-kanale-korisnicima/"
+        },
+        {
+          "segment": "trziste",
+          "count": 10,
+          "sample": "https://www.cenzolovka.rs/trziste/milosavljevic-o-kupovini-n1-kompanija-koja-tokom-preuzimanja-ceka-odobrenja-ne-moze-unapred-da-postavlja-direktore/"
+        },
+        {
+          "segment": "stripolovka",
+          "count": 6,
+          "sample": "https://www.cenzolovka.rs/stripolovka/marko-somborac-tabloidna-sluzba/"
+        },
+        {
+          "segment": "svet",
+          "count": 6,
+          "sample": "https://www.cenzolovka.rs/svet/totalni-rat-u-kome-su-i-mediji-izgubili-slobodu/"
+        },
+        {
+          "segment": "region",
+          "count": 5,
+          "sample": "https://www.cenzolovka.rs/region/bhrt-u-blokirani-racuni-pred-pocetak-izborne-kampanje/"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://www.cenzolovka.rs/feed/",
+          "outcome": "feed (rss, 20 stavki)"
+        },
+        {
+          "url": "https://www.cenzolovka.rs/comments/feed/",
+          "outcome": "feed (rss, 20 stavki)"
+        },
+        {
+          "url": "https://www.cenzolovka.rs/rss.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.cenzolovka.rs/atom.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.cenzolovka.rs/index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.cenzolovka.rs/sitemap_index.xml",
+          "outcome": "sitemap (indeks, 46 unosa)"
+        },
+        {
+          "url": "https://www.cenzolovka.rs/post-sitemap.xml",
+          "outcome": "sitemap (urlset, 1001 unosa)"
+        },
+        {
+          "url": "https://www.cenzolovka.rs/post-sitemap2.xml",
+          "outcome": "sitemap (urlset, 1000 unosa)"
+        }
+      ],
+      "notes": [],
+      "verdict": "rss",
+      "elapsedMs": 26189
+    },
+    {
+      "id": "blic",
+      "name": "Blic",
+      "angle": "mejnstrim",
+      "homepage": "https://www.blic.rs",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": [
+          "https://www.blic.rs/sitemap-stories-latest-index.xml.gz",
+          "https://www.blic.rs/sitemap-stories-by-month-index.xml.gz",
+          "https://www.blic.rs/sitemap-stories-news-news.xml.gz"
+        ]
+      },
+      "homepageStatus": 200,
+      "feeds": [],
+      "sitemaps": [
+        {
+          "url": "https://www.blic.rs/sitemap-stories-latest-index.xml.gz",
+          "isNewsSitemap": false,
+          "isIndex": true,
+          "entryCount": 1
+        },
+        {
+          "url": "https://www.blic.rs/sitemap-stories-latest-latest.xml.gz",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 11
+        },
+        {
+          "url": "https://www.blic.rs/sitemap-stories-by-month-index.xml.gz",
+          "isNewsSitemap": false,
+          "isIndex": true,
+          "entryCount": 319
+        },
+        {
+          "url": "https://www.blic.rs/sitemap-stories-by-month-2026-9.xml.gz",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 1257
+        },
+        {
+          "url": "https://www.blic.rs/sitemap-stories-by-month-2026-8.xml.gz",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 9016
+        },
+        {
+          "url": "https://www.blic.rs/sitemap-stories-news-news.xml.gz",
+          "isNewsSitemap": true,
+          "isIndex": false,
+          "entryCount": 523
+        }
+      ],
+      "topSegments": [
+        {
+          "segment": "vesti",
+          "count": 65,
+          "sample": "https://www.blic.rs/vesti/politika"
+        },
+        {
+          "segment": "zabava",
+          "count": 34,
+          "sample": "https://www.blic.rs/zabava/milioner-ozenio-poznatu-srpkinju-od-koje-je-stariji-19-godina-i-dosao-u-beograd/gfy1tgk"
+        },
+        {
+          "segment": "biznis",
+          "count": 25,
+          "sample": "https://www.blic.rs/biznis/vesti/vucic-ministri-ce-morati-da-rade-najmanje-10-sati-dnevno/kp927zd"
+        },
+        {
+          "segment": "video-strana",
+          "count": 18,
+          "sample": "https://www.blic.rs/video-strana/bebi-dol-spremna-za-ulazak-u-elitu-10/PIuVSUUs?playlistId=cSR1hD8z"
+        },
+        {
+          "segment": "zdravlje",
+          "count": 10,
+          "sample": "https://www.blic.rs/zdravlje/ishrana/da-li-toplo-mleko-zaista-pomaze-za-spavanje/dhtd5ws"
+        },
+        {
+          "segment": "slobodno-vreme",
+          "count": 10,
+          "sample": "https://www.blic.rs/slobodno-vreme/povratak-na-balkan-na-testu-kupio-kucu-a-supruga-i-deca-ne-zele-da-napuste-nemacku/gf13hwh"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://www.blic.rs/feed",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.blic.rs/rss",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://www.blic.rs/rss.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.blic.rs/feed/rss2",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.blic.rs/atom.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.blic.rs/index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.blic.rs/?feed=rss2",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://www.blic.rs/sitemap-stories-latest-index.xml.gz",
+          "outcome": "sitemap (indeks, 1 unosa)"
+        },
+        {
+          "url": "https://www.blic.rs/sitemap-stories-latest-latest.xml.gz",
+          "outcome": "sitemap (urlset, 11 unosa)"
+        },
+        {
+          "url": "https://www.blic.rs/sitemap-stories-by-month-index.xml.gz",
+          "outcome": "sitemap (indeks, 319 unosa)"
+        },
+        {
+          "url": "https://www.blic.rs/sitemap-stories-by-month-2026-9.xml.gz",
+          "outcome": "sitemap (urlset, 1257 unosa)"
+        },
+        {
+          "url": "https://www.blic.rs/sitemap-stories-by-month-2026-8.xml.gz",
+          "outcome": "sitemap (urlset, 9016 unosa)"
+        },
+        {
+          "url": "https://www.blic.rs/sitemap-stories-news-news.xml.gz",
+          "outcome": "sitemap (urlset, news, 523 unosa)"
+        }
+      ],
+      "notes": [],
+      "verdict": "sitemap",
+      "elapsedMs": 15731
+    },
+    {
+      "id": "telegraf",
+      "name": "Telegraf",
+      "angle": "mejnstrim",
+      "homepage": "https://www.telegraf.rs",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": [
+          "https://www.telegraf.rs/xml/sitemap/latest",
+          "https://www.telegraf.rs/xml/sitemap",
+          "https://www.telegraf.rs/xml/news",
+          "https://www.telegraf.rs/xml/sitemap/ankete"
+        ]
+      },
+      "homepageStatus": 200,
+      "feeds": [
+        {
+          "requestedUrl": "https://www.telegraf.rs/rss",
+          "finalUrl": "https://www.telegraf.rs/rss",
+          "kind": "rss",
+          "title": "Telegraf - Najnovije vesti",
+          "itemCount": 20,
+          "newestItemAt": "2026-09-05T22:50:00.000Z",
+          "discoveredVia": "putanja"
+        }
+      ],
+      "sitemaps": [
+        {
+          "url": "https://www.telegraf.rs/xml/sitemap/latest",
+          "isNewsSitemap": false,
+          "isIndex": false,
+          "entryCount": 6
+        },
+        {
+          "url": "https://www.telegraf.rs/xml/sitemap",
+          "isNewsSitemap": false,
+          "isIndex": true,
+          "entryCount": 88
+        },
+        {
+          "url": "https://www.telegraf.rs/xml/news",
+          "isNewsSitemap": true,
+          "isIndex": false,
+          "entryCount": 687
+        }
+      ],
+      "topSegments": [
+        {
+          "segment": "vesti",
+          "count": 93,
+          "sample": "https://www.telegraf.rs/vesti/srbija"
+        },
+        {
+          "segment": "jetset",
+          "count": 76,
+          "sample": "https://www.telegraf.rs/jetset/rijaliti/4391276-zavirite-u-belu-kucu-trpeza-nikad-bogatija-pogledajte-sta-im-je-veliki-sef-pripremio-za-pocetak-elite-10"
+        },
+        {
+          "segment": "sport",
+          "count": 53,
+          "sample": "https://www.telegraf.rs/sport/tip"
+        },
+        {
+          "segment": "hi-tech",
+          "count": 35,
+          "sample": "https://www.telegraf.rs/hi-tech/info-tech/4390419-slika-i-zvuk-na-tv-u-su-vam-ocajni-zbog-fabrickih-podesavanja-5-jeftinih-trikova-koji-menjaju-sve"
+        },
+        {
+          "segment": "pop-i-kultura",
+          "count": 30,
+          "sample": "https://www.telegraf.rs/pop-i-kultura/muzika"
+        },
+        {
+          "segment": "auto",
+          "count": 28,
+          "sample": "https://www.telegraf.rs/auto/auto-vesti"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://www.telegraf.rs/feed",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.telegraf.rs/rss",
+          "outcome": "feed (rss, 20 stavki)"
+        },
+        {
+          "url": "https://www.telegraf.rs/rss.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.telegraf.rs/feed/rss2",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.telegraf.rs/atom.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.telegraf.rs/index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.telegraf.rs/?feed=rss2",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://www.telegraf.rs/xml/sitemap/latest",
+          "outcome": "sitemap (urlset, 6 unosa)"
+        },
+        {
+          "url": "https://www.telegraf.rs/xml/sitemap",
+          "outcome": "sitemap (indeks, 88 unosa)"
+        },
+        {
+          "url": "https://www.telegraf.rs/xml/news",
+          "outcome": "sitemap (urlset, news, 687 unosa)"
+        }
+      ],
+      "notes": [],
+      "verdict": "rss",
+      "elapsedMs": 11783
+    },
+    {
+      "id": "mondo",
+      "name": "Mondo",
+      "angle": "mejnstrim",
+      "homepage": "https://mondo.rs",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": [
+          "https://mondo.rs/sitemaps/index.xml",
+          "https://mondo.rs/sitemaps/news-sitemap.xml"
+        ]
+      },
+      "homepageStatus": 200,
+      "feeds": [
+        {
+          "requestedUrl": "https://mondo.rs/rss/629/Naslovna",
+          "finalUrl": "https://mondo.rs/rss/629/Naslovna",
+          "kind": "rss",
+          "title": "Naslovna",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T22:00:10.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/644/Sport",
+          "finalUrl": "https://mondo.rs/rss/644/Sport",
+          "kind": "rss",
+          "title": "Sport",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T21:59:00.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/646/Sport/Fudbal",
+          "finalUrl": "https://mondo.rs/rss/646/Sport/Fudbal",
+          "kind": "rss",
+          "title": "Fudbal",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T21:59:00.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/652/Sport/Kosarka",
+          "finalUrl": "https://mondo.rs/rss/652/Sport/Kosarka",
+          "kind": "rss",
+          "title": "Košarka",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T21:48:04.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/657/Sport/Tenis",
+          "finalUrl": "https://mondo.rs/rss/657/Sport/Tenis",
+          "kind": "rss",
+          "title": "Tenis",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T19:54:39.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/660/Sport/Ostali-sportovi",
+          "finalUrl": "https://mondo.rs/rss/660/Sport/Ostali-sportovi",
+          "kind": "rss",
+          "title": "Ostali sportovi",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T20:48:58.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/631/Info",
+          "finalUrl": "https://mondo.rs/rss/631/Info",
+          "kind": "rss",
+          "title": "Info",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T22:00:10.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/640/Info/Drustvo",
+          "finalUrl": "https://mondo.rs/rss/640/Info/Drustvo",
+          "kind": "rss",
+          "title": "Društvo",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T16:00:00.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/11427/Info/Politika",
+          "finalUrl": "https://mondo.rs/rss/11427/Info/Politika",
+          "kind": "rss",
+          "title": "Politika",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T17:36:08.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/641/Info/Crna-hronika",
+          "finalUrl": "https://mondo.rs/rss/641/Info/Crna-hronika",
+          "kind": "rss",
+          "title": "Crna hronika",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T21:41:30.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/642/Info/Ekonomija",
+          "finalUrl": "https://mondo.rs/rss/642/Info/Ekonomija",
+          "kind": "rss",
+          "title": "Ekonomija",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T19:23:02.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/637/Info/Srbija",
+          "finalUrl": "https://mondo.rs/rss/637/Info/Srbija",
+          "kind": "rss",
+          "title": "Srbija",
+          "itemCount": 100,
+          "newestItemAt": "2026-08-31T06:21:34.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/639/Info/Beograd",
+          "finalUrl": "https://mondo.rs/rss/639/Info/Beograd",
+          "kind": "rss",
+          "title": "Beograd na Mondu",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T16:29:59.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/638/Info/Svet",
+          "finalUrl": "https://mondo.rs/rss/638/Info/Svet",
+          "kind": "rss",
+          "title": "Svet",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T22:00:10.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/643/Info/EX-YU",
+          "finalUrl": "https://mondo.rs/rss/643/Info/EX-YU",
+          "kind": "rss",
+          "title": "EX YU",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T13:42:02.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/11312/Info/Novi-Sad-na-Mondu",
+          "finalUrl": "https://mondo.rs/rss/11312/Info/Novi-Sad-na-Mondu",
+          "kind": "rss",
+          "title": "Novi Sad na Mondu",
+          "itemCount": 100,
+          "newestItemAt": "2026-08-17T15:38:49.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/663/Zabava",
+          "finalUrl": "https://mondo.rs/rss/663/Zabava",
+          "kind": "rss",
+          "title": "Zabava",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T20:51:50.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/665/Zabava/Zvezde-i-tracevi",
+          "finalUrl": "https://mondo.rs/rss/665/Zabava/Zvezde-i-tracevi",
+          "kind": "rss",
+          "title": "Zvezde i tračevi",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T20:51:50.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/671/Zabava/TV",
+          "finalUrl": "https://mondo.rs/rss/671/Zabava/TV",
+          "kind": "rss",
+          "title": "TV",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T19:10:16.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/673/Zabava/Film",
+          "finalUrl": "https://mondo.rs/rss/673/Zabava/Film",
+          "kind": "rss",
+          "title": "Film",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-04T20:35:24.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/674/Zabava/Muzika",
+          "finalUrl": "https://mondo.rs/rss/674/Zabava/Muzika",
+          "kind": "rss",
+          "title": "Muzika",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T05:00:00.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/675/Zabava/Zanimljivosti",
+          "finalUrl": "https://mondo.rs/rss/675/Zabava/Zanimljivosti",
+          "kind": "rss",
+          "title": "Zanimljivosti",
+          "itemCount": 100,
+          "newestItemAt": "2026-08-22T14:14:16.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/676/Zabava/Kultura",
+          "finalUrl": "https://mondo.rs/rss/676/Zabava/Kultura",
+          "kind": "rss",
+          "title": "Kultura",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T17:43:16.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/678/Magazin",
+          "finalUrl": "https://mondo.rs/rss/678/Magazin",
+          "kind": "rss",
+          "title": "Magazin",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T10:00:00.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/680/Magazin/Ljubav",
+          "finalUrl": "https://mondo.rs/rss/680/Magazin/Ljubav",
+          "kind": "rss",
+          "title": "Ljubav",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-01T13:03:33.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/681/Magazin/Stil",
+          "finalUrl": "https://mondo.rs/rss/681/Magazin/Stil",
+          "kind": "rss",
+          "title": "Stil",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T10:00:00.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/685/Magazin/Zdravlje",
+          "finalUrl": "https://mondo.rs/rss/685/Magazin/Zdravlje",
+          "kind": "rss",
+          "title": "Zdravlje",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T04:45:00.000Z",
+          "discoveredVia": "html"
+        },
+        {
+          "requestedUrl": "https://mondo.rs/rss/822/Horoskop",
+          "finalUrl": "https://mondo.rs/rss/822/Horoskop",
+          "kind": "rss",
+          "title": "Horoskop",
+          "itemCount": 100,
+          "newestItemAt": "2026-09-05T03:01:00.000Z",
+          "discoveredVia": "html"
+        }
+      ],
+      "sitemaps": [
+        {
+          "url": "https://mondo.rs/sitemaps/index.xml",
+          "isNewsSitemap": false,
+          "isIndex": true,
+          "entryCount": 29
+        },
+        {
+          "url": "https://mondo.rs/sitemaps/news-sitemap.xml",
+          "isNewsSitemap": true,
+          "isIndex": false,
+          "entryCount": 314
+        }
+      ],
+      "topSegments": [
+        {
+          "segment": "Info",
+          "count": 18,
+          "sample": "https://mondo.rs/Info/Svet/a2278373/putin-tri-sata-razgovarao-sa-vitkofom-i-kusnerom.html"
+        },
+        {
+          "segment": "Sport",
+          "count": 11,
+          "sample": "https://mondo.rs/Sport/Fudbal/a2278369/dusan-vlahovic-na-srpskom-psovao-milana-skrinjara.html"
+        },
+        {
+          "segment": "Zabava",
+          "count": 10,
+          "sample": "https://mondo.rs/Zabava/Zvezde-i-tracevi/a2278351/zeljko-mitrovic-izrekao-zabranu-staniji-sve-se-culo-uzivo.html"
+        },
+        {
+          "segment": "Automobili",
+          "count": 5,
+          "sample": "https://mondo.rs/Automobili/Majstor/a2257608/koji-su-simptomi-kvara-turbine.html"
+        },
+        {
+          "segment": "Ostalo",
+          "count": 4,
+          "sample": "https://mondo.rs/Ostalo/Marketing"
+        },
+        {
+          "segment": "Umro-Ratko-Mladic",
+          "count": 1,
+          "sample": "https://mondo.rs/Umro-Ratko-Mladic/tag27438/1"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://mondo.rs/rss/629/Naslovna",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/644/Sport",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/646/Sport/Fudbal",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/652/Sport/Kosarka",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/657/Sport/Tenis",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/660/Sport/Ostali-sportovi",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/631/Info",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/640/Info/Drustvo",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/11427/Info/Politika",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/641/Info/Crna-hronika",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/642/Info/Ekonomija",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/637/Info/Srbija",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/639/Info/Beograd",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/638/Info/Svet",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/643/Info/EX-YU",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/11312/Info/Novi-Sad-na-Mondu",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/663/Zabava",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/665/Zabava/Zvezde-i-tracevi",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/671/Zabava/TV",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/673/Zabava/Film",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/674/Zabava/Muzika",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/675/Zabava/Zanimljivosti",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/676/Zabava/Kultura",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/678/Magazin",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/680/Magazin/Ljubav",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/681/Magazin/Stil",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/685/Magazin/Zdravlje",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/rss/822/Horoskop",
+          "outcome": "feed (rss, 100 stavki)"
+        },
+        {
+          "url": "https://mondo.rs/sitemaps/index.xml",
+          "outcome": "sitemap (indeks, 29 unosa)"
+        },
+        {
+          "url": "https://mondo.rs/sitemaps/news-sitemap.xml",
+          "outcome": "sitemap (urlset, news, 314 unosa)"
+        }
+      ],
+      "notes": [],
+      "verdict": "rss",
+      "elapsedMs": 32576
+    },
+    {
+      "id": "b92",
+      "name": "B92",
+      "angle": "mejnstrim",
+      "homepage": "https://www.b92.net",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": []
+      },
+      "homepageStatus": 200,
+      "feeds": [
+        {
+          "requestedUrl": "https://www.b92.net/feed",
+          "finalUrl": "https://www.b92.net/rss/latest",
+          "kind": "rss",
+          "title": "B92.net - Najnovije>",
+          "itemCount": 20,
+          "newestItemAt": "2026-09-05T22:02:00.000Z",
+          "discoveredVia": "putanja"
+        },
+        {
+          "requestedUrl": "https://www.b92.net/rss.xml",
+          "finalUrl": "https://www.b92.net/rss/b92",
+          "kind": "rss",
+          "title": "B92.net - Najnovije - b92>",
+          "itemCount": 20,
+          "newestItemAt": "2026-09-05T22:02:00.000Z",
+          "discoveredVia": "putanja"
+        }
+      ],
+      "sitemaps": [],
+      "topSegments": [
+        {
+          "segment": "sport",
+          "count": 173,
+          "sample": "https://www.b92.net/sport/fudbal"
+        },
+        {
+          "segment": "svi-komentari",
+          "count": 150,
+          "sample": "https://www.b92.net/svi-komentari/265097"
+        },
+        {
+          "segment": "info",
+          "count": 64,
+          "sample": "https://www.b92.net/info/politika"
+        },
+        {
+          "segment": "putovanja",
+          "count": 38,
+          "sample": "https://www.b92.net/putovanja/moj-put"
+        },
+        {
+          "segment": "biz",
+          "count": 36,
+          "sample": "https://www.b92.net/biz/srbija"
+        },
+        {
+          "segment": "lokal",
+          "count": 36,
+          "sample": "https://www.b92.net/lokal/beograd"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://www.b92.net/feed",
+          "outcome": "feed (rss, 20 stavki)"
+        },
+        {
+          "url": "https://www.b92.net/rss",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://www.b92.net/rss.xml",
+          "outcome": "feed (rss, 20 stavki)"
+        },
+        {
+          "url": "https://www.b92.net/feed/rss2",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.b92.net/?feed=rss2",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        }
+      ],
+      "notes": [],
+      "verdict": "rss",
+      "elapsedMs": 11773
+    },
+    {
+      "id": "rts",
+      "name": "RTS",
+      "angle": "mejnstrim",
+      "homepage": "https://www.rts.rs",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": []
+      },
+      "homepageStatus": 200,
+      "feeds": [],
+      "sitemaps": [],
+      "topSegments": [
+        {
+          "segment": "vesti",
+          "count": 118,
+          "sample": "https://www.rts.rs/vesti/politika.html"
+        },
+        {
+          "segment": "magazin",
+          "count": 118,
+          "sample": "https://www.rts.rs/magazin/zivot.html"
+        },
+        {
+          "segment": "sport",
+          "count": 71,
+          "sample": "https://www.rts.rs/sport/fudbal.html"
+        },
+        {
+          "segment": "rts",
+          "count": 56,
+          "sample": "https://www.rts.rs/rts/muzicka-produkcija.html"
+        },
+        {
+          "segment": "tv",
+          "count": 34,
+          "sample": "https://www.rts.rs/tv/rts1.html"
+        },
+        {
+          "segment": "radio",
+          "count": 30,
+          "sample": "https://www.rts.rs/radio/radio-beograd-1.html"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://rss.html/",
+          "outcome": "greska — Mrezna greska: fetch failed (getaddrinfo ENOTFOUND rss.html)"
+        },
+        {
+          "url": "https://www.rts.rs/feed",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.rts.rs/rss",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.rts.rs/rss.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.rts.rs/feed/rss2",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.rts.rs/atom.xml",
+          "outcome": "greska — Mrezna greska: fetch failed (other side closed)"
+        },
+        {
+          "url": "https://www.rts.rs/index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.rts.rs/?feed=rss2",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://www.rts.rs/sitemap.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.rts.rs/sitemap_index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.rts.rs/sitemap-news.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.rts.rs/news-sitemap.xml",
+          "outcome": "HTTP 404"
+        }
+      ],
+      "notes": [],
+      "verdict": "scrape",
+      "elapsedMs": 12447
+    },
+    {
+      "id": "euronews",
+      "name": "Euronews Srbija",
+      "angle": "mejnstrim",
+      "homepage": "https://www.euronews.rs",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": []
+      },
+      "homepageStatus": 200,
+      "feeds": [],
+      "sitemaps": [],
+      "topSegments": [
+        {
+          "segment": "srbija",
+          "count": 124,
+          "sample": "https://www.euronews.rs/srbija/politika"
+        },
+        {
+          "segment": "magazin",
+          "count": 101,
+          "sample": "https://www.euronews.rs/magazin/zivot"
+        },
+        {
+          "segment": "evropa",
+          "count": 83,
+          "sample": "https://www.euronews.rs/evropa/vesti"
+        },
+        {
+          "segment": "biznis",
+          "count": 56,
+          "sample": "https://www.euronews.rs/biznis/biznis-vesti"
+        },
+        {
+          "segment": "svet",
+          "count": 55,
+          "sample": "https://www.euronews.rs/svet/fokus"
+        },
+        {
+          "segment": "sport",
+          "count": 29,
+          "sample": "https://www.euronews.rs/sport/fudbal"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://www.euronews.rs/feed",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.euronews.rs/rss",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://www.euronews.rs/rss.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.euronews.rs/feed/rss2",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.euronews.rs/atom.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.euronews.rs/index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.euronews.rs/?feed=rss2",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://www.euronews.rs/sitemap.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.euronews.rs/sitemap_index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.euronews.rs/sitemap-news.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.euronews.rs/news-sitemap.xml",
+          "outcome": "HTTP 404"
+        }
+      ],
+      "notes": [],
+      "verdict": "scrape",
+      "elapsedMs": 12850
+    },
+    {
+      "id": "tanjug",
+      "name": "Tanjug",
+      "angle": "agencija",
+      "homepage": "https://www.tanjug.rs",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": [
+          "https://www.tanjug.rs/sitemap/news.xml"
+        ]
+      },
+      "homepageStatus": 200,
+      "feeds": [],
+      "sitemaps": [
+        {
+          "url": "https://www.tanjug.rs/sitemap/news.xml",
+          "isNewsSitemap": true,
+          "isIndex": false,
+          "entryCount": 420
+        }
+      ],
+      "topSegments": [
+        {
+          "segment": "srbija",
+          "count": 68,
+          "sample": "https://www.tanjug.rs/srbija/politika"
+        },
+        {
+          "segment": "svet",
+          "count": 34,
+          "sample": "https://www.tanjug.rs/svet/politika"
+        },
+        {
+          "segment": "sport",
+          "count": 33,
+          "sample": "https://www.tanjug.rs/sport/fudbal"
+        },
+        {
+          "segment": "ekonomija",
+          "count": 25,
+          "sample": "https://www.tanjug.rs/ekonomija/srbija"
+        },
+        {
+          "segment": "kultura",
+          "count": 20,
+          "sample": "https://www.tanjug.rs/kultura/art"
+        },
+        {
+          "segment": "region",
+          "count": 19,
+          "sample": "https://www.tanjug.rs/region/politika"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://www.tanjug.rs/feed",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.tanjug.rs/rss",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://www.tanjug.rs/rss.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.tanjug.rs/feed/rss2",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.tanjug.rs/atom.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.tanjug.rs/index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://www.tanjug.rs/?feed=rss2",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        },
+        {
+          "url": "https://www.tanjug.rs/sitemap/news.xml",
+          "outcome": "sitemap (urlset, news, 420 unosa)"
+        }
+      ],
+      "notes": [],
+      "verdict": "sitemap",
+      "elapsedMs": 9512
+    },
+    {
+      "id": "beta",
+      "name": "Beta",
+      "angle": "agencija",
+      "homepage": "https://beta.rs",
+      "enabled": true,
+      "robots": {
+        "state": "dostupan",
+        "crawlDelaySeconds": null,
+        "declaredSitemaps": []
+      },
+      "homepageStatus": 200,
+      "feeds": [
+        {
+          "requestedUrl": "https://beta.rs/rss",
+          "finalUrl": "https://beta.rs/rss",
+          "kind": "rss",
+          "title": "Betars - Novinska agencija Beta",
+          "itemCount": 10,
+          "newestItemAt": "2026-09-05T21:30:08.000Z",
+          "discoveredVia": "putanja"
+        }
+      ],
+      "sitemaps": [],
+      "topSegments": [
+        {
+          "segment": "content",
+          "count": 215,
+          "sample": "https://beta.rs/content/251501-putin-sa-vitkofom-i-kusnerom-moskvi-odgovara-saradnja-sa-vasingtonom-ukrajina-smanjila-napade"
+        },
+        {
+          "segment": "category",
+          "count": 58,
+          "sample": "https://beta.rs/category/vesti"
+        }
+      ],
+      "attempts": [
+        {
+          "url": "https://beta.rs/feed",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://beta.rs/rss",
+          "outcome": "feed (rss, 10 stavki)"
+        },
+        {
+          "url": "https://beta.rs/rss.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://beta.rs/feed/rss2",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://beta.rs/atom.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://beta.rs/index.xml",
+          "outcome": "HTTP 404"
+        },
+        {
+          "url": "https://beta.rs/?feed=rss2",
+          "outcome": "HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)"
+        }
+      ],
+      "notes": [],
+      "verdict": "rss",
+      "elapsedMs": 9361
+    }
+  ]
+}
