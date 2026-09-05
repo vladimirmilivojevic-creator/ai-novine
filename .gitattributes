@@ -1,2 +1,9 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Sve tekstualne fajlove drzi u LF-u i u repo-u i u radnom folderu, i na Windows-u.
+# Bez ovoga Prettier lokalno prijavljuje CRLF greske koje na CI-ju (Linux) ne postoje.
+* text=auto eol=lf
+
+# Binarni fajlovi — bez ikakve konverzije.
+*.png binary
+*.jpg binary
+*.woff2 binary
+*.ttf binary

@@ -1,0 +1,13 @@
+{
+  "name": "@ai-novine/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Zajednicki tipovi, logger i ucitavanje konfiguracije",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "zod": "^4.5.4"
+  }
+}

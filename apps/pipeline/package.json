@@ -1,0 +1,18 @@
+{
+  "name": "@ai-novine/pipeline",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Node CLI: discover | ingest | editorial | sweep",
+  "bin": {
+    "ainovine": "./src/index.ts"
+  },
+  "scripts": {
+    "start": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@ai-novine/core": "*",
+    "@ai-novine/db": "*",
+    "commander": "^15.0.0"
+  }
+}

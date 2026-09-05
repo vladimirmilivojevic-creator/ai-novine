@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "_comment": "Urednicka pravila: pragovi, kvote i ritam. Ovaj fajl menjas ti — kod ga samo cita.",
+  "cadence": {
+    "ingestEveryMinutes": 20,
+    "editorialEveryMinutes": 60,
+    "sweepCron": "0 3 * * *"
+  },
+  "clustering": {
+    "similarityThreshold": 0.62,
+    "windowHours": 36,
+    "minTitleChars": 20
+  },
+  "gates": {
+    "_comment": "Klaster ide u AI generisanje samo ako prodje SVE ove kapije (brief, sekcija 9).",
+    "minDistinctSources": 3,
+    "minDistinctAngles": 2,
+    "minTotalItems": 3,
+    "minWordsToPublish": 350,
+    "maxWordsToPublish": 900
+  },
+  "updates": {
+    "_comment": "Umesto novog clanka o istoj temi — azuriranje postojeceg (brief, sekcije 5 i 9).",
+    "existingArticleWindowHours": 6,
+    "minNewSourcesToTriggerUpdate": 2,
+    "maxUpdatesPerArticle": 5
+  },
+  "limits": {
+    "maxArticlesPerDay": 30,
+    "maxFlagshipArticlesPerDay": 4,
+    "maxArticlesPerEditorialRun": 6
+  },
+  "models": {
+    "_comment": "Poredjenje kvaliteta na srpskom radi se u Fazi 5, pre nego sto se ovo zakljuca.",
+    "default": "claude-haiku-4-5-20251001",
+    "flagship": "claude-sonnet-5",
+    "maxOutputTokens": 4000
+  },
+  "categories": {
+    "politika": { "label": "Politika", "dailyQuota": 8, "minDistinctSources": 3 },
+    "ekonomija": { "label": "Ekonomija", "dailyQuota": 5, "minDistinctSources": 3 },
+    "drustvo": { "label": "Drustvo i hronika", "dailyQuota": 8, "minDistinctSources": 3 },
+    "sport": { "label": "Sport", "dailyQuota": 4, "minDistinctSources": 2 },
+    "region": { "label": "Region", "dailyQuota": 3, "minDistinctSources": 2 },
+    "svet": { "label": "Svet", "dailyQuota": 4, "minDistinctSources": 2 }
+  },
+  "sensitivity": {
+    "_comment": "Osetljivi clanci cekaju tvoje odobrenje preko Telegrama (brief, sekcija 7). Faza 7.",
+    "topics": [
+      "krivicni postupak",
+      "imenovana optuzba",
+      "tragedija ili zrtve",
+      "sudski postupak",
+      "zdravstveno stanje imenovane osobe"
+    ],
+    "approvalTimeoutHours": 2,
+    "onTimeout": "draft"
+  },
+  "retention": {
+    "_comment": "Supabase besplatni tier je 500 MB. Sirovi tekstovi se brisu, generisani clanci ostaju.",
+    "rawItemsDays": 10,
+    "pipelineRunsDays": 30,
+    "rejectedClustersDays": 7
+  }
+}

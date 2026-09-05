@@ -1,0 +1,281 @@
+{
+  "version": 1,
+  "_comment": "Lista izvora koje Engine 1 prati. Ovo je fajl koji ti menjas rukom — kod ga samo cita. Da izbacis izvor, stavi \"enabled\": false (ne brisi ga, da istorija u bazi ostane citljiva). Polje \"feeds\" popunjava `npm run pipeline -- discover` u Fazi 1.",
+  "defaults": {
+    "userAgent": "AINovineBot/1.0 (+https://ainovine.rs/kako-radimo)",
+    "requestsPerSecondPerDomain": 1,
+    "requestTimeoutMs": 15000,
+    "respectRobotsTxt": true,
+    "maxConsecutiveFailures": 3,
+    "disableAfterFailuresHours": 6,
+    "maxItemsPerFetch": 60
+  },
+  "angles": {
+    "provladin": "Provladin / desni ugao",
+    "kriticki": "Kriticki / opozicioni ugao",
+    "mejnstrim": "Mejnstrim / manje jasno svrstan",
+    "agencija": "Novinska agencija (cinjenicki sloj)"
+  },
+  "sources": [
+    {
+      "id": "informer",
+      "name": "Informer",
+      "homepage": "https://informer.rs",
+      "angle": "provladin",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": "Probno merenje u planskoj fazi: nema RSS autodiscovery — kandidat za sitemap/scraping fallback."
+    },
+    {
+      "id": "alo",
+      "name": "Alo",
+      "homepage": "https://www.alo.rs",
+      "angle": "provladin",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": ""
+    },
+    {
+      "id": "pink",
+      "name": "Pink",
+      "homepage": "https://pink.rs",
+      "angle": "provladin",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": "Probno merenje: RSS postoji."
+    },
+    {
+      "id": "kurir",
+      "name": "Kurir",
+      "homepage": "https://www.kurir.rs",
+      "angle": "provladin",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": "Probno merenje: RSS postoji. Test izvor za Fazu 2."
+    },
+    {
+      "id": "politika",
+      "name": "Politika",
+      "homepage": "https://www.politika.rs",
+      "angle": "provladin",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": "Probno merenje: HTTP 403 (Cloudflare) i na /robots.txt. Kandidat za izbacivanje u Fazi 1."
+    },
+    {
+      "id": "novosti",
+      "name": "Vecernje novosti",
+      "homepage": "https://www.novosti.rs",
+      "angle": "provladin",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": ""
+    },
+    {
+      "id": "happy",
+      "name": "Happy TV",
+      "homepage": "https://happytv.rs",
+      "angle": "provladin",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": "Brief navodi happy.rs; zvanicni portal je happytv.rs — Faza 1 proverava oba."
+    },
+    {
+      "id": "srbijadanas",
+      "name": "Srbija Danas",
+      "homepage": "https://www.srbijadanas.com",
+      "angle": "provladin",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": ""
+    },
+    {
+      "id": "prva",
+      "name": "Prva",
+      "homepage": "https://www.prva.rs",
+      "angle": "provladin",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": ""
+    },
+    {
+      "id": "n1",
+      "name": "N1",
+      "homepage": "https://n1info.rs",
+      "angle": "kriticki",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": "Probno merenje: RSS postoji. Test izvor za Fazu 2."
+    },
+    {
+      "id": "nova",
+      "name": "Nova.rs",
+      "homepage": "https://nova.rs",
+      "angle": "kriticki",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": "Probno merenje: RSS postoji."
+    },
+    {
+      "id": "danas",
+      "name": "Danas",
+      "homepage": "https://www.danas.rs",
+      "angle": "kriticki",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": "Probno merenje: RSS postoji. Test izvor za Fazu 2."
+    },
+    {
+      "id": "vreme",
+      "name": "Vreme",
+      "homepage": "https://vreme.com",
+      "angle": "kriticki",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": "Probno merenje: RSS postoji."
+    },
+    {
+      "id": "insajder",
+      "name": "Insajder",
+      "homepage": "https://insajder.net",
+      "angle": "kriticki",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": "Probno merenje: RSS postoji."
+    },
+    {
+      "id": "birn",
+      "name": "BIRN Srbija",
+      "homepage": "https://birn.rs",
+      "angle": "kriticki",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": "Istrazivacki medij — mali dnevni obim, ali visok kvalitet ugla."
+    },
+    {
+      "id": "juznevesti",
+      "name": "Juzne vesti",
+      "homepage": "https://www.juznevesti.com",
+      "angle": "kriticki",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": "Regionalni (jug Srbije) fokus."
+    },
+    {
+      "id": "krik",
+      "name": "KRIK",
+      "homepage": "https://www.krik.rs",
+      "angle": "kriticki",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": "Probno merenje: RSS postoji. Istrazivacki medij — mali dnevni obim."
+    },
+    {
+      "id": "cenzolovka",
+      "name": "Cenzolovka",
+      "homepage": "https://www.cenzolovka.rs",
+      "angle": "kriticki",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": "Tema: sloboda medija. Uzak fokus."
+    },
+    {
+      "id": "blic",
+      "name": "Blic",
+      "homepage": "https://www.blic.rs",
+      "angle": "mejnstrim",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": "Probno merenje: nema RSS autodiscovery — kandidat za sitemap/scraping fallback."
+    },
+    {
+      "id": "telegraf",
+      "name": "Telegraf",
+      "homepage": "https://www.telegraf.rs",
+      "angle": "mejnstrim",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": "Probno merenje: RSS postoji."
+    },
+    {
+      "id": "mondo",
+      "name": "Mondo",
+      "homepage": "https://mondo.rs",
+      "angle": "mejnstrim",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": ""
+    },
+    {
+      "id": "b92",
+      "name": "B92",
+      "homepage": "https://www.b92.net",
+      "angle": "mejnstrim",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": ""
+    },
+    {
+      "id": "rts",
+      "name": "RTS",
+      "homepage": "https://www.rts.rs",
+      "angle": "mejnstrim",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": "Probno merenje: RSS postoji. Javni servis."
+    },
+    {
+      "id": "euronews",
+      "name": "Euronews Srbija",
+      "homepage": "https://www.euronews.rs",
+      "angle": "mejnstrim",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": "Probno merenje: nema RSS autodiscovery — kandidat za sitemap/scraping fallback."
+    },
+    {
+      "id": "tanjug",
+      "name": "Tanjug",
+      "homepage": "https://www.tanjug.rs",
+      "angle": "agencija",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": "Probno merenje: HTTP 403 (Cloudflare) i na /robots.txt. Kandidat za izbacivanje u Fazi 1."
+    },
+    {
+      "id": "beta",
+      "name": "Beta",
+      "homepage": "https://beta.rs",
+      "angle": "agencija",
+      "enabled": true,
+      "feeds": [],
+      "scrape": null,
+      "notes": "Veci deo sadrzaja je iza pretplate — Faza 1 proverava koliko je javno dostupno."
+    }
+  ]
+}

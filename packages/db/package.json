@@ -1,0 +1,14 @@
+{
+  "name": "@ai-novine/db",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Supabase klijent, tipovi tabela i SQL migracije",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@ai-novine/core": "*",
+    "@supabase/supabase-js": "^2.115.0"
+  }
+}

@@ -1,0 +1,28 @@
+# Zavisnosti
+node_modules/
+
+# Build izlaz
+dist/
+.next/
+out/
+*.tsbuildinfo
+
+# Okruzenje i tajne — NIKAD u repo (repo je javan)
+.env
+.env.*
+!.env.example
+
+# Testovi i alati
+coverage/
+.vitest/
+.eslintcache
+
+# Lokalni radni fajlovi
+.DS_Store
+Thumbs.db
+*.log
+.tmp/
+.vercel/
+.idea/
+.vscode/*
+!.vscode/extensions.json
