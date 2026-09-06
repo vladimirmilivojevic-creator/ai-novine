@@ -51,6 +51,13 @@ export function buildReviewMessage(article: ReviewMessageInput): string {
     `Rubrika: ${article.category} · ${article.wordCount} reči · model: ${article.model}` +
       (article.sourceCount ? ` · izvora: ${article.sourceCount}` : ''),
   );
+  parts.push('');
+  // Bez ovog objašnjenja izgleda kao da dugme ne radi: „sat" na dugmetu nestaje
+  // tek kad pipeline pokupi odgovor, a to je u sledećem ciklusu.
+  parts.push(
+    '<i>Dugme će se nakratko vrteti — to je normalno. Odluka se upisuje kad pipeline ' +
+      'sledeći put pokupi odgovore. Dovoljno je pritisnuti jednom.</i>',
+  );
 
   return parts.join('\n');
 }

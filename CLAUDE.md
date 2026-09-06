@@ -7,8 +7,8 @@ izvor istine o tome dokle se stiglo: koje su faze završene, koje su odluke done
 je sledeći korak na redu. Bez njega ćeš ponoviti posao ili raditi pogrešnu fazu.
 
 Puni plan projekta je u `docs/plan.md`, originalni zahtev vlasnika u `docs/brief.md`, presek
-kompromisa zbog budžeta u `docs/tradeoffs.md`, a izveštaj za nekoga ko nije programer u
-`docs/izvestaj-za-investitore.md`.
+kompromisa zbog budžeta u `docs/tradeoffs.md`, izveštaj za nekoga ko nije programer u
+`docs/izvestaj-za-investitore.md`, a spisak svega odloženog u `docs/odlozeno.md`.
 
 ## Šta je ovo
 
@@ -47,11 +47,18 @@ npm run pipeline -- <cmd>   # discover | migrate | ingest | cluster | editorial 
 
 ## Pravila rada u ovom projektu
 
-- **Radi fazu po fazu.** Posle svake faze: ažuriraj **sva tri dokumenta** — `docs/progress.md`
-  (šta je urađeno i zašto, tehnički), `docs/tradeoffs.md` (svaki kompromis zbog budžeta) i
+- **Radi fazu po fazu.** Posle svake faze ažuriraj **sva četiri dokumenta**: `docs/progress.md`
+  (šta je urađeno i zašto, tehnički), `docs/tradeoffs.md` (svaki kompromis zbog budžeta),
   `docs/izvestaj-za-investitore.md` (šta je faza donela sajtu, običnim jezikom, plus tačan broj
-  automatskih provera). Zatim objasni šta je urađeno, reci vlasniku tačno šta da proveri, i sačekaj
-  njegovu potvrdu pre sledeće faze.
+  automatskih provera) i `docs/odlozeno.md` (svako „ovo sada ovako, kasnije onako“). Zatim objasni
+  šta je urađeno, reci vlasniku tačno šta da proveri, i sačekaj njegovu potvrdu pre sledeće faze.
+- **Svako odlaganje ide u `docs/odlozeno.md` istog trenutka.** Ako u odgovoru vlasniku napišeš
+  „za sada ovako, u Fazi X kako treba“ — ta ista rečenica mora da postoji i kao red u tom fajlu,
+  sa četiri stvari: šta je odloženo, zašto, u kojoj se fazi rešava, i **šta se stvarno dešava ako se
+  zaboravi**. Bez poslednje kolone spisak je bezvredan. Kad se stavka reši, briše se iz tabele i
+  upisuje u odeljak „Zatvoreno“ sa datumom — ne ostavlja se precrtana.
+- **Na početku Faze 11 ceo `docs/odlozeno.md` se prolazi red po red.** Sve iz prve tabele mora biti
+  rešeno pre puštanja u rad.
 - **Izveštaj za investitore piše se za nekoga ko nikad nije programirao.** Bez skraćenica i
   stručnih izraza; gde je izraz neizbežan, objasni ga u istoj rečenici. Brojevi u njemu moraju biti
   izvučeni iz git istorije, CI logova ili baze — nikad iz sećanja.
