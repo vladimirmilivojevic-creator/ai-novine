@@ -51,6 +51,18 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: npm run pipeline -- cluster --report 15
 
+      # Osetljivi clanci idu vlasniku na odobrenje, a odgovori sa prethodnog
+      # ciklusa se ovde kupe. Radi bez javne adrese — bot sam pita Telegram
+      # ima li novih odgovora.
+      - name: Odobravanje osetljivih članaka
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: npm run pipeline -- review
+
       - name: Pisanje članaka
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}

@@ -55,6 +55,7 @@ Cene trećih strana su sa njihovih cenovnika i **treba ih proveriti pre svake od
 | **Najviše 8 izveštaja po temi ide modelu, po 1.600 znakova** | Ulazni tokeni se plaćaju. | Puni tekstovi svih izveštaja: 📐 procena da bi ulaz porastao dva do tri puta, dakle oko **+$0.01 po članku**. | ❓ Nepoznato da li bi više materijala dalo bolji članak. Nije testirano. |
 | **Dopune troše istu dnevnu granicu kao novi članci** | Dopuna se plaća isto koliko i pisanje. Bez tog pravila bi šest ciklusa dnevno × dve dopune značilo dvanaest plaćenih poziva van plana. | Odvojena kvota za dopune: 📐 procena **+$2–3/mesec** za četiri dopune dnevno preko granice. | 📏 Izmereno: dopuna košta $0.016 (jeftiniji model) do $0.053 (jači, dugačak članak). |
 | **Najviše dve dopune po ciklusu** | Ista granica troška. | Više dopuna znači svežije praćenje priča koje se razvijaju. | 📐 Procena. Nije mereno koliko priča dnevno stvarno zaslužuje više od dve dopune. |
+| **Odobravanje bez webhook-a, odluka stiže u sledećem ciklusu** | Webhook traži javnu adresu, koju sajt dobija tek u Fazi 11. | Webhook — **$0**, ali zahteva da sajt bude pušten u rad. Odluka bi tada stizala istog trenutka. | 📏 Izmereno: `getUpdates` radi bez ijedne javne adrese. Zakašnjenje je jedan ciklus, dakle do četiri sata. |
 | **Mesečna kočnica na $6** | Zaštita od greške u kodu i od dana sa neuobičajeno mnogo vesti. | Podizanje kočnice je stvar jedne linije u `config/editorial.json`. | 📏 Izmereno: plan je $4.20 mesečno pri 10 članaka dnevno. |
 
 ### Izmerena razlika u kvalitetu između modela

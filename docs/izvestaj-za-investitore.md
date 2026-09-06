@@ -57,8 +57,9 @@ Primer iz stvarnog rada: članak „Odbojkašice Srbije igraju za bronzu" postao
 verzija.
 
 **Osetljive teme čekaju vaše odobrenje.** Članak o krivičnom postupku, nesreći sa žrtvama ili
-sudskom procesu ne izlazi sam. Sistem ga označi i ostavi po strani. Ta provera preko Telegrama je
-sledeći korak u izgradnji.
+sudskom procesu ne izlazi sam. Sistem ga pošalje na vaš telefon, preko Telegrama, sa dva dugmeta:
+odobri ili odbij. Dok ne pritisnete dugme, članak stoji. Ako ne odgovorite u roku od dva sata,
+ostaje neobjavljen — ćutanje se ne računa kao odobrenje.
 
 ### Koliko ovo košta
 
@@ -91,7 +92,7 @@ prepoznaju kao ista reč. Test za to pita program upravo to, i uporedi odgovor s
 neko sutra promeni način prepoznavanja reči i slučajno pokvari to pravilo, test odmah pukne i
 promena se ne može objaviti dok se ne popravi.
 
-Sistem trenutno ima **166 takvih provera**, i sve se pokreću automatski pri svakoj izmeni koda.
+Sistem trenutno ima **182 takve provere**, i sve se pokreću automatski pri svakoj izmeni koda.
 
 ### Zašto je to važnije nego što zvuči
 
@@ -120,9 +121,10 @@ Brojevi su izvučeni iz istorije izmena projekta, faza po faza.
 | 4a | Popravke posle vašeg pregleda | 124 |
 | 5 | Pisanje članaka | 147 |
 | 5a | Smanjenje troška | 161 |
-| 6 | Dopuna postojećih članaka | **166** |
+| 6 | Dopuna postojećih članaka | 166 |
+| 7 | Odobravanje osetljivih članaka | **182** |
 
-Svaka izmena koda automatski pokreće svih 166 provera na tuđem računaru (GitHub), i to **dvaput** —
+Svaka izmena koda automatski pokreće svih 182 provere na tuđem računaru (GitHub), i to **dvaput** —
 jednom u jednoj vremenskoj zoni, jednom u drugoj, upravo zbog one greške sa pomerenim vremenom.
 
 ---
@@ -164,6 +166,11 @@ pola cene.
 Ovo nije samo lepše za čitaoca: Google od januara 2025. kažnjava sajtove koji masovno objavljuju
 sličan sadržaj, i dopuna umesto ponavljanja je glavna odbrana od toga.
 
+**Faza 7 — vaše odobrenje za osetljive teme.** Članak o krivičnom postupku ili nesreći sa žrtvama
+sada stiže na vaš telefon pre objave, sa dugmadima „odobri" i „odbij". Rešeno je tako da radi i pre
+nego što sajt uopšte postoji na internetu — bot sam proverava da li ste odgovorili, umesto da čeka
+da ga neko pozove.
+
 ---
 
 ## 4. Šta trenutno postoji, u brojkama
@@ -177,7 +184,7 @@ sličan sadržaj, i dopuna umesto ponavljanja je glavna odbrana od toga.
 | Dopuna postojećih članaka | 2 |
 | Dužina članaka | 374–867 reči |
 | Ukupno potrošeno na veštačku inteligenciju do sada | $0,22 |
-| Automatskih provera koje se stalno pokreću | 166 |
+| Automatskih provera koje se stalno pokreću | 182 |
 
 Mali broj članaka nije slabost sistema nego posledica toga što je do sada radio uglavnom probno.
 Kada se pusti u redovan rad, piše deset članaka dnevno.
@@ -186,9 +193,8 @@ Kada se pusti u redovan rad, piše deset članaka dnevno.
 
 ## 5. Šta još nije napravljeno
 
-Projekat ima jedanaest faza; završeno je sedam (0 do 6). Preostaje:
+Projekat ima jedanaest faza; završeno je osam (0 do 7). Preostaje:
 
-- **Faza 7** — slanje osetljivih članaka na vaše odobrenje preko Telegrama.
 - **Faza 8** — slike za članke. Crtaće se programski, u prepoznatljivom izgledu, bez ijednog dinara
   troška i bez pravnog rizika koji nosi prikazivanje stvarnih osoba.
 - **Faza 9** — sam sajt: naslovna strana, rubrike, stranica članka, prikaz „obe strane", pretraga.

@@ -4,7 +4,7 @@
 > zašto, šta vlasnik treba da proveri, i status faze. Pun plan je u `docs/plan.md`.
 
 **Poslednje ažuriranje:** 6. septembar 2026.
-**Trenutno stanje:** Faza 6 gotova — priča koja se razvija dobija jedan članak koji raste, sa istorijom izmena i nepromenjenim URL-om. Faza 7 (Telegram odobravanje) je sledeća.
+**Trenutno stanje:** Faza 7 gotova — osetljivi članci idu na Telegram na odobrenje, radi bez javne adrese. Čeka se pritisak dugmeta radi provere. Faza 8 (slike) je sledeća.
 
 ## Pregled faza
 
@@ -17,8 +17,8 @@
 | 4    | Klasterovanje i trending (Engine 2)  | ✅ Gotovo, čeka potvrdu |
 | 5    | AI generisanje teksta ⚠️ kritična kapija | ✅ Gotovo, čeka potvrdu |
 | 6    | Ažuriranje umesto dupliranja         | ✅ Gotovo, čeka potvrdu |
-| 7    | Telegram odobravanje                 | 🔜 Sledeća          |
-| 8    | Slike                                | ⬜ Čeka             |
+| 7    | Telegram odobravanje                 | ✅ Gotovo, čeka potvrdu |
+| 8    | Slike                                | 🔜 Sledeća          |
 | 9    | Frontend                             | ⬜ Čeka             |
 | 10   | Pravne stranice, komentari, SEO      | ⬜ Čeka             |
 | 11   | Deployment i nadzor                  | ⬜ Čeka             |
@@ -759,3 +759,67 @@ na 867 reči.
 2. Tabela `article_revisions` → tu je stara verzija istog članka, sa razlogom izmene.
 3. Prati jednu priču koja se razvija kroz nekoliko ciklusa i proverava da nastaje **jedan članak
    koji raste**, a ne četiri skoro identična.
+
+---
+
+## Faza 7 — Telegram odobravanje osetljivih članaka ✅
+
+**Status:** gotovo, čeka potvrdu vlasnika (pritisak dugmeta na telefonu).
+
+### Kako radi
+
+Osetljiv članak — krivični postupak, tragedija sa žrtvama, sudski proces, zdravlje imenovane osobe —
+ne izlazi sam. Označi ga model još pri pisanju, članak dobija stanje `pending_review`, i onda ga bot
+šalje na Telegram sa dva dugmeta.
+
+Jedno pokretanje komande `review` radi tri stvari, tim redom:
+
+1. **Pokupi odluke** koje je vlasnik doneo pritiskom na dugme u prethodnom ciklusu.
+2. **Ugasi zahteve starije od dva sata.** Članak tada ostaje neobjavljen — **ćutanje nije
+   odobrenje**, kako brief i traži.
+3. **Pošalje nove** osetljive članke.
+
+Odobren članak dobija stanje `published` i vreme objave; odbijen dobija `rejected` i ostaje u bazi,
+jer je i odbijanje podatak. Poruci se posle odluke menja tekst, pa se u istoriji chata vidi šta je
+odlučeno i kada.
+
+### Odluka: bez webhook-a, za sada
+
+Telegram nudi dva načina da bot sazna za pritisak dugmeta:
+
+- **Webhook** — Telegram pozove naš sajt. Traži javnu adresu, koju sajt dobija tek u Fazi 11.
+- **`getUpdates`** — bot sam pita ima li novih odgovora. Radi bez ijedne javne adrese.
+
+Izabran je drugi, pa odobravanje **radi već sada**, uz jedinu cenu da odluka stigne u sledećem
+ciklusu umesto istog trenutka. Webhook se dodaje u Fazi 11 kad postoji adresa; kod za obradu odluke
+je isti, menja se samo kako odluka stiže.
+
+### Zaštita
+
+Odluka se prihvata **samo iz podešenog chata**. To je jedina prava zaštita ovog kanala: ko zna token
+bota može da pošalje poruku, ali odgovor iz tuđeg chata se odbacuje i zabeleži u dnevniku.
+
+Pomeraj pročitanih poruka čuva se u bazi (tabela `app_state`). Bez toga bi se isti pritisak dugmeta
+obrađivao u svakom ciklusu.
+
+### Provereno
+
+Poslat je stvarni članak koji čeka odobrenje — o dolasku američkih izaslanika u Kijev, označen kao
+osetljiv jer pominje poginule i povređene civile. Poruka je stigla na telefon sa naslovom, uvodom,
+tekstom, razlogom označavanja i dva dugmeta.
+
+16 novih testova pokriva sastavljanje poruke i čitanje odgovora: da naslov sa `<` i `&` ne obori
+poruku, da predugačak tekst stane u Telegram granicu i bude presečen na kraju rečenice, da podatak
+dugmeta stane u 64 bajta, i da se tuđi podaci dugmeta odbace.
+
+### Ako Telegram nije podešen
+
+Posao se **uredno preskače** uz upozorenje, umesto da obori ciklus. Članci onda samo ostaju u redu
+za odobrenje dok se Telegram ne podesi.
+
+### Šta vlasnik proverava
+
+1. Otvori Telegram, poruku od `@AinovineBot`.
+2. Pritisne **✅ Odobri** ili **❌ Odbij**.
+3. Javi mi — pokrenuću `review` da pokupi odluku, pa ćemo zajedno videti da je stanje članka u bazi
+   promenjeno i da se tekst poruke izmenio.

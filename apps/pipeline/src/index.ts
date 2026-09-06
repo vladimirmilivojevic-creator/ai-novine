@@ -9,6 +9,7 @@ import { runDoctor } from './commands/doctor.js';
 import { runEditorial } from './commands/editorial.js';
 import { runIngest } from './commands/ingest.js';
 import { runMigrate } from './commands/migrate.js';
+import { runReview } from './commands/review.js';
 import { runSweep } from './commands/sweep.js';
 
 const program = new Command();
@@ -116,6 +117,14 @@ program
       topics: Math.max(1, Number.parseInt(options.topics, 10) || 2),
       ...(options.cluster ? { clusterId: options.cluster } : {}),
     });
+  });
+
+program
+  .command('review')
+  .description('Salje osetljive clanke na Telegram i kupi odluke (Faza 7)')
+  .option('--dry-run', 'samo prikazi sta bi bilo poslato, bez slanja', false)
+  .action(async (options: { dryRun: boolean }) => {
+    await runReview({ dryRun: options.dryRun });
   });
 
 program
