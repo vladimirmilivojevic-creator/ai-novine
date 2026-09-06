@@ -17,6 +17,7 @@ import {
 import { formatUsd, monthlyEstimate } from '../generate/cost.js';
 import { generateArticle, GenerationError, type GenerationResult } from '../generate/generate.js';
 import { buildUserMessage, MAX_SOURCES_IN_PROMPT, type TopicMaterial } from '../generate/prompt.js';
+import { paragraphsToText } from '../generate/schema.js';
 
 const log = createLogger('compare');
 
@@ -174,7 +175,7 @@ function renderTopic(
     lines.push('');
     lines.push(`*${article.lead}*`);
     lines.push('');
-    lines.push(article.body);
+    lines.push(paragraphsToText(article.body));
     lines.push('');
 
     if (article.bothSides) {

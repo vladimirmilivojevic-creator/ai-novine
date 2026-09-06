@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { halveCost } from './batch.js';
 import { calculateCost, formatUsd, monthlyEstimate, usageFromResponse } from './cost.js';
 import {
   anglesInMaterial,
@@ -9,8 +10,12 @@ import {
   type TopicMaterial,
 } from './prompt.js';
 import { repairAndValidate } from './repair.js';
-import { articleSchema } from './schema.js';
+import { articleSchema, paragraphsToText } from './schema.js';
 import { selectClustersForGeneration, slugify, type ClusterCandidate } from './select.js';
+
+const PARAGRAPH =
+  'Vlada je na sednici razmatrala predlog i o njemu glasala posle rasprave. '.repeat(6);
+const BODY = [PARAGRAPH, PARAGRAPH, PARAGRAPH, PARAGRAPH, PARAGRAPH];
 
 const GATES = { minDistinctSources: 3, minDistinctAngles: 2, minTotalItems: 3 };
 
@@ -123,7 +128,7 @@ describe('articleSchema', () => {
   const valid = {
     title: 'Vlada usvojila budžet za narednu godinu',
     lead: 'Vlada je usvojila predlog budžeta.',
-    body: 'Prvi pasus.\n\nDrugi pasus.',
+    body: BODY,
     category: 'ekonomija',
     sensitive: false,
     sensitivityReason: null,
@@ -291,7 +296,7 @@ describe('repairAndValidate', () => {
   const base = {
     title: 'Vlada usvojila budžet za narednu godinu',
     lead: 'Vlada je usvojila predlog budžeta.',
-    body: 'Prvi pasus.\n\nDrugi pasus.',
+    body: BODY,
     category: 'ekonomija',
     sensitive: false,
     sensitivityReason: null,
@@ -338,5 +343,97 @@ describe('repairAndValidate', () => {
   it('odbija odgovor koji uopšte nije objekat', () => {
     expect(repairAndValidate('samo tekst').article).toBeNull();
     expect(repairAndValidate(null).problems).toHaveLength(1);
+  });
+});
+
+describe('šema traži dužinu strukturom, ne instrukcijom', () => {
+  const valid = {
+    title: 'Naslov',
+    lead: 'Uvod.',
+    body: BODY,
+    category: 'politika',
+    sensitive: false,
+    sensitivityReason: null,
+    sourcesDiverge: false,
+    bothSides: null,
+    keywords: [],
+    notes: [],
+  };
+
+  it('odbija članak sa premalo pasusa', () => {
+    const result = articleSchema.safeParse({ ...valid, body: BODY.slice(0, 3) });
+    expect(result.success).toBe(false);
+  });
+
+  it('odbija pasus kraći od donje granice', () => {
+    const result = articleSchema.safeParse({ ...valid, body: [...BODY.slice(0, 4), 'Kratko.'] });
+    expect(result.success).toBe(false);
+  });
+
+  it('pet pasusa preko granice daje članak duži od 350 reči', () => {
+    const words = paragraphsToText(BODY).split(/\s+/).filter(Boolean).length;
+    expect(words).toBeGreaterThanOrEqual(350);
+  });
+});
+
+describe('Batch API — pola cene', () => {
+  const usage = {
+    inputTokens: 5000,
+    outputTokens: 1500,
+    cacheCreationTokens: 0,
+    cacheReadTokens: 8000,
+  };
+
+  it('polovi svaku stavku troška, uključujući keš', () => {
+    const direct = calculateCost('claude-sonnet-5', usage);
+    const batch = halveCost(direct);
+
+    expect(batch.totalCost).toBeCloseTo(direct.totalCost / 2, 9);
+    expect(batch.inputCost).toBeCloseTo(direct.inputCost / 2, 9);
+    expect(batch.cacheReadCost).toBeCloseTo(direct.cacheReadCost / 2, 9);
+  });
+
+  it('ne menja broj tokena, samo cenu', () => {
+    const batch = halveCost(calculateCost('claude-haiku-4-5', usage));
+    expect(batch.inputTokens).toBe(usage.inputTokens);
+    expect(batch.cacheReadTokens).toBe(usage.cacheReadTokens);
+  });
+});
+
+describe('tema koju jeftiniji model nije uspeo da napiše', () => {
+  it('ide jačem modelu i kad je dnevna kvota jačeg potrošena', () => {
+    const outcome = selectClustersForGeneration(
+      [candidate({ clusterId: 'pala', trendingScore: 10, needsFlagship: true })],
+      GATES,
+      {
+        maxPerRun: 5,
+        maxPerDay: 30,
+        maxFlagshipPerDay: 0,
+        writtenToday: 0,
+        flagshipWrittenToday: 0,
+      },
+    );
+
+    expect(outcome.selected[0]?.tier).toBe('flagship');
+  });
+
+  it('ne troši kvotu jačeg modela na temu koja je već pala', () => {
+    const outcome = selectClustersForGeneration(
+      [
+        candidate({ clusterId: 'pala', trendingScore: 90, needsFlagship: true }),
+        candidate({ clusterId: 'nova', trendingScore: 80 }),
+      ],
+      GATES,
+      {
+        maxPerRun: 5,
+        maxPerDay: 30,
+        maxFlagshipPerDay: 1,
+        writtenToday: 0,
+        flagshipWrittenToday: 0,
+      },
+    );
+
+    // Obe idu jačem: prva jer je pala, druga jer troši svoju jednu kvotu.
+    expect(outcome.selected.map((s) => s.tier)).toEqual(['flagship', 'flagship']);
   });
 });

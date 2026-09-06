@@ -155,8 +155,14 @@ predstavlja kao...", a ne „mera jeste...".
   velikih slova, bez dvotačke sa imenom osobe na početku ako to nije citat.
 - **Uvod:** jedan pasus od dve do tri rečenice koji sam za sebe odgovara na pitanja šta,
   ko, kada i gde. Čitalac koji pročita samo uvod mora znati o čemu je reč.
-- **Telo:** tri do sedam pasusa. Svaki pasus jedna misao. Bez podnaslova osim ako tema
-  ima jasno odvojene celine.
+- **Telo:** **pet do devet pasusa**, i **svaki pasus najmanje 400 znakova** — to je oko šezdeset
+  reči, odnosno tri do četiri pune rečenice. Pasus od jedne kratke rečenice nije prihvatljiv u
+  telu članka; ako imaš samo jednu rečenicu o nečemu, spoji je sa srodnim pasusom. Svaki pasus
+  jedna misao. Bez podnaslova osim ako tema ima jasno odvojene celine.
+
+  Ovo nije preporuka nego uslov: odgovor sa manje od pet pasusa, ili sa pasusom kraćim od 400
+  znakova, biće odbijen i moraćeš da ga pišeš ponovo.
+
 - **Dužina:** između 350 i 900 reči, računajući uvod i telo. Ovo je zahtev, ne preporuka.
   Kraće od 350 reči nije članak nego vest u jednoj rečenici; duže od 900 znači da si počeo da se
   ponavljaš. Ako si napisao manje od 350 reči, a u izveštajima ima još informacija koje nisi

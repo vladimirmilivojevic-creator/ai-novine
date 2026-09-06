@@ -28,9 +28,11 @@
     "maxUpdatesPerArticle": 5
   },
   "limits": {
-    "maxArticlesPerDay": 30,
-    "maxFlagshipArticlesPerDay": 4,
-    "maxArticlesPerEditorialRun": 6
+    "_comment": "Broj clanaka dnevno je glavna poluga troska. Izmereno 6.9.2026 (Batch API, topao kes): Haiku ~$0.0080, Sonnet ~$0.0173 po clanku. Racunica: 3 Sonnet + 7 Haiku dnevno, dva ciklusa dnevno = ~$4.20 mesecno. monthlyBudgetUsd je kocnica, ne cilj — kad se dostigne, generisanje staje do prvog u mesecu.",
+    "maxArticlesPerDay": 10,
+    "maxFlagshipArticlesPerDay": 3,
+    "maxArticlesPerEditorialRun": 5,
+    "monthlyBudgetUsd": 6
   },
   "models": {
     "_comment": "Identifikatori bez datuma su zvanicni oblik; API ih sam razresava na tekucu verziju (claude-haiku-4-5 vodi na claude-haiku-4-5-20251001). Cenovnik u apps/pipeline/src/generate/cost.ts je vezan za ova imena. Poredjenje kvaliteta na srpskom radi se komandom `compare`.",

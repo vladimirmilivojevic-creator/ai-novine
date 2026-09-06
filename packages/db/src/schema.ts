@@ -70,6 +70,7 @@ export interface ClusterRow {
   title_sample: string | null;
   status: 'open' | 'covered' | 'rejected';
   article_id: string | null;
+  needs_flagship: boolean;
 }
 
 export interface ClusterItemRow {
@@ -104,3 +105,18 @@ export interface ArticleRow {
 }
 
 export type NewArticle = Omit<ArticleRow, 'id' | 'created_at' | 'updated_at'>;
+
+export interface ArticleBatchRow {
+  id: string;
+  batch_id: string;
+  model: string;
+  status: 'submitted' | 'collected' | 'failed' | 'canceled';
+  request_count: number;
+  cluster_map: Record<string, string>;
+  submitted_at: string;
+  collected_at: string | null;
+  succeeded: number;
+  failed: number;
+  cost_usd: number;
+  errors: string[];
+}

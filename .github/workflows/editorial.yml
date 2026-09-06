@@ -1,0 +1,63 @@
+name: Pisanje članaka
+
+# Urednički ciklus radi asinhrono, kroz Batch API: jedno pokretanje pokupi
+# rezultate prethodnog paketa i pošalje novi. Tako posao nikad ne čeka odgovor
+# modela, a tokeni se plaćaju upola.
+#
+# Ritam je namerno redak. Svaki ciklus plaća upis uredničkog prompta u keš, pa
+# je jedan ciklus sa pet članaka jeftiniji od pet ciklusa sa po jednim.
+on:
+  schedule:
+    - cron: '20 */4 * * *'
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: 'Najviše članaka u ovom ciklusu'
+        required: false
+        default: ''
+      mode:
+        description: 'batch (jeftinije, odgovor u sledećem ciklusu) ili sync'
+        required: false
+        default: 'batch'
+        type: choice
+        options: [batch, sync]
+
+concurrency:
+  group: editorial
+  cancel-in-progress: false
+
+jobs:
+  editorial:
+    name: Izbor tema i pisanje
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalacija zavisnosti
+        run: npm ci
+
+      # Teme se grupišu pre pisanja — bez svežih tema nema šta da se piše.
+      - name: Grupisanje vesti u teme
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: npm run pipeline -- cluster --report 15
+
+      - name: Pisanje članaka
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          npm run pipeline -- editorial \
+            ${{ github.event.inputs.mode == 'sync' && ' ' || '--batch' }} \
+            ${{ github.event.inputs.limit && format('--limit {0}', github.event.inputs.limit) || '' }}

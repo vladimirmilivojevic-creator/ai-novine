@@ -15,6 +15,8 @@ export interface ClusterCandidate {
   distinctSources: number;
   distinctAngles: number;
   size: number;
+  /** Jeftiniji model je već pokušao i tekst je bio prekratak. */
+  needsFlagship?: boolean;
 }
 
 export interface SelectionLimits {
@@ -88,8 +90,11 @@ export function selectClustersForGeneration(
       continue;
     }
 
-    const tier = flagshipLeft > 0 ? 'flagship' : 'default';
-    if (tier === 'flagship') flagshipLeft -= 1;
+    // Tema koju jeftiniji model nije uspeo da napiše ide jačem bez obzira na
+    // dnevnu kvotu — inače bi se vrtela u krug i trošila na svaki pokušaj.
+    const tier: Selection['tier'] =
+      candidate.needsFlagship || flagshipLeft > 0 ? 'flagship' : 'default';
+    if (tier === 'flagship' && !candidate.needsFlagship) flagshipLeft -= 1;
 
     outcome.selected.push({ candidate, tier });
   }

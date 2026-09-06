@@ -15,6 +15,17 @@ export const CATEGORY_VALUES = [
   'svet',
 ] as const;
 
+/**
+ * Šema drži samo STRUKTURU — da telo nije jedna rečenica i da pasusi nisu
+ * jednorečenične crtice. Pravo pravilo je ukupna dužina članka od 350 reči
+ * (brief, sekcija 9), i ono se proverava u kodu posle odgovora: tvrda granica
+ * po svakom pasusu se pokazala prekrutom, jer Haiku ume da promaši jedan pasus
+ * za dvadesetak znakova i time izgubi ceo članak.
+ */
+export const MIN_PARAGRAPHS = 4;
+export const MAX_PARAGRAPHS = 9;
+export const MIN_PARAGRAPH_CHARS = 200;
+
 export const bothSidesSchema = z.object({
   officialLabel: z
     .string()
@@ -35,10 +46,20 @@ export const articleSchema = z.object({
   lead: z
     .string()
     .describe('Uvodni pasus od dve do tri rečenice: šta, ko, kada i gde. Bez naslova u sebi.'),
+  /**
+   * Telo se traži kao NIZ pasusa sa najmanjom dužinom svakog, a ne kao jedan
+   * tekst. Razlog je merenje: uz tekstualnu instrukciju „piši između 350 i 900
+   * reči" Haiku 4.5 je vraćao članke od 99 do 302 reči. Šema je obavezujuća —
+   * odgovor koji je ne ispuni nije validan, pa se traži ispravka.
+   */
   body: z
-    .string()
+    .array(z.string().min(MIN_PARAGRAPH_CHARS))
+    .min(MIN_PARAGRAPHS)
+    .max(MAX_PARAGRAPHS)
     .describe(
-      'Telo članka, tri do sedam pasusa razdvojenih praznim redom. Običan tekst, bez markdown naslova i HTML-a. Ne ponavlja uvod.',
+      `Pasusi tela članka: najmanje ${MIN_PARAGRAPHS}, najviše ${MAX_PARAGRAPHS}, svaki najmanje ` +
+        `${MIN_PARAGRAPH_CHARS} znakova. Svaki pasus je jedna misao i obična rečenica — bez markdown ` +
+        'naslova, bez crtica na početku, bez HTML-a. Ne ponavljaj uvod.',
     ),
   category: z.enum(CATEGORY_VALUES).describe('Tačno jedna kategorija.'),
   sensitive: z
@@ -70,3 +91,8 @@ export const articleSchema = z.object({
 
 export type GeneratedArticle = z.infer<typeof articleSchema>;
 export type BothSides = z.infer<typeof bothSidesSchema>;
+
+/** Pasusi u jedan tekst, onako kako se čuva u bazi i prikazuje na sajtu. */
+export function paragraphsToText(paragraphs: string[]): string {
+  return paragraphs.join('\n\n');
+}

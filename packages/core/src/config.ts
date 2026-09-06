@@ -94,6 +94,8 @@ export const editorialConfigSchema = z.object({
     maxArticlesPerDay: z.number().int().positive(),
     maxFlagshipArticlesPerDay: z.number().int().nonnegative(),
     maxArticlesPerEditorialRun: z.number().int().positive(),
+    /** Kad mesecni trosak dodje do ovoga, generisanje staje do prvog u mesecu. */
+    monthlyBudgetUsd: z.number().positive(),
   }),
   models: z.object({
     default: z.string().min(1),

@@ -17,6 +17,8 @@ export interface GenerateOptions {
   maxOutputTokens: number;
   /** Dubina razmišljanja na modelima koji je podržavaju. */
   effort?: 'low' | 'medium' | 'high';
+  /** Najmanji broj reči; ispod toga se traži dopuna, pa greška `too_short`. */
+  minWords?: number;
 }
 
 export interface GenerationResult {
@@ -35,7 +37,7 @@ export interface GenerationResult {
 export class GenerationError extends Error {
   constructor(
     message: string,
-    readonly kind: 'auth' | 'credit' | 'rate_limit' | 'schema' | 'api',
+    readonly kind: 'auth' | 'credit' | 'rate_limit' | 'schema' | 'too_short' | 'api',
     options?: { cause?: unknown },
   ) {
     super(message, options);
@@ -97,22 +99,21 @@ export async function generateArticle(
   let parsed = repairAndValidate(readJson(response));
   let retried = false;
 
-  // Strukturisani izlaz nije tvrda garancija na svim modelima. Umesto da se
-  // ceo clanak baci zbog jedne pogresne reci, trazi se ispravka — jednom.
-  if (!parsed.article) {
-    log.warn(`${options.model}: odgovor ne odgovara semi, trazim ispravku.`, {
-      problemi: parsed.problems.slice(0, 3),
-    });
+  /**
+   * Jedan pokušaj ispravke, i za oblik i za dužinu.
+   *
+   * Strukturisani izlaz nije tvrda garancija na svim modelima, a dužina članka
+   * uopšte nije stvar šeme nego uredničko pravilo iz sekcije 9 brief-a. Oboje se
+   * rešava isto: modelu se kaže šta tačno ne valja i traži se ispravka. Umesto
+   * da se plaćeni odgovor baci zbog jednog kratkog pasusa.
+   */
+  const askForFix = async (problems: string[], instruction: string): Promise<void> => {
+    log.warn(`${options.model}: trazim ispravku.`, { problemi: problems.slice(0, 3) });
 
     messages.push({ role: 'assistant', content: textOf(response) });
     messages.push({
       role: 'user',
-      content: [
-        'Odgovor ne odgovara zadatoj šemi. Problemi:',
-        ...parsed.problems.map((problem) => `- ${problem}`),
-        '',
-        'Pošalji ispravljen JSON, isti sadržaj članka, bez ikakvog teksta van JSON-a.',
-      ].join('\n'),
+      content: [...problems.map((problem) => `- ${problem}`), '', instruction].join('\n'),
     });
 
     const retryResponse = await call();
@@ -122,6 +123,13 @@ export async function generateArticle(
     // Potrošnja oba poziva se sabira — oba su naplaćena.
     response = mergeUsage(response, retryResponse);
     parsed = { ...retryParsed, repairs: [...parsed.repairs, ...retryParsed.repairs] };
+  };
+
+  if (!parsed.article) {
+    await askForFix(
+      ['Odgovor ne odgovara zadatoj šemi:', ...parsed.problems],
+      'Pošalji ispravljen JSON, isti sadržaj članka, bez ikakvog teksta van JSON-a.',
+    );
   }
 
   if (!parsed.article) {
@@ -131,10 +139,40 @@ export async function generateArticle(
     );
   }
 
+  // Dužina je uredničko pravilo, ne stvar šeme: članak kraći od praga je tanak
+  // sadržaj, tačno ono što Google „Scaled Content Abuse" politika kažnjava.
+  const minWords = options.minWords ?? 0;
+  if (minWords > 0 && !retried) {
+    const words = countWords(`${parsed.article.lead} ${parsed.article.body.join(' ')}`);
+    if (words < minWords) {
+      await askForFix(
+        [`Članak ima ${words} reči, a mora imati najmanje ${minWords}.`],
+        `Dopuni tekst do najmanje ${minWords} reči tako što ćeš razraditi ono što je u ` +
+          'izveštajima ostalo neiskorišćeno — dodaj jedan ili dva pasusa, ili proširi postojeće. ' +
+          'Ne ponavljaj već rečeno i ne razvlači praznim rečenicama. Pošalji ceo JSON iznova.',
+      );
+    }
+  }
+
+  if (!parsed.article) {
+    throw new GenerationError(
+      'Model je posle traženja dužeg teksta vratio neispravan odgovor.',
+      'schema',
+    );
+  }
+
+  const finalWords = countWords(`${parsed.article.lead} ${parsed.article.body.join(' ')}`);
+  if (minWords > 0 && finalWords < minWords) {
+    throw new GenerationError(
+      `Članak ima ${finalWords} reči ni posle dopune, a prag je ${minWords}.`,
+      'too_short',
+    );
+  }
+
   const article = parsed.article;
   const usage = usageFromResponse(response.usage);
   const cost = calculateCost(options.model, usage);
-  const wordCount = countWords(`${article.lead} ${article.body}`);
+  const wordCount = finalWords;
 
   log.info(`Napisan članak (${options.model}).`, {
     reci: wordCount,

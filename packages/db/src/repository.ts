@@ -1,6 +1,7 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { Source } from '@ai-novine/core';
 import type {
+  ArticleBatchRow,
   ArticleRow,
   ClusterRow,
   FetchStateRow,
@@ -522,6 +523,8 @@ export interface ClusterCandidateRow {
   distinct_sources: number;
   angles: string[];
   size: number;
+  /** Jeftiniji model nije dostigao potrebnu duzinu — ide jacim. */
+  needs_flagship: boolean;
 }
 
 /** Teme koje jos nemaju clanak, najjace prve. */
@@ -531,7 +534,7 @@ export async function clustersWithoutArticle(
 ): Promise<ClusterCandidateRow[]> {
   const { data, error } = await client
     .from('clusters')
-    .select('id, title_sample, trending_score, distinct_sources, angles, size')
+    .select('id, title_sample, trending_score, distinct_sources, angles, size, needs_flagship')
     .eq('status', 'open')
     .is('article_id', null)
     .order('trending_score', { ascending: false })
@@ -620,4 +623,93 @@ export async function latestArticles(client: SupabaseClient, limit: number): Pro
     .limit(limit);
   if (error) fail('Citanje clanaka nije proslo', error);
   return data as ArticleRow[];
+}
+
+/** Ukupan trosak generisanja u tekucem mesecu, u dolarima. */
+export async function monthlySpend(client: SupabaseClient): Promise<number> {
+  const since = new Date();
+  since.setUTCDate(1);
+  since.setUTCHours(0, 0, 0, 0);
+
+  const { data, error } = await client
+    .from('articles')
+    .select('cost_usd')
+    .gte('created_at', since.toISOString());
+  if (error) fail('Citanje mesecnog troska nije proslo', error);
+
+  return (data as { cost_usd: number }[]).reduce((sum, row) => sum + Number(row.cost_usd), 0);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// article_batches — asinhrono pisanje kroz Batch API
+// ─────────────────────────────────────────────────────────────────────────────
+
+export async function recordBatchSubmission(
+  client: SupabaseClient,
+  batch: {
+    batchId: string;
+    model: string;
+    requestCount: number;
+    clusterMap: Record<string, string>;
+  },
+): Promise<void> {
+  const { error } = await client.from('article_batches').insert({
+    batch_id: batch.batchId,
+    model: batch.model,
+    request_count: batch.requestCount,
+    cluster_map: batch.clusterMap,
+  });
+  if (error) fail('Upis poslatog paketa nije prosao', error);
+}
+
+/** Paketi koji cekaju da se pokupe. */
+export async function pendingBatches(client: SupabaseClient): Promise<ArticleBatchRow[]> {
+  const { data, error } = await client
+    .from('article_batches')
+    .select('*')
+    .eq('status', 'submitted')
+    .order('submitted_at');
+  if (error) fail('Citanje poslatih paketa nije proslo', error);
+  return data as ArticleBatchRow[];
+}
+
+export async function markBatchCollected(
+  client: SupabaseClient,
+  batchId: string,
+  result: { succeeded: number; failed: number; costUsd: number; errors: string[] },
+): Promise<void> {
+  const { error } = await client
+    .from('article_batches')
+    .update({
+      status: 'collected',
+      collected_at: new Date().toISOString(),
+      succeeded: result.succeeded,
+      failed: result.failed,
+      cost_usd: Number(result.costUsd.toFixed(6)),
+      errors: result.errors.slice(0, 50),
+    })
+    .eq('batch_id', batchId);
+  if (error) fail(`Zatvaranje paketa ${batchId} nije proslo`, error);
+}
+
+/** Da li tema vec ceka odgovor u nekom poslatom paketu. */
+export async function clusterIdsInFlight(client: SupabaseClient): Promise<Set<string>> {
+  const batches = await pendingBatches(client);
+  const ids = new Set<string>();
+  for (const batch of batches) {
+    for (const clusterId of Object.values(batch.cluster_map)) ids.add(clusterId);
+  }
+  return ids;
+}
+
+/** Oznaci temu da je sledeci put pise jaci model. */
+export async function markClusterNeedsFlagship(
+  client: SupabaseClient,
+  clusterId: string,
+): Promise<void> {
+  const { error } = await client
+    .from('clusters')
+    .update({ needs_flagship: true })
+    .eq('id', clusterId);
+  if (error) fail(`Oznacavanje teme ${clusterId} nije proslo`, error);
 }

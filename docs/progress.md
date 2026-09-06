@@ -4,7 +4,7 @@
 > zašto, šta vlasnik treba da proveri, i status faze. Pun plan je u `docs/plan.md`.
 
 **Poslednje ažuriranje:** 6. septembar 2026.
-**Trenutno stanje:** Faza 5 — poređenje modela je odrađeno na stvarnim temama. Haiku 4.5 ne drži dužinu članka, Sonnet 5 je drži. Čeka se odluka vlasnika o modelu.
+**Trenutno stanje:** Faza 5 završena uz optimizaciju troška — Batch API, hibridni izbor modela i kočnica budžeta. Plan: ~$4.20 mesečno za 10 članaka dnevno. Faza 6 je sledeća.
 
 ## Pregled faza
 
@@ -15,13 +15,14 @@
 | 2    | Engine 1 na 3 test izvora            | ✅ Gotovo, čeka potvrdu |
 | 3    | Engine 1 na sve izvore               | ✅ Gotovo, čeka potvrdu |
 | 4    | Klasterovanje i trending (Engine 2)  | ✅ Gotovo, čeka potvrdu |
-| 5    | AI generisanje teksta ⚠️ kritična kapija | 🔄 Čeka odluku o modelu |
+| 5    | AI generisanje teksta ⚠️ kritična kapija | ✅ Gotovo, čeka potvrdu |
 | 6    | Ažuriranje umesto dupliranja         | ⬜ Čeka             |
 | 7    | Telegram odobravanje                 | ⬜ Čeka             |
 | 8    | Slike                                | ⬜ Čeka             |
 | 9    | Frontend                             | ⬜ Čeka             |
 | 10   | Pravne stranice, komentari, SEO      | ⬜ Čeka             |
 | 11   | Deployment i nadzor                  | ⬜ Čeka             |
+| 12   | Drugi provajderi modela (možda)     | ⬜ Razmotreno, odloženo |
 
 ---
 
@@ -596,3 +597,87 @@ procenjenih ~$21. Ako je to previše, jeftinije rešenje nije slabiji model nego
 15 članaka dnevno sa Sonnet modelom je ~$19 mesečno.
 
 Odluka je vlasnikova; dok je ne donese, `config/editorial.json` ostaje na Haiku modelu.
+
+### Optimizacija troška Faze 5 — izmereno 6. septembra 2026
+
+#### 1. Batch API — staje, i uvedeno je
+
+Batch API daje **50% popusta na sve tokene**, keširanje se i dalje primenjuje, a odgovori stižu
+asinhrono: većina paketa za manje od sat vremena, rok je 24 sata.
+
+Pipeline nije uživo-razgovor nego cron, pa zakašnjenje ne smeta. Uvedeno je u **dva koraka**: jedno
+pokretanje pokupi rezultate prethodnog paketa i pošalje novi. Posao tako nikad ne čeka odgovor
+modela, a članci kasne jedan ciklus.
+
+Šta se izgubilo: u paketu se od modela ne može odmah tražiti ispravka. Zato tema čiji je tekst
+došao prekratak dobija oznaku `needs_flagship` i u sledećem paketu je piše jači model.
+
+**Izmereno na stvarnim člancima:** Sonnet kroz paket **$0.0173 po članku**, naspram $0.0418
+neposredno. Članci su 481, 534 i 587 reči — dužina se nije pokvarila.
+
+#### 2. Da li izmerena cena drži vodu u produkciji
+
+Drži, ali uz uslov koji je sada ugrađen u ritam poslova.
+
+Keš uredničkog prompta traje pet minuta. Unutar jednog ciklusa članci se pišu jedan za drugim, pa
+svi osim prvog čitaju iz keša. **Između ciklusa keš je hladan**, i prvi članak svakog ciklusa plaća
+upis prompta: kod Haiku modela oko $0.012 više, kod Sonnet modela oko $0.020.
+
+Posledica: **jedan ciklus sa pet članaka je jeftiniji od pet ciklusa sa po jednim.** Zato urednički
+posao ne radi svakih sat vremena nego **na svaka četiri** (`20 */4 * * *`), sa najviše pet članaka
+po ciklusu. Prikupljanje vesti i dalje radi na 20 minuta — ono ne zove model.
+
+Izmereno na 814 sirovih vesti iz jednog dana: **65 tema prolazi kapije kvaliteta dnevno**. Ponuda je
+dakle šest puta veća od dnevne granice, pa je broj članaka stvarno glavna poluga troška.
+
+#### 3. Hibridni izbor modela i računica
+
+Jači model dobija najjače teme dana; ostatak piše jeftiniji.
+
+| Postavka | Sonnet/dan | Haiku/dan | Ciklusa/dan | Mesečno |
+| --- | ---: | ---: | ---: | ---: |
+| Neposredno, 10 članaka | 3 | 7 | 2 | $9.03 |
+| Neposredno, 8 članaka | 2 | 6 | 2 | $7.32 |
+| **Batch, 10 članaka (izabrano)** | **3** | **7** | **2** | **$4.20** |
+| Batch, 12 članaka | 4 | 8 | 2 | $4.95 |
+
+Računica po članku (topao keš): Haiku $0.0160 neposredno / $0.0080 kroz paket; Sonnet $0.0418 /
+$0.0173. Trošak hladnog keša po ciklusu: $0.032 neposredno, $0.016 kroz paket.
+
+Izabrano je **10 članaka dnevno, od toga 3 jačim modelom, kroz Batch API — oko $4.20 mesečno.**
+Minimalna dužina članka od 350 reči nije dirana: to je zaštita iz sekcije 9 brief-a, ne stilska stvar.
+
+#### 4. Haiku i dužina — rešeno strukturom, ne instrukcijom
+
+Tekstualna instrukcija „piši između 350 i 900 reči" nije radila: Haiku je vraćao 99 do 302 reči.
+
+Prvi pokušaj bio je tvrda granica u šemi — svaki pasus najmanje 400 znakova. To je **pogoršalo
+stvar**: Haiku bi promašio jedan pasus za dvadesetak znakova i ceo članak bi propao, i posle
+ispravke.
+
+Rešenje koje radi je podela odgovornosti:
+
+- **Šema drži strukturu:** telo je niz od četiri do devet pasusa, svaki najmanje 200 znakova. To
+  sprečava jednorečenične pasuse i telo od jedne rečenice.
+- **Kod drži uredničko pravilo:** posle odgovora se broje reči, i ako ih je manje od 350, od modela
+  se traži dopuna sa tačnim brojem („članak ima 296 reči, a mora imati najmanje 350").
+- **Ako ni dopuna ne pomogne**, temu preuzima jači model.
+
+Rezultat na istim temama: **Haiku 3/3 uspešno, 392, 387 i 381 reč.** Ranije 302, 99 i 225.
+
+#### 5. Kočnica budžeta
+
+`editorial` pre svega ostalog sabira `cost_usd` svih članaka od prvog u mesecu. Kad zbir dostigne
+`monthlyBudgetUsd` (postavljeno na 6 dolara, uz plan od 4.20), generisanje se preskače do prvog u
+narednom mesecu. Bolje da nekog dana nema novih članaka nego da račun eksplodira zbog greške u kodu
+ili dana sa neuobičajeno mnogo vesti.
+
+#### 6. Drugi provajderi — razmotreno, odloženo
+
+Gemini i OpenAI nude jeftinije modele koji bi mogli da zamene Haiku za deo članaka. Nije rađeno i
+nije menjan ni jedan red koda u tom pravcu, iz tri razloga: hibrid sa Batch API-jem već staje u
+budžet; drugi provajder znači drugi SDK, drugi oblik strukturisanog izlaza i drugo ponašanje na
+srpskom, što traži novo merenje kvaliteta; i tri provajdera u istom pipeline-u su tri mesta gde
+nešto može da otkaže.
+
+Ostaje kao **Faza 12**, ako se pokaže potreba.

@@ -7,6 +7,7 @@ import {
 } from '@ai-novine/core';
 import {
   articlesWrittenToday,
+  monthlySpend,
   clusterSourceItems,
   clustersWithoutArticle,
   createServiceClient,
@@ -19,6 +20,8 @@ import { formatUsd } from '../generate/cost.js';
 import { generateArticle, GenerationError } from '../generate/generate.js';
 import type { TopicMaterial } from '../generate/prompt.js';
 import { selectClustersForGeneration, slugify } from '../generate/select.js';
+import { runBatchCycle } from './editorial-batch.js';
+import { paragraphsToText } from '../generate/schema.js';
 
 const log = createLogger('editorial');
 
@@ -27,6 +30,11 @@ export interface EditorialOptions {
   dryRun: boolean;
   /** Gornja granica članaka u ovom ciklusu; podrazumevano iz konfiguracije. */
   limit?: number;
+  /**
+   * Asinhrono pisanje kroz Batch API — pola cene, uz zakašnjenje od jednog
+   * ciklusa. Jedan ciklus pokupi prethodni paket i pošalje novi.
+   */
+  batch: boolean;
 }
 
 /**
@@ -43,6 +51,28 @@ export async function runEditorial(options: EditorialOptions): Promise<void> {
   const client = createServiceClient();
   const angleById = new Map(activeSources().map((source) => [source.id, source.angle]));
 
+  if (options.batch && !options.dryRun) {
+    await runBatchCycle(client, options.limit);
+    return;
+  }
+
+  // Kočnica pre svega ostalog: bolje da nekog dana nema novih članaka nego da
+  // račun eksplodira zbog greške u kodu ili dana sa neuobičajeno mnogo vesti.
+  const spent = await monthlySpend(client);
+  const budget = editorial.limits.monthlyBudgetUsd;
+  if (spent >= budget) {
+    log.error('Mesečni budžet je potrošen — generisanje se preskače do prvog u mesecu.', {
+      potroseno: formatUsd(spent),
+      budzet: formatUsd(budget),
+    });
+    return;
+  }
+  log.info('Stanje budžeta.', {
+    potroseno: formatUsd(spent),
+    budzet: formatUsd(budget),
+    preostalo: formatUsd(budget - spent),
+  });
+
   const written = await articlesWrittenToday(client, editorial.models.flagship);
   const candidates = await clustersWithoutArticle(client, 60);
 
@@ -54,6 +84,7 @@ export async function runEditorial(options: EditorialOptions): Promise<void> {
       distinctSources: row.distinct_sources,
       distinctAngles: row.angles.length,
       size: row.size,
+      needsFlagship: row.needs_flagship,
     })),
     editorial.gates,
     {
@@ -104,6 +135,7 @@ export async function runEditorial(options: EditorialOptions): Promise<void> {
   const errors: string[] = [];
   let written_ = 0;
   let sensitive = 0;
+  let escalated = 0;
   let totalCost = 0;
 
   try {
@@ -131,19 +163,45 @@ export async function runEditorial(options: EditorialOptions): Promise<void> {
       };
 
       try {
-        const result = await generateArticle(material, {
-          model,
-          maxOutputTokens: editorial.models.maxOutputTokens,
-          effort: 'medium',
-        });
+        let result;
+        try {
+          result = await generateArticle(material, {
+            model,
+            maxOutputTokens: editorial.models.maxOutputTokens,
+            effort: 'medium',
+            minWords: editorial.gates.minWordsToPublish,
+          });
+        } catch (error) {
+          // Jeftiniji model ume da ne dogura do 350 reči ni posle dopune. Tada
+          // temu preuzima jači model umesto da ostane bez članka — to je i
+          // jeftinije nego da svi članci idu na jači model.
+          const escalatable =
+            error instanceof GenerationError &&
+            error.kind === 'too_short' &&
+            model !== editorial.models.flagship;
+          if (!escalatable) throw error;
 
+          log.warn('Tema prelazi na jači model jer tekst nije dostigao potrebnu dužinu.', {
+            tema: selection.candidate.titleSample?.slice(0, 60),
+            razlog: (error as GenerationError).message,
+          });
+          escalated += 1;
+          result = await generateArticle(material, {
+            model: editorial.models.flagship,
+            maxOutputTokens: editorial.models.maxOutputTokens,
+            effort: 'medium',
+            minWords: editorial.gates.minWordsToPublish,
+          });
+        }
+
+        const usedModel = result.cost.model;
         const article = result.article;
         const articleId = await insertArticle(client, {
           cluster_id: selection.candidate.clusterId,
           slug: slugify(article.title),
           title: article.title,
           lead: article.lead,
-          body: article.body,
+          body: paragraphsToText(article.body),
           category: article.category,
           // Osetljiv clanak ceka ljudsku proveru (brief, sekcija 7).
           status: article.sensitive ? 'pending_review' : 'draft',
@@ -154,7 +212,7 @@ export async function runEditorial(options: EditorialOptions): Promise<void> {
           keywords: article.keywords,
           notes: article.notes,
           word_count: result.wordCount,
-          model,
+          model: usedModel,
           usage: {
             ulazniTokeni: result.cost.inputTokens,
             izlazniTokeni: result.cost.outputTokens,
@@ -183,6 +241,8 @@ export async function runEditorial(options: EditorialOptions): Promise<void> {
     const stats = {
       napisano: written_,
       osetljivih: sensitive,
+      presloNaJaciModel: escalated,
+      mesecnoUkupnoUsd: Number((spent + totalCost).toFixed(6)),
       trosakUsd: Number(totalCost.toFixed(6)),
       gresaka: errors.length,
       trajanjeSekundi: Math.round((Date.now() - startedAt) / 1000),

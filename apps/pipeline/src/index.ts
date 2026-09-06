@@ -97,9 +97,11 @@ program
   .description('Bira teme koje zasluzuju clanak i pise ih')
   .option('--dry-run', 'samo prikazi koje bi teme dobile clanak, bez poziva modelu', false)
   .option('--limit <broj>', 'najvise clanaka u ovom ciklusu')
-  .action(async (options: { dryRun: boolean; limit?: string }) => {
+  .option('--batch', 'asinhrono kroz Batch API: pola cene, odgovor u sledecem ciklusu', false)
+  .action(async (options: { dryRun: boolean; limit?: string; batch: boolean }) => {
     await runEditorial({
       dryRun: options.dryRun,
+      batch: options.batch,
       ...(options.limit ? { limit: Math.max(1, Number.parseInt(options.limit, 10) || 1) } : {}),
     });
   });
