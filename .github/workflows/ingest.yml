@@ -1,0 +1,52 @@
+name: Prikupljanje vesti
+
+# Brief traži ciklus na svakih 20 minuta. GitHub Actions cron u praksi kasni
+# 20-40 minuta pod opterećenjem — to je poznato ponašanje besplatnog tier-a i
+# ne može se popraviti sa naše strane.
+on:
+  schedule:
+    - cron: '*/20 * * * *'
+  workflow_dispatch:
+    inputs:
+      only:
+        description: 'Samo zadati izvori, npr. n1,danas,kurir (prazno = svi)'
+        required: false
+        default: ''
+      limit:
+        description: 'Najviše novih članaka po izvoru'
+        required: false
+        default: '25'
+
+# Dva ciklusa se nikad ne preklapaju — drugi čeka da prvi završi.
+concurrency:
+  group: ingest
+  cancel-in-progress: false
+
+jobs:
+  ingest:
+    name: Dohvatanje i upis u bazu
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalacija zavisnosti
+        run: npm ci
+
+      - name: Prikupljanje
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          LOG_LEVEL: info
+        run: |
+          npm run pipeline -- ingest \
+            --concurrency 6 \
+            --limit "${{ github.event.inputs.limit || '25' }}" \
+            ${{ github.event.inputs.only && format('--only {0}', github.event.inputs.only) || '' }}

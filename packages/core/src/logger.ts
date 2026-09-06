@@ -14,7 +14,9 @@ function resolveLevel(): LogLevel {
 }
 
 const activeLevel = resolveLevel();
-const asJson = process.env.CI === 'true' || process.env.LOG_FORMAT === 'json';
+// JSON samo kad se izricito trazi. U GitHub Actions dnevniku se citljiv tekst
+// lakse prati nego niz JSON linija.
+const asJson = process.env.LOG_FORMAT === 'json';
 
 export type LogFields = Record<string, unknown>;
 

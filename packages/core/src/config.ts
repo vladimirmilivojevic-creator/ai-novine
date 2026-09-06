@@ -30,6 +30,8 @@ export const sourceSchema = z.object({
   angle: angleSchema,
   enabled: z.boolean(),
   feeds: z.array(urlString),
+  /** News sitemap-ovi — koriste se kad izvor nema RSS (Faza 3). */
+  newsSitemaps: z.array(urlString).default([]),
   scrape: scrapeConfigSchema.nullable().default(null),
   notes: z.string().default(''),
 });

@@ -4,8 +4,11 @@ import {
   FetchFailure,
   loadRobots,
   looksLikeFeed,
+  looksLikeSitemap,
   parseFeed,
-  type FeedItem,
+  parseSitemap,
+  type RobotsInfo,
+  type SitemapEntry,
   type Source,
 } from '@ai-novine/core';
 import {
@@ -14,6 +17,7 @@ import {
   getFetchStates,
   insertRawItems,
   saveFetchState,
+  type FetchStateRow,
   type NewRawItem,
 } from '@ai-novine/db';
 import type { SupabaseClient } from '@supabase/supabase-js';
@@ -38,9 +42,11 @@ export interface IngestOptions {
 
 export interface SourceIngestResult {
   sourceId: string;
-  feedsChecked: number;
-  feedsUnchanged: number;
-  feedItems: number;
+  /** Odakle su stigli kandidati u ovom ciklusu. */
+  channel: 'feed' | 'sitemap' | 'nista';
+  checked: number;
+  unchanged: number;
+  candidates: number;
   newUrls: number;
   extracted: number;
   inserted: number;
@@ -49,9 +55,11 @@ export interface SourceIngestResult {
 }
 
 interface Candidate {
-  item: FeedItem;
   url: string;
   hash: string;
+  title: string;
+  summary: string | null;
+  publishedAt: string | null;
 }
 
 export async function ingestSource(
@@ -61,9 +69,10 @@ export async function ingestSource(
 ): Promise<SourceIngestResult> {
   const result: SourceIngestResult = {
     sourceId: source.id,
-    feedsChecked: 0,
-    feedsUnchanged: 0,
-    feedItems: 0,
+    channel: 'nista',
+    checked: 0,
+    unchanged: 0,
+    candidates: 0,
     newUrls: 0,
     extracted: 0,
     inserted: 0,
@@ -71,90 +80,29 @@ export async function ingestSource(
     errors: [],
   };
 
-  if (source.feeds.length === 0) {
-    result.errors.push('Izvor nema nijedan feed u config/sources.json.');
+  if (source.feeds.length === 0 && source.newsSitemaps.length === 0) {
+    result.errors.push('Izvor nema ni feed ni news sitemap u config/sources.json.');
     return result;
   }
 
   const robots = await loadRobots(source.homepage);
-  const fetchStates = await getFetchStates(client, source.feeds);
-
-  // ── 1. Feed-ovi ────────────────────────────────────────────────────────────
+  const fetchStates = await getFetchStates(client, [...source.feeds, ...source.newsSitemaps]);
   const candidates = new Map<string, Candidate>();
 
-  for (const feedUrl of source.feeds) {
-    result.feedsChecked += 1;
-    const state = fetchStates.get(feedUrl);
+  // RSS je prvi izbor. News sitemap ulazi u igru kad izvor nema feed, ili kad
+  // feed tog ciklusa nije dao nista — tako pad jednog kanala ne gasi izvor.
+  await collectFromFeeds(client, source, fetchStates, candidates, result);
+  if (candidates.size > 0) result.channel = 'feed';
 
-    const conditional: Record<string, string> = {};
-    if (state?.etag) conditional['if-none-match'] = state.etag;
-    if (state?.last_modified) conditional['if-modified-since'] = state.last_modified;
-
-    let response;
-    try {
-      response = await fetchText(feedUrl, {
-        accept: 'application/rss+xml, application/xml;q=0.9, */*;q=0.5',
-        headers: conditional,
-      });
-    } catch (error) {
-      const message = error instanceof FetchFailure ? error.message : String(error);
-      result.errors.push(`${feedUrl}: ${message}`);
-      continue;
-    }
-
-    if (response.status === 304) {
-      result.feedsUnchanged += 1;
-      await saveFetchState(client, {
-        url: feedUrl,
-        sourceId: source.id,
-        etag: state?.etag ?? null,
-        lastModified: state?.last_modified ?? null,
-        status: 304,
-        changed: false,
-      });
-      continue;
-    }
-
-    if (!response.ok) {
-      result.errors.push(`${feedUrl}: HTTP ${response.status}`);
-      continue;
-    }
-
-    if (!looksLikeFeed(response.body, response.contentType)) {
-      result.errors.push(`${feedUrl}: odgovor nije feed`);
-      continue;
-    }
-
-    const feed = parseFeed(response.body);
-    if (!feed) {
-      result.errors.push(`${feedUrl}: XML se ne parsira kao RSS/Atom`);
-      continue;
-    }
-
-    await saveFetchState(client, {
-      url: feedUrl,
-      sourceId: source.id,
-      etag: response.etag,
-      lastModified: response.lastModified,
-      status: response.status,
-      changed: true,
-    });
-
-    for (const item of feed.items) {
-      result.feedItems += 1;
-      if (!item.link || !item.title) continue;
-
-      const canonical = canonicalizeUrl(item.link, feedUrl);
-      if (!canonical) continue;
-      if (!sameSite(canonical, source.homepage)) continue;
-
-      candidates.set(canonical, { item, url: canonical, hash: urlHash(canonical) });
-    }
+  if (candidates.size === 0 && source.newsSitemaps.length > 0) {
+    await collectFromSitemaps(client, source, robots, fetchStates, candidates, result);
+    if (candidates.size > 0) result.channel = 'sitemap';
   }
 
+  result.candidates = candidates.size;
   if (candidates.size === 0) return result;
 
-  // ── 2. Sta je vec u bazi ───────────────────────────────────────────────────
+  // ── Sta je vec u bazi ──────────────────────────────────────────────────────
   const all = [...candidates.values()];
   const known = await existingUrlHashes(
     client,
@@ -163,13 +111,13 @@ export async function ingestSource(
 
   const fresh = all
     .filter((candidate) => !known.has(candidate.hash))
-    .sort((a, b) => publishedTime(b.item) - publishedTime(a.item))
+    .sort((a, b) => timeOf(b.publishedAt) - timeOf(a.publishedAt))
     .slice(0, options.maxItemsPerSource);
 
   result.newUrls = fresh.length;
   if (fresh.length === 0) return result;
 
-  // ── 3. Tekst clanka ────────────────────────────────────────────────────────
+  // ── Tekst clanka ───────────────────────────────────────────────────────────
   const rows: NewRawItem[] = [];
   const seenContent = new Set<string>();
 
@@ -186,7 +134,7 @@ export async function ingestSource(
     rows.push(row);
   }
 
-  // ── 4. Upis ────────────────────────────────────────────────────────────────
+  // ── Upis ───────────────────────────────────────────────────────────────────
   if (rows.length > 0) {
     const knownContent = await existingContentHashes(
       client,
@@ -202,9 +150,10 @@ export async function ingestSource(
   }
 
   log.info(`${source.name}: ${result.inserted} novih`, {
-    feedova: result.feedsChecked,
-    nepromenjenih: result.feedsUnchanged,
-    kandidata: candidates.size,
+    kanal: result.channel,
+    proverenih: result.checked,
+    nepromenjenih: result.unchanged,
+    kandidata: result.candidates,
     novihUrl: result.newUrls,
     duplikata: result.duplicates,
     gresaka: result.errors.length,
@@ -213,26 +162,221 @@ export async function ingestSource(
   return result;
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// RSS
+// ─────────────────────────────────────────────────────────────────────────────
+
+async function collectFromFeeds(
+  client: SupabaseClient,
+  source: Source,
+  states: Map<string, FetchStateRow>,
+  candidates: Map<string, Candidate>,
+  result: SourceIngestResult,
+): Promise<void> {
+  for (const feedUrl of source.feeds) {
+    result.checked += 1;
+
+    const response = await conditionalGet(client, source, feedUrl, states, result, {
+      accept: 'application/rss+xml, application/xml;q=0.9, */*;q=0.5',
+    });
+    if (!response) continue;
+
+    if (!looksLikeFeed(response.body, response.contentType)) {
+      result.errors.push(`${feedUrl}: odgovor nije feed`);
+      continue;
+    }
+
+    const feed = parseFeed(response.body);
+    if (!feed) {
+      result.errors.push(`${feedUrl}: XML se ne parsira kao RSS/Atom`);
+      continue;
+    }
+
+    for (const item of feed.items) {
+      if (!item.link || !item.title) continue;
+      addCandidate(candidates, source, feedUrl, {
+        link: item.link,
+        title: item.title,
+        summary: item.summary,
+        publishedAt: item.publishedAt,
+      });
+    }
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// News sitemap — rezervni kanal za izvore bez RSS-a
+// ─────────────────────────────────────────────────────────────────────────────
+
+async function collectFromSitemaps(
+  client: SupabaseClient,
+  source: Source,
+  robots: RobotsInfo,
+  states: Map<string, FetchStateRow>,
+  candidates: Map<string, Candidate>,
+  result: SourceIngestResult,
+): Promise<void> {
+  for (const sitemapUrl of source.newsSitemaps) {
+    result.checked += 1;
+
+    const response = await conditionalGet(client, source, sitemapUrl, states, result, {
+      accept: 'application/xml, text/xml;q=0.9',
+    });
+    if (!response) continue;
+
+    if (!looksLikeSitemap(response.body)) {
+      result.errors.push(`${sitemapUrl}: odgovor nije sitemap`);
+      continue;
+    }
+
+    const sitemap = parseSitemap(response.body);
+    if (!sitemap) {
+      result.errors.push(`${sitemapUrl}: XML se ne parsira kao sitemap`);
+      continue;
+    }
+
+    // Indeks ne nosi clanke nego pokazuje na sitemap-ove koji ih nose.
+    const entries =
+      sitemap.kind === 'urlset'
+        ? sitemap.entries
+        : await followSitemapIndex(sitemap.entries, robots, result);
+
+    for (const entry of entries) {
+      addCandidate(candidates, source, sitemapUrl, {
+        link: entry.url,
+        title: entry.title ?? '',
+        summary: null,
+        publishedAt: entry.publishedAt,
+      });
+    }
+  }
+}
+
+async function followSitemapIndex(
+  entries: SitemapEntry[],
+  robots: RobotsInfo,
+  result: SourceIngestResult,
+): Promise<SitemapEntry[]> {
+  const children = entries
+    .map((entry) => entry.url)
+    .filter((url) => /news|vesti|latest|stories/i.test(url))
+    .slice(0, 2);
+
+  const collected: SitemapEntry[] = [];
+
+  for (const child of children) {
+    if (!robots.isAllowed(child)) continue;
+    try {
+      const response = await fetchText(child, { accept: 'application/xml' });
+      if (!response.ok) continue;
+
+      const parsed = parseSitemap(response.body);
+      if (parsed?.kind === 'urlset') collected.push(...parsed.entries);
+    } catch (error) {
+      const message = error instanceof FetchFailure ? error.message : String(error);
+      result.errors.push(`${child}: ${message}`);
+    }
+  }
+  return collected;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Zajednicko
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Dohvatanje uz ETag / Last-Modified. `null` znaci „nema novog sadrzaja". */
+async function conditionalGet(
+  client: SupabaseClient,
+  source: Source,
+  url: string,
+  states: Map<string, FetchStateRow>,
+  result: SourceIngestResult,
+  options: { accept: string },
+): Promise<{ body: string; contentType: string | null } | null> {
+  const state = states.get(url);
+  const headers: Record<string, string> = {};
+  if (state?.etag) headers['if-none-match'] = state.etag;
+  if (state?.last_modified) headers['if-modified-since'] = state.last_modified;
+
+  let response;
+  try {
+    response = await fetchText(url, { accept: options.accept, headers });
+  } catch (error) {
+    const message = error instanceof FetchFailure ? error.message : String(error);
+    result.errors.push(`${url}: ${message}`);
+    return null;
+  }
+
+  if (response.status === 304) {
+    result.unchanged += 1;
+    await saveFetchState(client, {
+      url,
+      sourceId: source.id,
+      etag: state?.etag ?? null,
+      lastModified: state?.last_modified ?? null,
+      status: 304,
+      changed: false,
+    });
+    return null;
+  }
+
+  if (!response.ok) {
+    result.errors.push(`${url}: HTTP ${response.status}`);
+    return null;
+  }
+
+  await saveFetchState(client, {
+    url,
+    sourceId: source.id,
+    etag: response.etag,
+    lastModified: response.lastModified,
+    status: response.status,
+    changed: true,
+  });
+
+  return { body: response.body, contentType: response.contentType };
+}
+
+function addCandidate(
+  candidates: Map<string, Candidate>,
+  source: Source,
+  baseUrl: string,
+  raw: { link: string; title: string; summary: string | null; publishedAt: string | null },
+): void {
+  const canonical = canonicalizeUrl(raw.link, baseUrl);
+  if (!canonical) return;
+
+  // Link mora da pripada izvoru — ili domenu iz konfiguracije, ili domenu sa
+  // koga je kanal stvarno posluzen. Drugo je vazno kod izvora koji preusmerava
+  // na drugi domen (srbijadanas.com salje na sd.rs), gde bi poredjenje samo sa
+  // konfiguracijom odbacilo sve clanke tog izvora.
+  if (!sameSite(canonical, source.homepage) && !sameSite(canonical, baseUrl)) return;
+
+  candidates.set(canonical, {
+    url: canonical,
+    hash: urlHash(canonical),
+    title: stripHtml(raw.title),
+    summary: raw.summary ? stripHtml(raw.summary) : null,
+    publishedAt: toIsoDate(raw.publishedAt),
+  });
+}
+
 async function buildRow(
   source: Source,
   candidate: Candidate,
   options: IngestOptions,
-  robots: Awaited<ReturnType<typeof loadRobots>>,
+  robots: RobotsInfo,
   result: SourceIngestResult,
 ): Promise<NewRawItem | null> {
-  const feedTitle = stripHtml(candidate.item.title);
-  const feedSummary = candidate.item.summary ? stripHtml(candidate.item.summary) : null;
-  const publishedAt = toIsoDate(candidate.item.publishedAt);
-
-  let title = feedTitle;
+  let title = candidate.title;
+  let summary = candidate.summary;
   let text = '';
-  let summary = feedSummary;
   let author: string | null = null;
   let imageUrl: string | null = null;
   let language: string | null = null;
   let canonicalUrl: string | null = null;
   let extraction: NewRawItem['extraction'] = 'feed';
-  let published = publishedAt;
+  let published = candidate.publishedAt;
 
   if (options.fullText) {
     if (!robots.isAllowed(candidate.url)) {
@@ -264,7 +408,7 @@ async function buildRow(
     }
   }
 
-  // Bez teksta ostaje ono sto je feed dao — naslov i kratak opis.
+  // Bez teksta ostaje ono sto je kanal dao — naslov i kratak opis.
   if (!text) text = summary ?? '';
   if (!title) return null;
 
@@ -289,17 +433,20 @@ async function buildRow(
 /** Odbacuje linkove koji vode van domena izvora (reklame, partnerski sadrzaj). */
 function sameSite(url: string, homepage: string): boolean {
   try {
-    const target = new URL(url).hostname.replace(/^www\./, '');
-    const home = new URL(homepage).hostname.replace(/^www\./, '');
-    const targetRoot = target.split('.').slice(-2).join('.');
-    const homeRoot = home.split('.').slice(-2).join('.');
-    return targetRoot === homeRoot;
+    return rootDomain(new URL(url).hostname) === rootDomain(new URL(homepage).hostname);
   } catch {
     return false;
   }
 }
 
-function publishedTime(item: FeedItem): number {
-  const iso = toIsoDate(item.publishedAt);
+function rootDomain(hostname: string): string {
+  return hostname
+    .replace(/^www\./, '')
+    .split('.')
+    .slice(-2)
+    .join('.');
+}
+
+function timeOf(iso: string | null): number {
   return iso ? new Date(iso).getTime() : 0;
 }

@@ -87,21 +87,39 @@ export async function runDiscover(options: DiscoverOptions): Promise<void> {
 function applyFeedsToConfig(reports: SourceReport[]): void {
   const path = join(configDir, 'sources.json');
   const raw = JSON.parse(readFileSync(path, 'utf8')) as {
-    sources: { id: string; feeds: string[] }[];
+    sources: { id: string; feeds: string[]; newsSitemaps?: string[] }[];
   };
 
   let changed = 0;
   for (const entry of raw.sources) {
     const report = reports.find((candidate) => candidate.id === entry.id);
-    if (!report || report.verdict !== 'rss') continue;
+    if (!report) continue;
+    let touched = false;
 
-    const feeds = pickFeedsForConfig(report).map((feed) => feed.finalUrl);
-    if (feeds.length === 0) continue;
-
-    if (JSON.stringify(entry.feeds) !== JSON.stringify(feeds)) {
-      entry.feeds = feeds;
-      changed += 1;
+    if (report.verdict === 'rss') {
+      const feeds = pickFeedsForConfig(report).map((feed) => feed.finalUrl);
+      if (feeds.length > 0 && JSON.stringify(entry.feeds) !== JSON.stringify(feeds)) {
+        entry.feeds = feeds;
+        touched = true;
+      }
     }
+
+    // News sitemap je rezervni put za izvore bez RSS-a — uredan XML sa svezim
+    // clancima. Upisuje se i kod izvora koji imaju RSS, kao dodatna mreza.
+    const sitemaps = report.sitemaps
+      .filter((sitemap) => sitemap.isNewsSitemap && sitemap.entryCount > 0)
+      .map((sitemap) => sitemap.url)
+      .slice(0, 2);
+
+    if (
+      sitemaps.length > 0 &&
+      JSON.stringify(entry.newsSitemaps ?? []) !== JSON.stringify(sitemaps)
+    ) {
+      entry.newsSitemaps = sitemaps;
+      touched = true;
+    }
+
+    if (touched) changed += 1;
   }
 
   writeFileSync(path, `${JSON.stringify(raw, null, 2)}\n`, 'utf8');

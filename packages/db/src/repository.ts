@@ -267,3 +267,50 @@ function chunk<T>(items: T[], size: number): T[][] {
   }
   return batches;
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Retention — Supabase besplatni tier je 500 MB
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Brise sirove clanke starije od zadatog broja dana. Vraca broj obrisanih. */
+export async function deleteOldRawItems(client: SupabaseClient, days: number): Promise<number> {
+  const cutoff = new Date(Date.now() - days * 86_400_000).toISOString();
+  const { data, error } = await client
+    .from('raw_items')
+    .delete()
+    .lt('fetched_at', cutoff)
+    .select('id');
+  if (error) fail('Brisanje starih sirovih clanaka nije proslo', error);
+  return (data as { id: string }[]).length;
+}
+
+/** Brise zapise o pokretanjima starije od zadatog broja dana. */
+export async function deleteOldRuns(client: SupabaseClient, days: number): Promise<number> {
+  const cutoff = new Date(Date.now() - days * 86_400_000).toISOString();
+  const { data, error } = await client
+    .from('pipeline_runs')
+    .delete()
+    .lt('started_at', cutoff)
+    .select('id');
+  if (error) fail('Brisanje starih zapisa o pokretanjima nije proslo', error);
+  return (data as { id: string }[]).length;
+}
+
+/** Broj redova i procena zauzeca, za nadzor besplatnog tier-a. */
+export async function storageSnapshot(client: SupabaseClient): Promise<{
+  rawItems: number;
+  runs: number;
+  oldestRawItem: string | null;
+}> {
+  const [{ count: rawItems }, { count: runs }, { data: oldest }] = await Promise.all([
+    client.from('raw_items').select('id', { count: 'exact', head: true }),
+    client.from('pipeline_runs').select('id', { count: 'exact', head: true }),
+    client.from('raw_items').select('fetched_at').order('fetched_at').limit(1),
+  ]);
+
+  return {
+    rawItems: rawItems ?? 0,
+    runs: runs ?? 0,
+    oldestRawItem: (oldest as { fetched_at: string }[] | null)?.[0]?.fetched_at ?? null,
+  };
+}

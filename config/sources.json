@@ -25,7 +25,8 @@
       "enabled": true,
       "feeds": [],
       "scrape": null,
-      "notes": "Probno merenje u planskoj fazi: nema RSS autodiscovery — kandidat za sitemap/scraping fallback."
+      "notes": "Probno merenje u planskoj fazi: nema RSS autodiscovery — kandidat za sitemap/scraping fallback.",
+      "newsSitemaps": ["https://informer.rs/sitemap/news.xml"]
     },
     {
       "id": "alo",
@@ -35,7 +36,8 @@
       "enabled": true,
       "feeds": [],
       "scrape": null,
-      "notes": ""
+      "notes": "",
+      "newsSitemaps": ["https://www.alo.rs/sitemap/google-news-sitemap.xml"]
     },
     {
       "id": "pink",
@@ -61,7 +63,8 @@
         "https://www.kurir.rs/rss/sport"
       ],
       "scrape": null,
-      "notes": "Probno merenje: RSS postoji. Test izvor za Fazu 2."
+      "notes": "Probno merenje: RSS postoji. Test izvor za Fazu 2.",
+      "newsSitemaps": ["https://www.kurir.rs/sitemaps-v2/news.xml"]
     },
     {
       "id": "politika",
@@ -81,7 +84,8 @@
       "enabled": true,
       "feeds": [],
       "scrape": null,
-      "notes": ""
+      "notes": "",
+      "newsSitemaps": ["https://www.novosti.rs/sitemaps/xml/news"]
     },
     {
       "id": "happy",
@@ -101,7 +105,8 @@
       "enabled": true,
       "feeds": ["https://www.sd.rs/rss.xml"],
       "scrape": null,
-      "notes": ""
+      "notes": "",
+      "newsSitemaps": ["https://www.sd.rs/googlenews.xml"]
     },
     {
       "id": "prva",
@@ -121,7 +126,8 @@
       "enabled": true,
       "feeds": ["https://n1info.rs/feed/"],
       "scrape": null,
-      "notes": "Probno merenje: RSS postoji. Test izvor za Fazu 2."
+      "notes": "Probno merenje: RSS postoji. Test izvor za Fazu 2.",
+      "newsSitemaps": ["https://n1info.rs/sitemap/sitemap_news_1.xml"]
     },
     {
       "id": "nova",
@@ -131,7 +137,8 @@
       "enabled": true,
       "feeds": ["https://nova.rs/feed/"],
       "scrape": null,
-      "notes": "Probno merenje: RSS postoji."
+      "notes": "Probno merenje: RSS postoji.",
+      "newsSitemaps": ["https://nova.rs/sitemap/sitemap_news_1.xml"]
     },
     {
       "id": "danas",
@@ -161,7 +168,8 @@
       "enabled": true,
       "feeds": ["https://insajder.net/feed.xml", "https://insajder.net/feed"],
       "scrape": null,
-      "notes": "Probno merenje: RSS postoji."
+      "notes": "Probno merenje: RSS postoji.",
+      "newsSitemaps": ["https://insajder.net/news-sitemap.xml"]
     },
     {
       "id": "birn",
@@ -211,7 +219,8 @@
       "enabled": true,
       "feeds": [],
       "scrape": null,
-      "notes": "Probno merenje: nema RSS autodiscovery — kandidat za sitemap/scraping fallback."
+      "notes": "Probno merenje: nema RSS autodiscovery — kandidat za sitemap/scraping fallback.",
+      "newsSitemaps": ["https://www.blic.rs/sitemap-stories-news-news.xml.gz"]
     },
     {
       "id": "telegraf",
@@ -221,7 +230,8 @@
       "enabled": true,
       "feeds": ["https://www.telegraf.rs/rss"],
       "scrape": null,
-      "notes": "Probno merenje: RSS postoji."
+      "notes": "Probno merenje: RSS postoji.",
+      "newsSitemaps": ["https://www.telegraf.rs/xml/news"]
     },
     {
       "id": "mondo",
@@ -237,7 +247,8 @@
         "https://mondo.rs/rss/678/Magazin"
       ],
       "scrape": null,
-      "notes": ""
+      "notes": "",
+      "newsSitemaps": ["https://mondo.rs/sitemaps/news-sitemap.xml"]
     },
     {
       "id": "b92",
@@ -277,7 +288,8 @@
       "enabled": true,
       "feeds": [],
       "scrape": null,
-      "notes": "Probno merenje: HTTP 403 (Cloudflare) i na /robots.txt. Kandidat za izbacivanje u Fazi 1."
+      "notes": "Probno merenje: HTTP 403 (Cloudflare) i na /robots.txt. Kandidat za izbacivanje u Fazi 1.",
+      "newsSitemaps": ["https://www.tanjug.rs/sitemap/news.xml"]
     },
     {
       "id": "beta",

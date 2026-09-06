@@ -36,7 +36,9 @@ export async function runIngest(options: IngestCommandOptions): Promise<void> {
 
   const selected = pickSources(options.only);
   if (selected.length === 0) {
-    log.error('Nijedan izvor ne odgovara filteru ili nijedan nema feed.', { only: options.only });
+    log.error('Nijedan izvor ne odgovara filteru ili nijedan nema kanal podataka.', {
+      only: options.only,
+    });
     process.exit(1);
   }
 
@@ -72,11 +74,11 @@ export async function runIngest(options: IngestCommandOptions): Promise<void> {
             fullText: options.fullText,
           });
 
-          // Prekidac se resetuje samo ako je bar jedan feed stvarno procitan.
-          const feedFailed =
-            result.feedsChecked > 0 && result.feedItems === 0 && result.feedsUnchanged === 0;
-          if (feedFailed) {
-            const message = result.errors[0] ?? 'nijedan feed nije procitan';
+          // Prekidac se resetuje samo ako je bar jedan kanal stvarno procitan.
+          const nothingRead =
+            result.checked > 0 && result.candidates === 0 && result.unchanged === 0;
+          if (nothingRead) {
+            const message = result.errors[0] ?? 'nijedan kanal nije procitan';
             const breaker = await recordSourceFailure(client, source.id, message, {
               maxConsecutiveFailures: config.defaults.maxConsecutiveFailures,
               disableForHours: config.defaults.disableAfterFailuresHours,
@@ -117,7 +119,9 @@ export async function runIngest(options: IngestCommandOptions): Promise<void> {
 }
 
 function pickSources(only?: string[]): Source[] {
-  const sources = activeSources().filter((source) => source.feeds.length > 0);
+  const sources = activeSources().filter(
+    (source) => source.feeds.length > 0 || source.newsSitemaps.length > 0,
+  );
   if (!only?.length) return sources;
   return sources.filter((source) => only.includes(source.id));
 }
@@ -128,9 +132,11 @@ function summarize(results: SourceIngestResult[], elapsedMs: number): Record<str
 
   return {
     izvora: results.length,
-    feedova: total((result) => result.feedsChecked),
-    nepromenjenihFeedova: total((result) => result.feedsUnchanged),
-    stavkiUFeedovima: total((result) => result.feedItems),
+    prekoSitemapa: results.filter((result) => result.channel === 'sitemap').length,
+    bezKandidata: results.filter((result) => result.channel === 'nista').length,
+    provereno: total((result) => result.checked),
+    nepromenjenih: total((result) => result.unchanged),
+    kandidata: total((result) => result.candidates),
     novihUrl: total((result) => result.newUrls),
     izvucenTekst: total((result) => result.extracted),
     upisano: total((result) => result.inserted),

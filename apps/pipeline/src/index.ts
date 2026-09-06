@@ -6,6 +6,7 @@ import { runDiscover } from './commands/discover.js';
 import { runDoctor } from './commands/doctor.js';
 import { runIngest } from './commands/ingest.js';
 import { runMigrate } from './commands/migrate.js';
+import { runSweep } from './commands/sweep.js';
 
 const program = new Command();
 
@@ -83,9 +84,10 @@ program
 
 program
   .command('sweep')
-  .description('Brise stare sirove vesti i gasi istekle zahteve za odobrenje (Faza 3 i 7)')
-  .action(() => {
-    notYet('sweep', 3);
+  .description('Brise stare sirove vesti i zapise o pokretanjima')
+  .option('--dry-run', 'samo prikazi stanje, ne brisi nista', false)
+  .action(async (options: { dryRun: boolean }) => {
+    await runSweep({ dryRun: options.dryRun });
   });
 
 function notYet(command: string, phase: number): never {

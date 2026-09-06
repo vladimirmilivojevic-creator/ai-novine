@@ -1,0 +1,36 @@
+name: Čišćenje baze
+
+# Supabase besplatni tier je 500 MB. Sirove vesti se brišu posle broja dana
+# zadatog u config/editorial.json; generisani članci ostaju.
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: sweep
+  cancel-in-progress: false
+
+jobs:
+  sweep:
+    name: Brisanje starih zapisa
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalacija zavisnosti
+        run: npm ci
+
+      - name: Čišćenje
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: npm run pipeline -- sweep

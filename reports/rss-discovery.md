@@ -1,6 +1,6 @@
 # RSS discovery izveštaj
 
-**Datum provere:** 6. 9. 2026. 00:59:26
+**Datum provere:** 6. 9. 2026. 13:11:58
 **Provereno izvora:** 26
 
 Izveštaj generiše `npm run pipeline -- discover`. Provera ide redom: `robots.txt`, pa `<link rel="alternate">` u HTML-u početne strane, pa standardne RSS putanje (`/feed`, `/rss`, `/rss.xml`, `/feed/rss2` i varijante), pa `sitemap.xml`. Svaki feed se i preuzima i parsira — sajt koji na `/feed` vrati HTML stranu ne računa se kao RSS.
@@ -20,30 +20,30 @@ Izveštaj generiše `npm run pipeline -- discover`. Provera ide redom: `robots.t
 | --- | --- | --- | --- | --- | --- |
 | Informer | provladin | Bez RSS-a, ali ima news sitemap | — | — | — |
 | Alo | provladin | Bez RSS-a, ali ima news sitemap | — | — | — |
-| Pink | provladin | RSS radi | `https://pink.rs/rss-feed` | 50 | pre 2 min |
-| Kurir | provladin | RSS radi | `https://www.kurir.rs/rss` | 100 | pre 10 min |
+| Pink | provladin | RSS radi | `https://pink.rs/rss-feed` | 50 | pre 1 h |
+| Kurir | provladin | RSS radi | `https://www.kurir.rs/rss` | 100 | pre 17 min |
 | Politika | provladin | Blokira botove | — | — | — |
 | Vecernje novosti | provladin | Bez RSS-a, ali ima news sitemap | — | — | — |
-| Happy TV | provladin | RSS radi | `https://happytv.rs/feed/` | 40 | pre 26 h |
-| Srbija Danas | provladin | RSS radi | `https://www.sd.rs/rss.xml` | 100 | pre 4 min |
+| Happy TV | provladin | RSS radi | `https://happytv.rs/feed/` | 40 | pre 6 min |
+| Srbija Danas | provladin | RSS radi | `https://www.sd.rs/rss.xml` | 100 | pre 7 min |
 | Prva | provladin | Bez RSS-a — treba scraping | — | — | — |
-| N1 | kriticki | RSS radi | `https://n1info.rs/feed/` | 50 | pre 1 h |
-| Nova.rs | kriticki | RSS radi | `https://nova.rs/feed/` | 50 | pre 44 min |
-| Danas | kriticki | RSS radi | `https://www.danas.rs/feed/` | 50 | pre 1 h |
-| Vreme | kriticki | RSS radi | `https://vreme.com/feed/` | 12 | pre 3 h |
-| Insajder | kriticki | RSS radi | `https://insajder.net/feed.xml` | 100 | pre 1 h |
+| N1 | kriticki | RSS radi | `https://n1info.rs/feed/` | 50 | pre 3 min |
+| Nova.rs | kriticki | RSS radi | `https://nova.rs/feed/` | 50 | pre 3 min |
+| Danas | kriticki | RSS radi | `https://www.danas.rs/feed/` | 50 | pre 10 min |
+| Vreme | kriticki | RSS radi | `https://vreme.com/feed/` | 12 | pre 48 min |
+| Insajder | kriticki | RSS radi | `https://insajder.net/feed.xml` | 100 | pre 24 min |
 | BIRN Srbija | kriticki | Bez RSS-a — treba scraping | — | — | — |
-| Juzne vesti | kriticki | RSS radi | `https://www.juznevesti.com/feed/` | 10 | pre 5 h |
-| KRIK | kriticki | RSS radi | `https://www.krik.rs/feed/` | 10 | pre 38 h |
-| Cenzolovka | kriticki | RSS radi | `https://www.cenzolovka.rs/feed/` | 20 | pre 31 h |
+| Juzne vesti | kriticki | RSS radi | `https://www.juznevesti.com/feed/` | 10 | pre 41 min |
+| KRIK | kriticki | RSS radi | `https://www.krik.rs/feed/` | 10 | pre 2 dana |
+| Cenzolovka | kriticki | RSS radi | `https://www.cenzolovka.rs/feed/` | 20 | pre 44 h |
 | Blic | mejnstrim | Bez RSS-a, ali ima news sitemap | — | — | — |
-| Telegraf | mejnstrim | RSS radi | `https://www.telegraf.rs/rss` | 20 | pre 11 min |
-| Mondo | mejnstrim | RSS radi | `https://mondo.rs/rss/629/Naslovna` | 100 | pre 1 h |
-| B92 | mejnstrim | RSS radi | `https://www.b92.net/rss/latest` | 20 | pre 59 min |
+| Telegraf | mejnstrim | RSS radi | `https://www.telegraf.rs/rss` | 20 | pre 2 min |
+| Mondo | mejnstrim | RSS radi | `https://mondo.rs/rss/629/Naslovna` | 100 | pre 7 min |
+| B92 | mejnstrim | RSS radi | `https://www.b92.net/rss/latest` | 20 | pre 7 min |
 | RTS | mejnstrim | Bez RSS-a — treba scraping | — | — | — |
 | Euronews Srbija | mejnstrim | Bez RSS-a — treba scraping | — | — | — |
 | Tanjug | agencija | Bez RSS-a, ali ima news sitemap | — | — | — |
-| Beta | agencija | RSS radi | `https://beta.rs/rss` | 10 | pre 2 h |
+| Beta | agencija | RSS radi | `https://beta.rs/rss` | 10 | pre 13 min |
 
 ## Izvori sa ispravnim RSS-om
 
@@ -53,7 +53,7 @@ Početna: https://pink.rs · robots.txt: dostupan
 
 | Feed | Tip | Pronađen preko | Stavki | Najnovija vest | U config |
 | --- | --- | --- | --- | --- | --- |
-| `https://pink.rs/rss-feed` | atom | html | 50 | pre 2 min | da |
+| `https://pink.rs/rss-feed` | atom | html | 50 | pre 1 h | da |
 
 ### Kurir
 
@@ -61,28 +61,28 @@ Početna: https://www.kurir.rs · robots.txt: dostupan
 
 | Feed | Tip | Pronađen preko | Stavki | Najnovija vest | U config |
 | --- | --- | --- | --- | --- | --- |
-| `https://www.kurir.rs/rss` | rss | html | 100 | pre 10 min | da |
-| `https://www.kurir.rs/rss/najnovije-vesti` | rss | html | 100 | pre 10 min | da |
-| `https://www.kurir.rs/rss/vesti` | rss | html | 100 | pre 20 min | da |
-| `https://www.kurir.rs/rss/vesti/politika` | rss | html | 100 | pre 3 h | — |
-| `https://www.kurir.rs/rss/vesti/drustvo` | rss | html | 100 | pre 1 h | — |
-| `https://www.kurir.rs/rss/vesti/srbija` | rss | html | 100 | pre 20 min | — |
-| `https://www.kurir.rs/rss/vesti/beograd` | rss | html | 100 | pre 7 h | — |
-| `https://www.kurir.rs/rss/stars` | rss | html | 100 | pre 30 min | da |
-| `https://www.kurir.rs/rss/sport` | rss | html | 100 | pre 1 h | da |
-| `https://www.kurir.rs/rss/sport/fudbal` | rss | html | 100 | pre 2 h | — |
-| `https://www.kurir.rs/rss/sport/kosarka` | rss | html | 100 | pre 2 h | — |
-| `https://www.kurir.rs/rss/sport/tenis` | rss | html | 100 | pre 3 h | — |
-| `https://www.kurir.rs/rss/crna-hronika` | rss | html | 100 | pre 2 h | — |
-| `https://www.kurir.rs/rss/region` | rss | html | 100 | pre 10 min | — |
-| `https://www.kurir.rs/rss/planeta` | rss | html | 100 | pre 19 min | — |
-| `https://www.kurir.rs/rss/zabava` | rss | html | 100 | pre 26 min | — |
-| `https://www.kurir.rs/rss/zabava/kultura` | rss | html | 100 | pre 4 h | — |
-| `https://www.kurir.rs/rss/zabava/pop-kultura` | rss | html | 100 | pre 3 h | — |
-| `https://www.kurir.rs/rss/zabava/zena` | rss | html | 100 | pre 26 min | — |
-| `https://www.kurir.rs/rss/zabava/tech` | rss | html | 8 | pre 6 dana | — |
-| `https://www.kurir.rs/rss/biznis` | rss | html | 100 | pre 3 h | — |
-| `https://www.kurir.rs/rss/zdravlje` | rss | html | 100 | pre 8 h | — |
+| `https://www.kurir.rs/rss` | rss | html | 100 | pre 17 min | da |
+| `https://www.kurir.rs/rss/najnovije-vesti` | rss | html | 100 | pre 7 min | da |
+| `https://www.kurir.rs/rss/vesti` | rss | html | 100 | pre 21 min | da |
+| `https://www.kurir.rs/rss/vesti/politika` | rss | html | 100 | pre 21 min | — |
+| `https://www.kurir.rs/rss/vesti/drustvo` | rss | html | 100 | pre 21 min | — |
+| `https://www.kurir.rs/rss/vesti/srbija` | rss | html | 100 | pre 8 h | — |
+| `https://www.kurir.rs/rss/vesti/beograd` | rss | html | 100 | pre 5 h | — |
+| `https://www.kurir.rs/rss/stars` | rss | html | 100 | pre 7 min | da |
+| `https://www.kurir.rs/rss/sport` | rss | html | 100 | pre 11 min | da |
+| `https://www.kurir.rs/rss/sport/fudbal` | rss | html | 100 | pre 11 min | — |
+| `https://www.kurir.rs/rss/sport/kosarka` | rss | html | 100 | pre 24 min | — |
+| `https://www.kurir.rs/rss/sport/tenis` | rss | html | 100 | pre 27 min | — |
+| `https://www.kurir.rs/rss/crna-hronika` | rss | html | 100 | pre 17 min | — |
+| `https://www.kurir.rs/rss/region` | rss | html | 100 | pre 12 min | — |
+| `https://www.kurir.rs/rss/planeta` | rss | html | 100 | pre 1 h | — |
+| `https://www.kurir.rs/rss/zabava` | rss | html | 100 | pre 25 min | — |
+| `https://www.kurir.rs/rss/zabava/kultura` | rss | html | 100 | pre 2 h | — |
+| `https://www.kurir.rs/rss/zabava/pop-kultura` | rss | html | 100 | pre 25 min | — |
+| `https://www.kurir.rs/rss/zabava/zena` | rss | html | 100 | pre 7 h | — |
+| `https://www.kurir.rs/rss/zabava/tech` | rss | html | 8 | pre 7 dana | — |
+| `https://www.kurir.rs/rss/biznis` | rss | html | 100 | pre 14 min | — |
+| `https://www.kurir.rs/rss/zdravlje` | rss | html | 100 | pre 29 min | — |
 
 > Sajt nudi 22 feed-ova (glavni plus po jedan za svaku rubriku). U `config/sources.json` ulazi 5 — dohvatati sve značilo bi višestruko veći saobraćaj ka istom sajtu za skoro isti sadržaj.
 
@@ -92,8 +92,8 @@ Početna: https://happytv.rs · robots.txt: dostupan
 
 | Feed | Tip | Pronađen preko | Stavki | Najnovija vest | U config |
 | --- | --- | --- | --- | --- | --- |
-| `https://happytv.rs/feed/` | rss | html | 40 | pre 26 h | da |
-| `https://happytv.rs/comments/feed/` | rss | html | 40 | pre 4 dana | — |
+| `https://happytv.rs/feed/` | rss | html | 40 | pre 6 min | da |
+| `https://happytv.rs/comments/feed/` | rss | html | 40 | pre 5 dana | — |
 
 > Sajt nudi 2 feed-ova (glavni plus po jedan za svaku rubriku). U `config/sources.json` ulazi 1 — dohvatati sve značilo bi višestruko veći saobraćaj ka istom sajtu za skoro isti sadržaj.
 
@@ -103,7 +103,7 @@ Početna: https://www.srbijadanas.com · robots.txt: dostupan
 
 | Feed | Tip | Pronađen preko | Stavki | Najnovija vest | U config |
 | --- | --- | --- | --- | --- | --- |
-| `https://www.sd.rs/rss.xml` | rss | html | 100 | pre 4 min | da |
+| `https://www.sd.rs/rss.xml` | rss | html | 100 | pre 7 min | da |
 
 ### N1
 
@@ -111,7 +111,7 @@ Početna: https://n1info.rs · robots.txt: dostupan
 
 | Feed | Tip | Pronađen preko | Stavki | Najnovija vest | U config |
 | --- | --- | --- | --- | --- | --- |
-| `https://n1info.rs/feed/` | rss | putanja | 50 | pre 1 h | da |
+| `https://n1info.rs/feed/` | rss | putanja | 50 | pre 3 min | da |
 
 ### Nova.rs
 
@@ -119,7 +119,7 @@ Početna: https://nova.rs · robots.txt: dostupan
 
 | Feed | Tip | Pronađen preko | Stavki | Najnovija vest | U config |
 | --- | --- | --- | --- | --- | --- |
-| `https://nova.rs/feed/` | rss | putanja | 50 | pre 44 min | da |
+| `https://nova.rs/feed/` | rss | putanja | 50 | pre 3 min | da |
 
 ### Danas
 
@@ -127,8 +127,8 @@ Početna: https://www.danas.rs · robots.txt: dostupan
 
 | Feed | Tip | Pronađen preko | Stavki | Najnovija vest | U config |
 | --- | --- | --- | --- | --- | --- |
-| `https://www.danas.rs/feed/` | rss | html | 50 | pre 1 h | da |
-| `https://www.danas.rs/comments/feed/` | rss | html | 50 | pre 1 h | — |
+| `https://www.danas.rs/feed/` | rss | html | 50 | pre 10 min | da |
+| `https://www.danas.rs/comments/feed/` | rss | html | 50 | pre 21 min | — |
 
 > Sajt nudi 2 feed-ova (glavni plus po jedan za svaku rubriku). U `config/sources.json` ulazi 1 — dohvatati sve značilo bi višestruko veći saobraćaj ka istom sajtu za skoro isti sadržaj.
 
@@ -138,7 +138,7 @@ Početna: https://vreme.com · robots.txt: dostupan
 
 | Feed | Tip | Pronađen preko | Stavki | Najnovija vest | U config |
 | --- | --- | --- | --- | --- | --- |
-| `https://vreme.com/feed/` | rss | putanja | 12 | pre 3 h | da |
+| `https://vreme.com/feed/` | rss | putanja | 12 | pre 48 min | da |
 
 ### Insajder
 
@@ -146,8 +146,8 @@ Početna: https://insajder.net · robots.txt: dostupan
 
 | Feed | Tip | Pronađen preko | Stavki | Najnovija vest | U config |
 | --- | --- | --- | --- | --- | --- |
-| `https://insajder.net/feed.xml` | rss | html | 100 | pre 1 h | da |
-| `https://insajder.net/feed` | rss | putanja | 100 | pre 1 h | da |
+| `https://insajder.net/feed.xml` | rss | html | 100 | pre 24 min | da |
+| `https://insajder.net/feed` | rss | putanja | 100 | pre 55 min | da |
 
 ### Juzne vesti
 
@@ -155,8 +155,8 @@ Početna: https://www.juznevesti.com · robots.txt: dostupan
 
 | Feed | Tip | Pronađen preko | Stavki | Najnovija vest | U config |
 | --- | --- | --- | --- | --- | --- |
-| `https://www.juznevesti.com/feed/` | rss | html | 10 | pre 5 h | da |
-| `https://www.juznevesti.com/comments/feed/` | rss | html | 10 | pre 2 h | — |
+| `https://www.juznevesti.com/feed/` | rss | html | 10 | pre 41 min | da |
+| `https://www.juznevesti.com/comments/feed/` | rss | html | 10 | pre 1 h | — |
 
 > Sajt nudi 2 feed-ova (glavni plus po jedan za svaku rubriku). U `config/sources.json` ulazi 1 — dohvatati sve značilo bi višestruko veći saobraćaj ka istom sajtu za skoro isti sadržaj.
 
@@ -166,8 +166,8 @@ Početna: https://www.krik.rs · robots.txt: dostupan
 
 | Feed | Tip | Pronađen preko | Stavki | Najnovija vest | U config |
 | --- | --- | --- | --- | --- | --- |
-| `https://www.krik.rs/feed/` | rss | html | 10 | pre 38 h | da |
-| `https://www.krik.rs/comments/feed/` | rss | html | 10 | pre 2096 dana | — |
+| `https://www.krik.rs/feed/` | rss | html | 10 | pre 2 dana | da |
+| `https://www.krik.rs/comments/feed/` | rss | html | 10 | pre 2097 dana | — |
 
 > Sajt nudi 2 feed-ova (glavni plus po jedan za svaku rubriku). U `config/sources.json` ulazi 1 — dohvatati sve značilo bi višestruko veći saobraćaj ka istom sajtu za skoro isti sadržaj.
 
@@ -177,7 +177,7 @@ Početna: https://www.cenzolovka.rs · robots.txt: dostupan
 
 | Feed | Tip | Pronađen preko | Stavki | Najnovija vest | U config |
 | --- | --- | --- | --- | --- | --- |
-| `https://www.cenzolovka.rs/feed/` | rss | html | 20 | pre 31 h | da |
+| `https://www.cenzolovka.rs/feed/` | rss | html | 20 | pre 44 h | da |
 | `https://www.cenzolovka.rs/comments/feed/` | rss | html | 20 | pre 1108 dana | — |
 
 > Sajt nudi 2 feed-ova (glavni plus po jedan za svaku rubriku). U `config/sources.json` ulazi 1 — dohvatati sve značilo bi višestruko veći saobraćaj ka istom sajtu za skoro isti sadržaj.
@@ -188,7 +188,7 @@ Početna: https://www.telegraf.rs · robots.txt: dostupan
 
 | Feed | Tip | Pronađen preko | Stavki | Najnovija vest | U config |
 | --- | --- | --- | --- | --- | --- |
-| `https://www.telegraf.rs/rss` | rss | putanja | 20 | pre 11 min | da |
+| `https://www.telegraf.rs/rss` | rss | putanja | 20 | pre 2 min | da |
 
 ### Mondo
 
@@ -196,34 +196,34 @@ Početna: https://mondo.rs · robots.txt: dostupan
 
 | Feed | Tip | Pronađen preko | Stavki | Najnovija vest | U config |
 | --- | --- | --- | --- | --- | --- |
-| `https://mondo.rs/rss/629/Naslovna` | rss | html | 100 | pre 1 h | da |
-| `https://mondo.rs/rss/644/Sport` | rss | html | 100 | pre 1 h | da |
-| `https://mondo.rs/rss/646/Sport/Fudbal` | rss | html | 100 | pre 1 h | — |
-| `https://mondo.rs/rss/652/Sport/Kosarka` | rss | html | 100 | pre 1 h | — |
+| `https://mondo.rs/rss/629/Naslovna` | rss | html | 100 | pre 7 min | da |
+| `https://mondo.rs/rss/644/Sport` | rss | html | 100 | pre 12 min | da |
+| `https://mondo.rs/rss/646/Sport/Fudbal` | rss | html | 100 | pre 12 min | — |
+| `https://mondo.rs/rss/652/Sport/Kosarka` | rss | html | 100 | pre 2 h | — |
 | `https://mondo.rs/rss/657/Sport/Tenis` | rss | html | 100 | pre 3 h | — |
 | `https://mondo.rs/rss/660/Sport/Ostali-sportovi` | rss | html | 100 | pre 2 h | — |
-| `https://mondo.rs/rss/631/Info` | rss | html | 100 | pre 1 h | da |
-| `https://mondo.rs/rss/640/Info/Drustvo` | rss | html | 100 | pre 7 h | — |
-| `https://mondo.rs/rss/11427/Info/Politika` | rss | html | 100 | pre 5 h | — |
+| `https://mondo.rs/rss/631/Info` | rss | html | 100 | pre 7 min | da |
+| `https://mondo.rs/rss/640/Info/Drustvo` | rss | html | 100 | pre 27 min | — |
+| `https://mondo.rs/rss/11427/Info/Politika` | rss | html | 100 | pre 3 h | — |
 | `https://mondo.rs/rss/641/Info/Crna-hronika` | rss | html | 100 | pre 1 h | — |
 | `https://mondo.rs/rss/642/Info/Ekonomija` | rss | html | 100 | pre 4 h | — |
 | `https://mondo.rs/rss/637/Info/Srbija` | rss | html | 100 | pre 6 dana | — |
-| `https://mondo.rs/rss/639/Info/Beograd` | rss | html | 100 | pre 7 h | — |
-| `https://mondo.rs/rss/638/Info/Svet` | rss | html | 100 | pre 1 h | — |
-| `https://mondo.rs/rss/643/Info/EX-YU` | rss | html | 100 | pre 9 h | — |
-| `https://mondo.rs/rss/11312/Info/Novi-Sad-na-Mondu` | rss | html | 100 | pre 19 dana | — |
-| `https://mondo.rs/rss/663/Zabava` | rss | html | 100 | pre 2 h | da |
-| `https://mondo.rs/rss/665/Zabava/Zvezde-i-tracevi` | rss | html | 100 | pre 2 h | — |
-| `https://mondo.rs/rss/671/Zabava/TV` | rss | html | 100 | pre 4 h | — |
-| `https://mondo.rs/rss/673/Zabava/Film` | rss | html | 100 | pre 26 h | — |
-| `https://mondo.rs/rss/674/Zabava/Muzika` | rss | html | 100 | pre 18 h | — |
-| `https://mondo.rs/rss/675/Zabava/Zanimljivosti` | rss | html | 100 | pre 14 dana | — |
-| `https://mondo.rs/rss/676/Zabava/Kultura` | rss | html | 100 | pre 5 h | — |
-| `https://mondo.rs/rss/678/Magazin` | rss | html | 100 | pre 13 h | da |
-| `https://mondo.rs/rss/680/Magazin/Ljubav` | rss | html | 100 | pre 4 dana | — |
-| `https://mondo.rs/rss/681/Magazin/Stil` | rss | html | 100 | pre 13 h | — |
-| `https://mondo.rs/rss/685/Magazin/Zdravlje` | rss | html | 100 | pre 18 h | — |
-| `https://mondo.rs/rss/822/Horoskop` | rss | html | 100 | pre 20 h | — |
+| `https://mondo.rs/rss/639/Info/Beograd` | rss | html | 100 | pre 19 h | — |
+| `https://mondo.rs/rss/638/Info/Svet` | rss | html | 100 | pre 58 min | — |
+| `https://mondo.rs/rss/643/Info/EX-YU` | rss | html | 100 | pre 7 min | — |
+| `https://mondo.rs/rss/11312/Info/Novi-Sad-na-Mondu` | rss | html | 100 | pre 20 dana | — |
+| `https://mondo.rs/rss/663/Zabava` | rss | html | 100 | pre 7 min | da |
+| `https://mondo.rs/rss/665/Zabava/Zvezde-i-tracevi` | rss | html | 100 | pre 7 min | — |
+| `https://mondo.rs/rss/671/Zabava/TV` | rss | html | 100 | pre 16 h | — |
+| `https://mondo.rs/rss/673/Zabava/Film` | rss | html | 100 | pre 39 h | — |
+| `https://mondo.rs/rss/674/Zabava/Muzika` | rss | html | 100 | pre 6 h | — |
+| `https://mondo.rs/rss/675/Zabava/Zanimljivosti` | rss | html | 100 | pre 15 dana | — |
+| `https://mondo.rs/rss/676/Zabava/Kultura` | rss | html | 100 | pre 18 h | — |
+| `https://mondo.rs/rss/678/Magazin` | rss | html | 100 | pre 1 h | da |
+| `https://mondo.rs/rss/680/Magazin/Ljubav` | rss | html | 100 | pre 5 dana | — |
+| `https://mondo.rs/rss/681/Magazin/Stil` | rss | html | 100 | pre 1 h | — |
+| `https://mondo.rs/rss/685/Magazin/Zdravlje` | rss | html | 100 | pre 30 h | — |
+| `https://mondo.rs/rss/822/Horoskop` | rss | html | 100 | pre 6 h | — |
 
 > Sajt nudi 28 feed-ova (glavni plus po jedan za svaku rubriku). U `config/sources.json` ulazi 5 — dohvatati sve značilo bi višestruko veći saobraćaj ka istom sajtu za skoro isti sadržaj.
 
@@ -233,8 +233,8 @@ Početna: https://www.b92.net · robots.txt: dostupan
 
 | Feed | Tip | Pronađen preko | Stavki | Najnovija vest | U config |
 | --- | --- | --- | --- | --- | --- |
-| `https://www.b92.net/rss/latest` | rss | putanja | 20 | pre 59 min | da |
-| `https://www.b92.net/rss/b92` | rss | putanja | 20 | pre 59 min | da |
+| `https://www.b92.net/rss/latest` | rss | putanja | 20 | pre 7 min | da |
+| `https://www.b92.net/rss/b92` | rss | putanja | 20 | pre 7 min | da |
 
 ### Beta
 
@@ -242,7 +242,7 @@ Početna: https://beta.rs · robots.txt: dostupan
 
 | Feed | Tip | Pronađen preko | Stavki | Najnovija vest | U config |
 | --- | --- | --- | --- | --- | --- |
-| `https://beta.rs/rss` | rss | putanja | 10 | pre 2 h | da |
+| `https://beta.rs/rss` | rss | putanja | 10 | pre 13 min | da |
 
 ## Izvori bez RSS-a — predlog fallback-a
 
@@ -256,10 +256,10 @@ Najčešće rubrike na početnoj strani:
 
 | Rubrika | Linkova | Primer |
 | --- | --- | --- |
-| `/zivot` | 84 | https://www.prva.rs/zivot/astro/3241/sta-svakom-horoskopskom-znaku-ne-ide-od-ruke/vest |
+| `/zivot` | 78 | https://www.prva.rs/zivot/astro/20037/najdetaljniji-nedeljni-horoskop-od-7-do-13-septembra-koga-ceka-buran-ljubavni-period-ko-je-umoran-od-svega-a-ko-ce-imati-napade-gladi/vest |
 | `/formati` | 75 | https://www.prva.rs/formati/emisija |
-| `/video` | 36 | https://www.prva.rs/video/serija/117513/igra-sudbine-1893-epizoda-sta-je-ovo-neko-resenje-o-privremenom-zatvaranju-objekta |
-| `/showbiz` | 14 | https://www.prva.rs/showbiz/vesti/19913/premijere-domacih-serija-i-najgledaniji-svetski-tv-sou-ove-jeseni-na-prvoj/vest |
+| `/video` | 36 | https://www.prva.rs/video/jutro/117524/da-li-je-letnjim-vrelinama-kraj |
+| `/showbiz` | 18 | https://www.prva.rs/showbiz/vesti/19913/premijere-domacih-serija-i-najgledaniji-svetski-tv-sou-ove-jeseni-na-prvoj/vest |
 | `/horoskop` | 12 | https://www.prva.rs/horoskop/ovan |
 | `/stranica` | 9 | https://www.prva.rs/stranica/1/prva |
 
@@ -324,10 +324,10 @@ Najčešće rubrike na početnoj strani:
 
 | Rubrika | Linkova | Primer |
 | --- | --- | --- |
-| `/vesti` | 118 | https://www.rts.rs/vesti/politika.html |
-| `/magazin` | 118 | https://www.rts.rs/magazin/zivot.html |
-| `/sport` | 71 | https://www.rts.rs/sport/fudbal.html |
-| `/rts` | 56 | https://www.rts.rs/rts/muzicka-produkcija.html |
+| `/magazin` | 120 | https://www.rts.rs/magazin/zivot.html |
+| `/vesti` | 116 | https://www.rts.rs/vesti/politika.html |
+| `/sport` | 73 | https://www.rts.rs/sport/fudbal.html |
+| `/rts` | 54 | https://www.rts.rs/rts/muzicka-produkcija.html |
 | `/tv` | 34 | https://www.rts.rs/tv/rts1.html |
 | `/radio` | 30 | https://www.rts.rs/radio/radio-beograd-1.html |
 
@@ -336,12 +336,12 @@ Predlog za `config/sources.json`:
 ```json
 {
   "listingUrls": [
-    "https://www.rts.rs/vesti/",
     "https://www.rts.rs/magazin/",
+    "https://www.rts.rs/vesti/",
     "https://www.rts.rs/sport/"
   ],
   "itemLinkSelector": "article a[href], h2 a[href], h3 a[href]",
-  "linkPattern": "^/(vesti|magazin|sport)/",
+  "linkPattern": "^/(magazin|vesti|sport)/",
   "maxLinksPerRun": 30
 }
 ```
@@ -354,12 +354,12 @@ Najčešće rubrike na početnoj strani:
 
 | Rubrika | Linkova | Primer |
 | --- | --- | --- |
-| `/srbija` | 124 | https://www.euronews.rs/srbija/politika |
-| `/magazin` | 101 | https://www.euronews.rs/magazin/zivot |
-| `/evropa` | 83 | https://www.euronews.rs/evropa/vesti |
-| `/biznis` | 56 | https://www.euronews.rs/biznis/biznis-vesti |
-| `/svet` | 55 | https://www.euronews.rs/svet/fokus |
-| `/sport` | 29 | https://www.euronews.rs/sport/fudbal |
+| `/srbija` | 129 | https://www.euronews.rs/srbija/politika |
+| `/magazin` | 116 | https://www.euronews.rs/magazin/zivot |
+| `/evropa` | 65 | https://www.euronews.rs/evropa/vesti |
+| `/svet` | 65 | https://www.euronews.rs/svet/fokus |
+| `/biznis` | 61 | https://www.euronews.rs/biznis/biznis-vesti |
+| `/putovanja` | 23 | https://www.euronews.rs/putovanja/novosti |
 
 Predlog za `config/sources.json`:
 
@@ -388,12 +388,12 @@ Najčešće rubrike na početnoj strani:
 
 | Rubrika | Linkova | Primer |
 | --- | --- | --- |
-| `/politika` | 46 | https://informer.rs/politika/vesti/1148079/ratko-mladic-izjave-hag-sudnica |
+| `/politika` | 50 | https://informer.rs/politika/vesti/1148191/vucic-blokaderi-tompson-koncerti |
 | `/magazin` | 34 | https://informer.rs/magazin/recepti |
-| `/planeta` | 32 | https://informer.rs/planeta/vesti/1147133/nato-rusija-vojni-sukob-aleksandar-grusko |
-| `/drustvo` | 32 | https://informer.rs/drustvo/vesti |
-| `/dzet-set` | 30 | https://informer.rs/dzet-set/rijaliti/1148047/elita-10-pocetak |
-| `/sport` | 17 | https://informer.rs/sport/fudbal/1148077/vinsent-vagner-trener-elverzberg |
+| `/dzet-set` | 31 | https://informer.rs/dzet-set/estrada/1148189/milena-stamenkovic-deka-rodjendan-porodica |
+| `/planeta` | 28 | https://informer.rs/planeta/vesti/1148188/kijev-stiv-vitkof-dzerar-kusner-evropa |
+| `/drustvo` | 26 | https://informer.rs/drustvo/srbija/1148182/pozar-suva-planina-vatrogasci |
+| `/hronika` | 20 | https://informer.rs/hronika/region/1148180/pucnjava-crna-gora-podgorica-teretana |
 
 Predlog za `config/sources.json`:
 
@@ -402,10 +402,10 @@ Predlog za `config/sources.json`:
   "listingUrls": [
     "https://informer.rs/politika/",
     "https://informer.rs/magazin/",
-    "https://informer.rs/planeta/"
+    "https://informer.rs/dzet-set/"
   ],
   "itemLinkSelector": "article a[href], h2 a[href], h3 a[href]",
-  "linkPattern": "^/(politika|magazin|planeta)/",
+  "linkPattern": "^/(politika|magazin|dzet-set)/",
   "maxLinksPerRun": 30
 }
 ```
@@ -416,18 +416,18 @@ Početna: https://www.alo.rs · robots.txt: dostupan
 
 **Ima news sitemap** — to je bolje od scraping-a: uredan XML sa svežim člancima.
 
-- `https://www.alo.rs/sitemap/google-news-sitemap.xml` (437 unosa)
+- `https://www.alo.rs/sitemap/google-news-sitemap.xml` (442 unosa)
 
 Najčešće rubrike na početnoj strani:
 
 | Rubrika | Linkova | Primer |
 | --- | --- | --- |
-| `/vesti` | 52 | https://www.alo.rs/vesti/drustvo.html |
-| `/razonoda` | 26 | https://www.alo.rs/razonoda/istorija.html |
+| `/vesti` | 51 | https://www.alo.rs/vesti/drustvo.html |
+| `/razonoda` | 28 | https://www.alo.rs/razonoda/istorija.html |
 | `/vip` | 25 | https://www.alo.rs/vip/estrada.html |
 | `/biz` | 22 | https://www.alo.rs/biz/novac.html |
 | `/hronika` | 15 | https://www.alo.rs/hronika/nesrece.html |
-| `/sport-mobile` | 9 | https://www.alo.rs/sport-mobile/tenis/16934992/sta-se-ovo-desava-na-us-openu-ispao-jedan-od-favorita-iz-senke-a-onda-je-i-finalista-rolan-garosa-doziveo-debakl.html |
+| `/sport-mobile` | 10 | https://www.alo.rs/sport-mobile/fudbal/16935465/trener-milana-opleo-po-srbinu-umislja-da-je-desetka.html |
 
 Predlog za `config/sources.json`:
 
@@ -450,18 +450,18 @@ Početna: https://www.novosti.rs · robots.txt: dostupan
 
 **Ima news sitemap** — to je bolje od scraping-a: uredan XML sa svežim člancima.
 
-- `https://www.novosti.rs/sitemaps/xml/news` (254 unosa)
+- `https://www.novosti.rs/sitemaps/xml/news` (343 unosa)
 
 Najčešće rubrike na početnoj strani:
 
 | Rubrika | Linkova | Primer |
 | --- | --- | --- |
-| `/vesti` | 165 | https://www.novosti.rs/vesti/politika |
-| `/sport` | 137 | https://www.novosti.rs/sport/fudbal |
-| `/planeta` | 124 | https://www.novosti.rs/planeta/svet |
+| `/vesti` | 215 | https://www.novosti.rs/vesti/politika |
+| `/sport` | 142 | https://www.novosti.rs/sport/fudbal |
+| `/planeta` | 100 | https://www.novosti.rs/planeta/svet |
+| `/drustvo` | 66 | https://www.novosti.rs/drustvo/vesti |
 | `/hronika` | 53 | https://www.novosti.rs/hronika/zlocin |
 | `/ekonomija` | 53 | https://www.novosti.rs/ekonomija/vesti |
-| `/drustvo` | 51 | https://www.novosti.rs/drustvo/vesti |
 
 Predlog za `config/sources.json`:
 
@@ -484,18 +484,18 @@ Početna: https://www.blic.rs · robots.txt: dostupan
 
 **Ima news sitemap** — to je bolje od scraping-a: uredan XML sa svežim člancima.
 
-- `https://www.blic.rs/sitemap-stories-news-news.xml.gz` (523 unosa)
+- `https://www.blic.rs/sitemap-stories-news-news.xml.gz` (516 unosa)
 
 Najčešće rubrike na početnoj strani:
 
 | Rubrika | Linkova | Primer |
 | --- | --- | --- |
-| `/vesti` | 65 | https://www.blic.rs/vesti/politika |
-| `/zabava` | 34 | https://www.blic.rs/zabava/milioner-ozenio-poznatu-srpkinju-od-koje-je-stariji-19-godina-i-dosao-u-beograd/gfy1tgk |
-| `/biznis` | 25 | https://www.blic.rs/biznis/vesti/vucic-ministri-ce-morati-da-rade-najmanje-10-sati-dnevno/kp927zd |
-| `/video-strana` | 18 | https://www.blic.rs/video-strana/bebi-dol-spremna-za-ulazak-u-elitu-10/PIuVSUUs?playlistId=cSR1hD8z |
-| `/zdravlje` | 10 | https://www.blic.rs/zdravlje/ishrana/da-li-toplo-mleko-zaista-pomaze-za-spavanje/dhtd5ws |
-| `/slobodno-vreme` | 10 | https://www.blic.rs/slobodno-vreme/povratak-na-balkan-na-testu-kupio-kucu-a-supruga-i-deca-ne-zele-da-napuste-nemacku/gf13hwh |
+| `/vesti` | 51 | https://www.blic.rs/vesti/politika |
+| `/biznis` | 35 | https://www.blic.rs/biznis/vesti/vucic-obilazi-zapadnobackom-okrugu/yqcg9xb |
+| `/zabava` | 32 | https://www.blic.rs/zabava/kuca-u-krcedinu-vila-na-dedinju-tri-stana-u-beogradu-imovina-naseg-pevaca/l9rzbhe |
+| `/video-strana` | 16 | https://www.blic.rs/video-strana/vucic-magnetna-rezonanca-u-somboru-u-najkracem-roku/0l9bnQlx?playlistId=cSR1hD8z |
+| `/zdravlje` | 10 | https://www.blic.rs/zdravlje/zdravstvena-stanja/trovanje-hranom-moze-izazvati-dugotrajni-sindrom-nervoznih-creva-ovo-su-simptomi/2cp1bl6 |
+| `/slobodno-vreme` | 10 | https://www.blic.rs/slobodno-vreme/najskuplja-napustena-kuca-na-balkanu-vredi-pravo-bogatstvo-a-15-godina-propada/kxebgxy |
 
 Predlog za `config/sources.json`:
 
@@ -503,11 +503,11 @@ Predlog za `config/sources.json`:
 {
   "listingUrls": [
     "https://www.blic.rs/vesti/",
-    "https://www.blic.rs/zabava/",
-    "https://www.blic.rs/biznis/"
+    "https://www.blic.rs/biznis/",
+    "https://www.blic.rs/zabava/"
   ],
   "itemLinkSelector": "article a[href], h2 a[href], h3 a[href]",
-  "linkPattern": "^/(vesti|zabava|biznis)/",
+  "linkPattern": "^/(vesti|biznis|zabava)/",
   "maxLinksPerRun": 30
 }
 ```
@@ -518,18 +518,18 @@ Početna: https://www.tanjug.rs · robots.txt: dostupan
 
 **Ima news sitemap** — to je bolje od scraping-a: uredan XML sa svežim člancima.
 
-- `https://www.tanjug.rs/sitemap/news.xml` (420 unosa)
+- `https://www.tanjug.rs/sitemap/news.xml` (385 unosa)
 
 Najčešće rubrike na početnoj strani:
 
 | Rubrika | Linkova | Primer |
 | --- | --- | --- |
-| `/srbija` | 68 | https://www.tanjug.rs/srbija/politika |
-| `/svet` | 34 | https://www.tanjug.rs/svet/politika |
-| `/sport` | 33 | https://www.tanjug.rs/sport/fudbal |
-| `/ekonomija` | 25 | https://www.tanjug.rs/ekonomija/srbija |
-| `/kultura` | 20 | https://www.tanjug.rs/kultura/art |
-| `/region` | 19 | https://www.tanjug.rs/region/politika |
+| `/srbija` | 60 | https://www.tanjug.rs/srbija/politika |
+| `/svet` | 50 | https://www.tanjug.rs/svet/politika |
+| `/ekonomija` | 35 | https://www.tanjug.rs/ekonomija/srbija |
+| `/sport` | 25 | https://www.tanjug.rs/sport/fudbal |
+| `/region` | 22 | https://www.tanjug.rs/region/politika |
+| `/kultura` | 19 | https://www.tanjug.rs/kultura/art |
 
 Predlog za `config/sources.json`:
 
@@ -538,10 +538,10 @@ Predlog za `config/sources.json`:
   "listingUrls": [
     "https://www.tanjug.rs/srbija/",
     "https://www.tanjug.rs/svet/",
-    "https://www.tanjug.rs/sport/"
+    "https://www.tanjug.rs/ekonomija/"
   ],
   "itemLinkSelector": "article a[href], h2 a[href], h3 a[href]",
-  "linkPattern": "^/(srbija|svet|sport)/",
+  "linkPattern": "^/(srbija|svet|ekonomija)/",
   "maxLinksPerRun": 30
 }
 ```
@@ -583,7 +583,7 @@ Sve isprobane putanje, izvor po izvor.
 - `https://www.alo.rs/index.xml` → HTTP 404
 - `https://www.alo.rs/?feed=rss2` → HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)
 - `https://www.alo.rs/sitemap/sitemap-index.xml` → sitemap (indeks, 69 unosa)
-- `https://www.alo.rs/sitemap/google-news-sitemap.xml` → sitemap (urlset, news, 437 unosa)
+- `https://www.alo.rs/sitemap/google-news-sitemap.xml` → sitemap (urlset, news, 442 unosa)
 
 </details>
 
@@ -625,7 +625,7 @@ Sve isprobane putanje, izvor po izvor.
 - `https://www.kurir.rs/rss/biznis` → feed (rss, 100 stavki)
 - `https://www.kurir.rs/rss/zdravlje` → feed (rss, 100 stavki)
 - `https://www.kurir.rs/sitemaps-v2/index.xml` → sitemap (indeks, 29 unosa)
-- `https://www.kurir.rs/sitemaps-v2/news.xml` → sitemap (urlset, news, 678 unosa)
+- `https://www.kurir.rs/sitemaps-v2/news.xml` → sitemap (urlset, news, 676 unosa)
 
 </details>
 
@@ -645,7 +645,7 @@ Sve isprobane putanje, izvor po izvor.
 - `https://www.novosti.rs/atom.xml` → HTTP 404
 - `https://www.novosti.rs/index.xml` → HTTP 404
 - `https://www.novosti.rs/?feed=rss2` → HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)
-- `https://www.novosti.rs/sitemaps/xml/news` → sitemap (urlset, news, 254 unosa)
+- `https://www.novosti.rs/sitemaps/xml/news` → sitemap (urlset, news, 343 unosa)
 
 </details>
 
@@ -667,15 +667,15 @@ Sve isprobane putanje, izvor po izvor.
 <summary>Srbija Danas — 10 provera</summary>
 
 - `https://www.sd.rs/rss.xml` → feed (rss, 100 stavki)
-- `https://www.srbijadanas.com/feed` → HTTP 404
+- `https://www.srbijadanas.com/feed` → HTTP 403
 - `https://www.srbijadanas.com/rss` → HTTP 404
 - `https://www.srbijadanas.com/feed/rss2` → HTTP 404
 - `https://www.srbijadanas.com/atom.xml` → HTTP 404
 - `https://www.srbijadanas.com/index.xml` → HTTP 404
 - `https://www.srbijadanas.com/?feed=rss2` → HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)
-- `https://www.sd.rs/sitemap/index.xml` → HTTP 403
-- `https://www.sd.rs/sitemap/latest` → sitemap (urlset, 7 unosa)
-- `https://www.sd.rs/googlenews.xml` → sitemap (urlset, news, 482 unosa)
+- `https://www.sd.rs/sitemap/index.xml` → sitemap (indeks, 153 unosa)
+- `https://www.sd.rs/googlenews.xml` → sitemap (urlset, news, 474 unosa)
+- `https://www.sd.rs/sitemap/latest` → sitemap (urlset, 97 unosa)
 
 </details>
 
@@ -706,7 +706,7 @@ Sve isprobane putanje, izvor po izvor.
 - `https://n1info.rs/atom.xml` → HTTP 404
 - `https://n1info.rs/index.xml` → HTTP 404
 - `https://n1info.rs/?feed=rss2` → HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)
-- `https://n1info.rs/sitemap/sitemap_news_1.xml` → sitemap (urlset, news, 285 unosa)
+- `https://n1info.rs/sitemap/sitemap_news_1.xml` → sitemap (urlset, news, 252 unosa)
 - `https://n1info.rs/sitemap/sitemap_category_1.xml` → sitemap (urlset, 92 unosa)
 - `https://n1info.rs/sitemap/sitemap_post_1.xml` → sitemap (urlset, 1000 unosa)
 
@@ -722,7 +722,7 @@ Sve isprobane putanje, izvor po izvor.
 - `https://nova.rs/atom.xml` → HTTP 404
 - `https://nova.rs/index.xml` → HTTP 404
 - `https://nova.rs/?feed=rss2` → HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)
-- `https://nova.rs/sitemap/sitemap_news_1.xml` → sitemap (urlset, news, 335 unosa)
+- `https://nova.rs/sitemap/sitemap_news_1.xml` → sitemap (urlset, news, 324 unosa)
 - `https://nova.rs/sitemap/sitemap_category_1.xml` → sitemap (urlset, 92 unosa)
 - `https://nova.rs/sitemap/sitemap_post_1.xml` → sitemap (urlset, 1000 unosa)
 
@@ -764,7 +764,7 @@ Sve isprobane putanje, izvor po izvor.
 - `https://insajder.net/index.xml` → HTTP 404
 - `https://insajder.net/?feed=rss2` → HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)
 - `https://insajder.net/sitemap.xml` → sitemap (indeks, 996 unosa)
-- `https://insajder.net/news-sitemap.xml` → sitemap (urlset, news, 131 unosa)
+- `https://insajder.net/news-sitemap.xml` → sitemap (urlset, news, 128 unosa)
 
 </details>
 
@@ -839,11 +839,11 @@ Sve isprobane putanje, izvor po izvor.
 - `https://www.blic.rs/index.xml` → HTTP 404
 - `https://www.blic.rs/?feed=rss2` → HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)
 - `https://www.blic.rs/sitemap-stories-latest-index.xml.gz` → sitemap (indeks, 1 unosa)
-- `https://www.blic.rs/sitemap-stories-latest-latest.xml.gz` → sitemap (urlset, 11 unosa)
+- `https://www.blic.rs/sitemap-stories-latest-latest.xml.gz` → sitemap (urlset, 131 unosa)
 - `https://www.blic.rs/sitemap-stories-by-month-index.xml.gz` → sitemap (indeks, 319 unosa)
 - `https://www.blic.rs/sitemap-stories-by-month-2026-9.xml.gz` → sitemap (urlset, 1257 unosa)
 - `https://www.blic.rs/sitemap-stories-by-month-2026-8.xml.gz` → sitemap (urlset, 9016 unosa)
-- `https://www.blic.rs/sitemap-stories-news-news.xml.gz` → sitemap (urlset, news, 523 unosa)
+- `https://www.blic.rs/sitemap-stories-news-news.xml.gz` → sitemap (urlset, news, 516 unosa)
 
 </details>
 
@@ -857,9 +857,9 @@ Sve isprobane putanje, izvor po izvor.
 - `https://www.telegraf.rs/atom.xml` → HTTP 404
 - `https://www.telegraf.rs/index.xml` → HTTP 404
 - `https://www.telegraf.rs/?feed=rss2` → HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)
-- `https://www.telegraf.rs/xml/sitemap/latest` → sitemap (urlset, 6 unosa)
+- `https://www.telegraf.rs/xml/sitemap/latest` → sitemap (urlset, 152 unosa)
 - `https://www.telegraf.rs/xml/sitemap` → sitemap (indeks, 88 unosa)
-- `https://www.telegraf.rs/xml/news` → sitemap (urlset, news, 687 unosa)
+- `https://www.telegraf.rs/xml/news` → sitemap (urlset, news, 659 unosa)
 
 </details>
 
@@ -895,7 +895,7 @@ Sve isprobane putanje, izvor po izvor.
 - `https://mondo.rs/rss/685/Magazin/Zdravlje` → feed (rss, 100 stavki)
 - `https://mondo.rs/rss/822/Horoskop` → feed (rss, 100 stavki)
 - `https://mondo.rs/sitemaps/index.xml` → sitemap (indeks, 29 unosa)
-- `https://mondo.rs/sitemaps/news-sitemap.xml` → sitemap (urlset, news, 314 unosa)
+- `https://mondo.rs/sitemaps/news-sitemap.xml` → sitemap (urlset, news, 318 unosa)
 
 </details>
 
@@ -918,7 +918,7 @@ Sve isprobane putanje, izvor po izvor.
 - `https://www.rts.rs/rss` → HTTP 404
 - `https://www.rts.rs/rss.xml` → HTTP 404
 - `https://www.rts.rs/feed/rss2` → HTTP 404
-- `https://www.rts.rs/atom.xml` → greska — Mrezna greska: fetch failed (other side closed)
+- `https://www.rts.rs/atom.xml` → HTTP 404
 - `https://www.rts.rs/index.xml` → HTTP 404
 - `https://www.rts.rs/?feed=rss2` → HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)
 - `https://www.rts.rs/sitemap.xml` → HTTP 404
@@ -955,7 +955,7 @@ Sve isprobane putanje, izvor po izvor.
 - `https://www.tanjug.rs/atom.xml` → HTTP 404
 - `https://www.tanjug.rs/index.xml` → HTTP 404
 - `https://www.tanjug.rs/?feed=rss2` → HTTP 200 ali sadrzaj nije feed (verovatno obicna HTML strana)
-- `https://www.tanjug.rs/sitemap/news.xml` → sitemap (urlset, news, 420 unosa)
+- `https://www.tanjug.rs/sitemap/news.xml` → sitemap (urlset, news, 385 unosa)
 
 </details>
 

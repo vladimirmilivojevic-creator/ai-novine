@@ -4,7 +4,7 @@
 > zašto, šta vlasnik treba da proveri, i status faze. Pun plan je u `docs/plan.md`.
 
 **Poslednje ažuriranje:** 6. septembar 2026.
-**Trenutno stanje:** Faza 2 gotova — 148 stvarnih vesti u bazi. Faza 3 u radu. Odluka o izvorima iz Faze 1 (Politika, Prva, BIRN, RTS, Euronews) još nije doneta — blokira samo scraping deo Faze 3.
+**Trenutno stanje:** 418 vesti u bazi sa 21 izvora, dva GitHub Actions workflow-a spremna. Čeka se odluka o pet izvora bez kanala (Politika, Prva, BIRN, RTS, Euronews) i dodavanje GitHub Secrets.
 
 ## Pregled faza
 
@@ -247,3 +247,68 @@ poznate i preskočio ih pre nego što je otvorio ijednu stranicu. To je dokaz da
    naslovima, tekstom i vremenom objave.
 2. Tabela `sources` → 26 redova, kolone `consecutive_failures` na 0 i `disabled_until` prazne.
 3. Tabela `pipeline_runs` → dva reda sa `ok = true`.
+
+---
+
+## Faza 3 — Engine 1 na sve izvore 🔄
+
+**Status:** urađeno sve što ne zavisi od odluke o izvorima; scraping adapteri čekaju tvoju odluku.
+
+### Šta je urađeno
+
+- **News sitemap kao ravnopravan kanal.** Pet izvora bez RSS-a (Informer, Alo, Večernje novosti,
+  Blic, Tanjug) prikuplja se iz `news` sitemap-a — uredan XML sa adresom, naslovom i vremenom
+  objave. Bolje od scraping-a HTML-a i ne traži nijednu heuristiku po sajtu.
+- **Redosled kanala:** RSS prvi; sitemap ulazi kad izvor nema feed **ili kad feed tog ciklusa nije
+  dao ništa**. Pad jednog kanala tako ne gasi izvor.
+- **`sweep` komanda** briše sirove vesti starije od 10 dana i zapise o pokretanjima starije od 30
+  (pragovi su u `config/editorial.json`). `--dry-run` prikazuje stanje bez brisanja.
+- **Dva GitHub Actions workflow-a:** `ingest.yml` na `*/20`, `sweep.yml` dnevno u 3h. Oba imaju
+  `concurrency` grupu, pa se dva ciklusa nikad ne preklapaju, i `workflow_dispatch` za ručno
+  pokretanje.
+- **Logovi su čitljiv tekst i u CI-ju.** JSON se dobija samo sa `LOG_FORMAT=json`.
+
+### Rezultat punog ciklusa (21 izvor)
+
+| Mera | Vrednost |
+| --- | --- |
+| Redova u `raw_items` | 418 |
+| Izvora sa podacima | 21 (16 preko RSS-a, 5 preko sitemap-a) |
+| Pun tekst izvučen | 411 od 418 |
+| Grešaka | 5 (četiri HTTP 403 na Srbija Danas, jedan 404 na Telegrafu) |
+| Trajanje | 87 sekundi za 21 izvor |
+
+Po uglu: kritički 178, provladin 155, mejnstrim 60, agencije 25. Sva četiri ugla imaju pokriće,
+što je uslov za kapiju „najmanje dva različita ugla" u Fazi 5.
+
+### Odluke i razlozi
+
+| Odluka | Zašto |
+| --- | --- |
+| News sitemap umesto scraping-a za pet izvora | Isti podatak, bez ijedne heuristike po sajtu i bez rizika da promena dizajna obori prikupljanje. |
+| Link se prihvata i sa domena kanala, ne samo sa domena iz konfiguracije | Srbija Danas preusmerava `srbijadanas.com` na `sd.rs`. Poređenje samo sa konfiguracijom je odbacivalo sve njegove članke i izvor je padao u prekidač. |
+| Greška na pojedinačnom članku ne ruši izvor | Portali povlače tekstove (404) i ponekad odbiju bota na pojedinim stranama (403). Takav članak se upiše sa naslovom i opisom iz feeda, ciklus ide dalje. |
+
+### Blokirano tvojom odlukom iz Faze 1
+
+Pet izvora nema nijedan kanal podataka:
+
+| Izvor | Stanje | Opcija |
+| --- | --- | --- |
+| Politika | Blokira botove (HTTP 403 i na `robots.txt`) | Izbaciti, ili im zvanično tražiti pristup |
+| RTS | Nema ni RSS ni sitemap | Scraping po predlogu iz `reports/rss-discovery.md` |
+| Euronews Srbija | Nema ni RSS ni sitemap | Scraping |
+| BIRN Srbija | Nema news sitemap, ali ima `post-sitemap1.xml` sa 992 članka | Običan sitemap kao kanal |
+| Prva | Nema ni RSS ni sitemap | Scraping, ili izbaciti |
+
+### Šta vlasnik radi i proverava
+
+1. **Dodaje tri GitHub Secrets** (bez njih zakazani ciklusi padaju):
+   GitHub → repo → Settings → Secrets and variables → Actions → New repository secret.
+   Imena: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`.
+   Vrednosti su iste kao u `.env`. `SUPABASE_DB_URL` se **ne** dodaje — migracije se ne pokreću iz
+   Actions-a.
+2. Actions tab → workflow „Prikupljanje vesti" → „Run workflow" za ručnu probu, pa proverava da je
+   run zelen.
+3. Supabase Table Editor → `raw_items` raste ravnomerno kroz sve izvore.
+4. Odlučuje šta sa pet izvora iz tabele iznad.
