@@ -1,6 +1,13 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { Source } from '@ai-novine/core';
-import type { FetchStateRow, NewRawItem, PipelineRunRow, RawItemRow, SourceRow } from './schema.js';
+import type {
+  ClusterRow,
+  FetchStateRow,
+  NewRawItem,
+  PipelineRunRow,
+  RawItemRow,
+  SourceRow,
+} from './schema.js';
 
 /** Postgres kod za povredu jedinstvenog indeksa. */
 const UNIQUE_VIOLATION = '23505';
@@ -313,4 +320,191 @@ export async function storageSnapshot(client: SupabaseClient): Promise<{
     runs: runs ?? 0,
     oldestRawItem: (oldest as { fetched_at: string }[] | null)?.[0]?.fetched_at ?? null,
   };
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// clusters — Engine 2
+// ─────────────────────────────────────────────────────────────────────────────
+
+export interface RawItemForClustering {
+  id: string;
+  source_id: string;
+  title: string;
+  content: string | null;
+  published_at: string | null;
+  fetched_at: string;
+}
+
+/** Sirove vesti iz zadatog prozora, najnovije prve. */
+export async function rawItemsForClustering(
+  client: SupabaseClient,
+  windowHours: number,
+  limit = 1000,
+): Promise<RawItemForClustering[]> {
+  const cutoff = new Date(Date.now() - windowHours * 3600_000).toISOString();
+  const { data, error } = await client
+    .from('raw_items')
+    .select('id, source_id, title, content, published_at, fetched_at')
+    .gte('fetched_at', cutoff)
+    .order('fetched_at', { ascending: false })
+    .limit(limit);
+  if (error) fail('Citanje vesti za klasterovanje nije proslo', error);
+  return data as RawItemForClustering[];
+}
+
+/** Id-jevi vesti koje su vec u nekoj temi. */
+export async function clusteredItemIds(
+  client: SupabaseClient,
+  itemIds: string[],
+): Promise<Set<string>> {
+  const found = new Set<string>();
+
+  for (const batch of chunk(itemIds, 200)) {
+    const { data, error } = await client
+      .from('cluster_items')
+      .select('raw_item_id')
+      .in('raw_item_id', batch);
+    if (error) fail('Provera vec klasterovanih vesti nije prosla', error);
+    for (const row of data as { raw_item_id: string }[]) found.add(row.raw_item_id);
+  }
+  return found;
+}
+
+/** Otvorene teme koje su se pomerile unutar prozora. */
+export async function openClusters(
+  client: SupabaseClient,
+  windowHours: number,
+  limit = 500,
+): Promise<ClusterRow[]> {
+  const cutoff = new Date(Date.now() - windowHours * 3600_000).toISOString();
+  const { data, error } = await client
+    .from('clusters')
+    .select('*')
+    .eq('status', 'open')
+    .gte('updated_at', cutoff)
+    .order('updated_at', { ascending: false })
+    .limit(limit);
+  if (error) fail('Citanje otvorenih tema nije proslo', error);
+  return data as ClusterRow[];
+}
+
+export interface ClusterUpsert {
+  id: string | null;
+  first_item_at: string | null;
+  last_item_at: string | null;
+  size: number;
+  distinct_sources: number;
+  angles: string[];
+  keywords: string[];
+  entities: string[];
+  centroid: Record<string, number>;
+  trending_score: number;
+  title_sample: string | null;
+}
+
+/** Upisuje ili osvezava temu i vraca njen id. */
+export async function saveCluster(client: SupabaseClient, cluster: ClusterUpsert): Promise<string> {
+  const payload = { ...cluster, updated_at: new Date().toISOString() };
+
+  if (cluster.id) {
+    const { error } = await client.from('clusters').update(payload).eq('id', cluster.id);
+    if (error) fail(`Osvezavanje teme ${cluster.id} nije proslo`, error);
+    return cluster.id;
+  }
+
+  const { id: _ignored, ...insertPayload } = payload;
+  const { data, error } = await client.from('clusters').insert(insertPayload).select('id').single();
+  if (error) fail('Upis nove teme nije prosao', error);
+  return (data as { id: string }).id;
+}
+
+export async function addClusterItems(
+  client: SupabaseClient,
+  clusterId: string,
+  items: { rawItemId: string; similarity: number }[],
+): Promise<number> {
+  if (items.length === 0) return 0;
+
+  const rows = items.map((item) => ({
+    cluster_id: clusterId,
+    raw_item_id: item.rawItemId,
+    similarity: item.similarity,
+  }));
+
+  const { error } = await client
+    .from('cluster_items')
+    .upsert(rows, { onConflict: 'cluster_id,raw_item_id', ignoreDuplicates: true });
+  if (error) fail('Upis clanova teme nije prosao', error);
+  return rows.length;
+}
+
+export interface ClusterWithMembers extends ClusterRow {
+  members: { title: string; source_id: string; url: string; published_at: string | null }[];
+}
+
+/** Najjace teme sa naslovima unutar svake — za izvestaj vlasniku. */
+export async function topClusters(
+  client: SupabaseClient,
+  limit: number,
+  minSize = 1,
+): Promise<ClusterWithMembers[]> {
+  const { data, error } = await client
+    .from('clusters')
+    .select('*')
+    .gte('size', minSize)
+    .order('trending_score', { ascending: false })
+    .limit(limit);
+  if (error) fail('Citanje najjacih tema nije proslo', error);
+
+  const clusters = data as ClusterRow[];
+  const result: ClusterWithMembers[] = [];
+
+  for (const cluster of clusters) {
+    const { data: links, error: linkError } = await client
+      .from('cluster_items')
+      .select('raw_item_id')
+      .eq('cluster_id', cluster.id);
+    if (linkError) fail('Citanje clanova teme nije proslo', linkError);
+
+    const ids = (links as { raw_item_id: string }[]).map((row) => row.raw_item_id);
+    if (ids.length === 0) {
+      result.push({ ...cluster, members: [] });
+      continue;
+    }
+
+    const { data: items, error: itemError } = await client
+      .from('raw_items')
+      .select('title, source_id, url, published_at')
+      .in('id', ids);
+    if (itemError) fail('Citanje vesti u temi nije proslo', itemError);
+
+    result.push({
+      ...cluster,
+      members: items as ClusterWithMembers['members'],
+    });
+  }
+  return result;
+}
+
+/**
+ * Brise sve teme. Teme su izveden podatak — prave se ponovo iz `raw_items`,
+ * pa je ovo bezbedno posle promene praga slicnosti ili nacina poredjenja.
+ */
+export async function deleteAllClusters(client: SupabaseClient): Promise<number> {
+  const { data, error } = await client
+    .from('clusters')
+    .delete()
+    .neq('id', '00000000-0000-0000-0000-000000000000')
+    .select('id');
+  if (error) fail('Brisanje tema nije proslo', error);
+  return (data as { id: string }[]).length;
+}
+
+/** Brise zadate teme (npr. one koje su spojene u drugu). */
+export async function deleteClusters(client: SupabaseClient, ids: string[]): Promise<number> {
+  if (ids.length === 0) return 0;
+
+  const { data, error } = await client.from('clusters').delete().in('id', ids).select('id');
+  if (error) fail('Brisanje spojenih tema nije proslo', error);
+  return (data as { id: string }[]).length;
 }

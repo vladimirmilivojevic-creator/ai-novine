@@ -71,7 +71,10 @@ export const editorialConfigSchema = z.object({
     sweepCron: z.string().min(1),
   }),
   clustering: z.object({
+    /** Iznad ovoga vest ulazi u postojecu temu. */
     similarityThreshold: z.number().gt(0).lt(1),
+    /** Iznad ovoga se dve teme spajaju u jednu (drugi prolaz). */
+    mergeThreshold: z.number().gt(0).lt(1),
     windowHours: z.number().positive(),
     minTitleChars: z.number().int().positive(),
   }),

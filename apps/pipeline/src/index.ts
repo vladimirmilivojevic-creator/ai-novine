@@ -1,6 +1,7 @@
 #!/usr/bin/env -S npx tsx
 import { Command } from 'commander';
 import { logger } from '@ai-novine/core';
+import { runCluster } from './commands/cluster.js';
 import { runConfigCheck } from './commands/config-check.js';
 import { runDiscover } from './commands/discover.js';
 import { runDoctor } from './commands/doctor.js';
@@ -76,10 +77,24 @@ program
   );
 
 program
+  .command('cluster')
+  .description('Grupise sirove vesti u teme i pravi izvestaj reports/teme-dana.md')
+  .option('--report <broj>', 'koliko tema ide u izvestaj (podrazumevano 15)', '15')
+  .option('--report-only', 'samo izvestaj o postojecim temama, bez novog grupisanja', false)
+  .option('--reset', 'obrisi sve teme i grupisi ispocetka (posle promene praga)', false)
+  .action(async (options: { report: string; reportOnly: boolean; reset: boolean }) => {
+    await runCluster({
+      report: Math.max(1, Number.parseInt(options.report, 10) || 15),
+      reportOnly: options.reportOnly,
+      reset: options.reset,
+    });
+  });
+
+program
   .command('editorial')
-  .description('Klasteruje vesti, bira teme i generise clanke (Faze 4 i 5)')
+  .description('Bira teme koje zasluzuju clanak i pise ih (Faza 5)')
   .action(() => {
-    notYet('editorial', 4);
+    notYet('editorial', 5);
   });
 
 program

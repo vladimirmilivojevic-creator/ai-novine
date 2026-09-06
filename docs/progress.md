@@ -4,7 +4,7 @@
 > zašto, šta vlasnik treba da proveri, i status faze. Pun plan je u `docs/plan.md`.
 
 **Poslednje ažuriranje:** 6. septembar 2026.
-**Trenutno stanje:** Faza 3 gotova — 636 vesti u bazi sa 24 izvora kroz tri kanala, GitHub Secrets podešeni, zakazani ciklusi uključeni. Faza 4 sledeća.
+**Trenutno stanje:** Faza 4 gotova — 636 vesti grupisano u 404 teme, izveštaj u `reports/teme-dana.md` čeka pregled. Faza 5 (AI pisanje) je sledeća i to je kritična kapija projekta.
 
 ## Pregled faza
 
@@ -14,8 +14,8 @@
 | 1    | RSS discovery izveštaj               | ✅ Gotovo, čeka potvrdu |
 | 2    | Engine 1 na 3 test izvora            | ✅ Gotovo, čeka potvrdu |
 | 3    | Engine 1 na sve izvore               | ✅ Gotovo, čeka potvrdu |
-| 4    | Klasterovanje i trending (Engine 2)  | 🔜 Sledeća          |
-| 5    | AI generisanje teksta ⚠️ kritična kapija | ⬜ Čeka          |
+| 4    | Klasterovanje i trending (Engine 2)  | ✅ Gotovo, čeka potvrdu |
+| 5    | AI generisanje teksta ⚠️ kritična kapija | 🔜 Sledeća       |
 | 6    | Ažuriranje umesto dupliranja         | ⬜ Čeka             |
 | 7    | Telegram odobravanje                 | ⬜ Čeka             |
 | 8    | Slike                                | ⬜ Čeka             |
@@ -338,3 +338,78 @@ koristi samo ako prethodni nije dao ništa.
    Actions-a, pa lozinka baze ne mora da postoji na GitHub-u.
 2. Actions tab → workflow „Prikupljanje vesti" → proverava da je zakazani run zelen.
 3. Supabase Table Editor → `raw_items` raste ravnomerno kroz sve izvore.
+
+---
+
+## Faza 4 — Klasterovanje i trending (Engine 2) ✅
+
+**Status:** gotovo, čeka potvrdu vlasnika.
+**Izveštaj za pregled:** `reports/teme-dana.md`
+
+### Šta je urađeno
+
+**Obrada srpskog teksta** (`packages/core/src/serbian.ts`) — tri stvari koje engleske biblioteke ne
+rade:
+
+- **Transliteracija ćirilice u latinicu.** RTS piše ćirilicom, ostali latinicom; bez ovoga bi ista
+  vest bila dva različita teksta.
+- **Skidanje kvačica.** U praksi se piše i „Vučić" i „Vucic".
+- **Skidanje padežnih nastavaka.** „Vučića", „Vučiću", „Vučićem" i „Vučićevo" daju isti koren.
+  Fiksno sečenje na prvih N znakova to ne postiže (razlika je baš na kraju), pa se skida najduži
+  nastavak koji odgovara, i to samo ako koren ostane dovoljno dug. „Predsednik" i „predstavnik"
+  tako ostaju različiti.
+
+Uz to: srpske stop-reči (veznici, predlozi, i novinarske fraze tipa „izjavio", „saopštio") i grubo
+prepoznavanje imena — nizovi reči sa velikim slovom usred rečenice.
+
+**Grupisanje** (`apps/pipeline/src/cluster/`):
+
+- TF-IDF nad korenima reči, naslov se broji trostruko, kosinusna sličnost.
+- Konačna sličnost = 0.8 × tekst + 0.2 × zajednička imena. Imena mogu da spasu par koji je pisan
+  različitim rečima, ali ne mogu sama da spoje dve nepovezane vesti.
+- **Drugi prolaz spaja teme** čiji su centroidi bliski. Ista priča ume da uđe u dve teme kad su
+  uglovi izveštavanja različiti („helikopteri gase požar" i „požar ne preti kućama").
+- Inkrementalno: svaka tema pamti centroid u bazi, pa se u sledećem ciklusu nova vest poredi sa
+  temom bez učitavanja svih njenih tekstova.
+
+**Trending skor** = broj različitih izvora × raspon uglova × brzina rasta u poslednjih 6 sati ×
+opadanje po vremenu od poslednjeg teksta (polovina na 12 sati). Bez ijednog spoljnog API-ja —
+brief traži baš to (sekcija 4).
+
+**Kapije kvaliteta** iz sekcije 9 brief-a su implementirane i vide se u izveštaju: tema ide na
+pisanje samo ako je javljaju najmanje tri nezavisna izvora iz najmanje dva različita ugla.
+
+### Pragovi su izmereni, ne pogođeni
+
+Oba praga su podešena merenjem na 635 stvarnih članaka, 6. septembra 2026:
+
+| Prag | Vrednost | Kako je izabran |
+| --- | --- | --- |
+| `similarityThreshold` (vest → tema) | 0.38 | Na 0.62 se ista priča razbijala na pet tema. Na 0.38 se spaja tačno. Ispod 0.35 počinje spajanje različitih događaja. |
+| `mergeThreshold` (tema → tema) | 0.30 | Na 0.30 se tri teme o požaru na Suvoj planini spajaju u jednu, kao i dva izveštaja o istim izborima u Nemačkoj i dve vesti o istoj saobraćajnoj nesreći. |
+
+Merenje je zabeleženo u `config/editorial.json`, da se sutra zna zašto brojevi izgledaju tako.
+
+### Rezultat na 636 stvarnih vesti
+
+- 635 vesti → **404 teme**, od toga 43 spojene u drugom prolazu.
+- Najjača tema: **požar na Suvoj planini — 14 tekstova iz 12 izvora, sva četiri ugla.** Svih 14
+  naslova je stvarno o tom požaru.
+- Prvih deset tema prolazi kapije kvaliteta.
+- Trajanje: 62 sekunde za ceo prozor od 36 sati.
+
+### Poznata slabost
+
+Jedno pogrešno spajanje na ovom uzorku: TV najava („NE PROPUSTITE AKTUELNOSTI NA HAPPY TV") spojena
+je sa vremenskom prognozom, jer oba teksta govore o „večeras" i „Srbiji" bez konkretnog događaja.
+Takav sadržaj ionako nije vest; ako se ponovi, rešenje je odbacivanje najava i promo tekstova pre
+grupisanja, ne pomeranje praga.
+
+### Šta vlasnik proverava
+
+**Ovo je faza gde tvoje poznavanje srpskih vesti vredi više od bilo kog testa.**
+
+1. Otvori `reports/teme-dana.md` i pročitaj prvih deset tema.
+2. Za svaku pogledaj spisak naslova unutar teme: **da li svi zaista pripadaju istoj priči?**
+3. Javi ako vidiš temu koja je pogrešno spojena, ili priču koja je razbijena na dve teme —
+   po tome se podešavaju pragovi.

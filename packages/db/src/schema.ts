@@ -53,3 +53,28 @@ export interface PipelineRunRow {
   stats: Record<string, number>;
   errors: string[];
 }
+
+export interface ClusterRow {
+  id: string;
+  created_at: string;
+  updated_at: string;
+  first_item_at: string | null;
+  last_item_at: string | null;
+  size: number;
+  distinct_sources: number;
+  angles: string[];
+  keywords: string[];
+  entities: string[];
+  centroid: Record<string, number>;
+  trending_score: number;
+  title_sample: string | null;
+  status: 'open' | 'covered' | 'rejected';
+  article_id: string | null;
+}
+
+export interface ClusterItemRow {
+  cluster_id: string;
+  raw_item_id: string;
+  similarity: number | null;
+  added_at: string;
+}
