@@ -4,7 +4,7 @@
 > zašto, šta vlasnik treba da proveri, i status faze. Pun plan je u `docs/plan.md`.
 
 **Poslednje ažuriranje:** 6. septembar 2026.
-**Trenutno stanje:** Faza 1 završena, čeka potvrdu vlasnika (koje izvore izbacujemo). Faza 2 sledeća.
+**Trenutno stanje:** Ključevi podešeni i provereni. Faza 2 u radu. Odluka o izvorima iz Faze 1 (Politika, Prva, BIRN, RTS, Euronews) još nije doneta — blokira Fazu 3, ne Fazu 2.
 
 ## Pregled faza
 
@@ -12,7 +12,7 @@
 | ---- | ------------------------------------ | ------------------- |
 | 0    | Priprema i kostur                    | ✅ Gotovo, potvrđeno |
 | 1    | RSS discovery izveštaj               | ✅ Gotovo, čeka potvrdu |
-| 2    | Engine 1 na 3 test izvora            | 🔜 Sledeća          |
+| 2    | Engine 1 na 3 test izvora            | 🔄 U radu           |
 | 3    | Engine 1 na sve izvore               | ⬜ Čeka             |
 | 4    | Klasterovanje i trending (Engine 2)  | ⬜ Čeka             |
 | 5    | AI generisanje teksta ⚠️ kritična kapija | ⬜ Čeka          |
@@ -79,6 +79,39 @@ Kodom:
 
 - Prelazak na TypeScript 7 kad `typescript-eslint` doda podršku.
 - `apps/web` još ne postoji — pravi se u Fazi 9.
+
+---
+
+## Okruženje i ključevi ✅
+
+**Status:** podešeno i provereno 6. septembra 2026.
+
+`npm run pipeline -- doctor` proverava okruženje i ispisuje samo ✅/❌ — nijedna vrednost ključa se
+ne ispisuje, samo osobine koje nisu tajna (format, uloga iz JWT-a, dužina).
+
+Šta proverava:
+
+- **Bezbednost:** da `.env` postoji, da je u `.gitignore`, da nikad nije ušao u git, i da
+  `.env.example` ne sadrži prave vrednosti.
+- **Env varijable:** prisustvo i oblik svake (Supabase JWT mora nositi očekivani `role`, Anthropic
+  ključ počinje sa `sk-ant-`, Telegram token ima oblik `<broj>:<niz>`).
+- **Konekcije:** Supabase anon i service ključ, Anthropic (`models.list` — besplatan GET, ne troši
+  tokene), Telegram (`getMe`).
+
+Rezultat prve provere: **18 od 18 stavki u redu.**
+
+### Incident: prave vrednosti su bile upisane u `.env.example`
+
+Vlasnik je ključeve prvo upisao u `.env.example`, koji **jeste** praćen gitom. Nije bilo commit-a
+ni push-a, pa ništa nije procurelo. Vrednosti su premeštene u `.env`, `.env.example` vraćen na
+placeholdere, a `doctor` je od tada zadužen da isti previd uhvati automatski.
+
+### Otvoreno
+
+- `TELEGRAM_WEBHOOK_SECRET` je trenutno predvidiv string. Pre nego što webhook izađe u produkciju
+  (Faza 7 i 11), zameniti ga nasumičnim nizom od najmanje 32 znaka.
+- Anon i service ključ su u starom JWT formatu (`eyJ…`). Supabase je uveo noviji format
+  (`sb_publishable_…` / `sb_secret_…`); `doctor` prihvata oba, prelazak nije hitan.
 
 ---
 

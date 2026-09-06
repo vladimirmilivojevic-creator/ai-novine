@@ -3,17 +3,7 @@
  * sada samo kreiranje klijenta, da se sve tajne citaju na jednom mestu.
  */
 import { createClient, type SupabaseClient } from '@supabase/supabase-js';
-
-function requireEnv(name: string): string {
-  const value = process.env[name];
-  if (!value) {
-    throw new Error(
-      `Nedostaje env varijabla ${name}. Kopiraj .env.example u .env i popuni je (lokalno), ` +
-        'ili je dodaj u GitHub Secrets / Vercel env (u produkciji).',
-    );
-  }
-  return value;
-}
+import { requireEnv } from '@ai-novine/core';
 
 /**
  * Klijent sa punim pravima — zaobilazi RLS. Koristi ga ISKLJUCIVO pipeline,

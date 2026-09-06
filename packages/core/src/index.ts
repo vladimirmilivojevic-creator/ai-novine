@@ -1,4 +1,5 @@
 export * from './config.js';
+export * from './env.js';
 export * from './feed.js';
 export * from './http.js';
 export * from './logger.js';

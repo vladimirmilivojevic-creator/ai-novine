@@ -3,6 +3,7 @@ import { Command } from 'commander';
 import { logger } from '@ai-novine/core';
 import { runConfigCheck } from './commands/config-check.js';
 import { runDiscover } from './commands/discover.js';
+import { runDoctor } from './commands/doctor.js';
 
 const program = new Command();
 
@@ -16,6 +17,13 @@ program
   .description('Proverava da li su config/sources.json i config/editorial.json ispravni')
   .action(() => {
     runConfigCheck();
+  });
+
+program
+  .command('doctor')
+  .description('Proverava env varijable i veze ka Supabase, Anthropic i Telegram servisima')
+  .action(async () => {
+    await runDoctor();
   });
 
 program

@@ -13,6 +13,7 @@
   "dependencies": {
     "@ai-novine/core": "*",
     "@ai-novine/db": "*",
+    "@anthropic-ai/sdk": "^0.124.0",
     "commander": "^15.0.0"
   }
 }
