@@ -6,7 +6,8 @@
 izvor istine o tome dokle se stiglo: koje su faze završene, koje su odluke donete i zašto, i koji
 je sledeći korak na redu. Bez njega ćeš ponoviti posao ili raditi pogrešnu fazu.
 
-Puni plan projekta je u `docs/plan.md`, originalni zahtev vlasnika u `docs/brief.md`.
+Puni plan projekta je u `docs/plan.md`, originalni zahtev vlasnika u `docs/brief.md`, a presek
+kompromisa zbog budžeta u `docs/tradeoffs.md`.
 
 ## Šta je ovo
 
@@ -23,7 +24,8 @@ Next.js 15 na Vercel-u za sajt, GitHub Actions cron za pipeline, Anthropic API z
 članaka. Bez build koraka — sve se izvršava kroz `tsx` direktno iz `.ts` fajlova.
 
 ```
-config/       sources.json (izvori) i editorial.json (pragovi, kvote) — vlasnik ih menja rukom
+config/       sources.json (izvori), editorial.json (pragovi, kvote) i editorial-prompt.md
+              (urednička pravila koja idu modelu) — vlasnik ih menja rukom
 packages/core tipovi, logger, učitavanje konfiguracije kroz zod šeme
 packages/db   Supabase klijent, šema i migracije
 apps/pipeline Node CLI: config | discover | ingest | editorial | sweep
@@ -53,6 +55,14 @@ npm run pipeline -- <cmd>   # discover | ingest | editorial | sweep
   `.env` (lokalno), GitHub Secrets i Vercel env varijablama.
 - **Budžet je ~0.** Jedini prihvatljiv trošak su Anthropic API pozivi. Nijedan plaćeni servis bez
   eksplicitne dozvole vlasnika.
+- **Svaki kompromis zbog budžeta ide u `docs/tradeoffs.md` istog trenutka.** Kad god se u nekoj
+  fazi nešto odluči zato što je besplatni tier tako tražio, ili zato što bolja opcija košta — taj
+  red se upisuje odmah, kao deo posla te faze, ne kao zadatak za kasnije. U redu mora da stoji:
+  šta je sada, zašto, koja bi bila bolja opcija i koliko okvirno košta, i da li je efekat
+  **izmeren** (imamo broj iz ovog projekta), **procenjen** (računica ili cenovnik) ili
+  **nepoznat** (treba testirati). Ne piši „bilo bi bolje" bez broja ili bez oznake da je nepoznato.
+  Taj dokument vlasnik koristi u razgovoru sa investitorom, pa nagađanje predstavljeno kao činjenica
+  tamo pravi stvarnu štetu.
 - **Konfiguracija ne ide u kod.** Izvori, pragovi i kvote se menjaju u `config/*.json`.
 - **Ne zaobilazi Cloudflare ni robots.txt.** Izvor koji blokira botove se preskače i loguje.
 - **Ne guši izvore.** Jedan zahtev u sekundi po domenu, korektan User-Agent `AINovineBot/1.0`,

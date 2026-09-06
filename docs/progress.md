@@ -4,7 +4,7 @@
 > zašto, šta vlasnik treba da proveri, i status faze. Pun plan je u `docs/plan.md`.
 
 **Poslednje ažuriranje:** 6. septembar 2026.
-**Trenutno stanje:** Faza 5 završena uz optimizaciju troška — Batch API, hibridni izbor modela i kočnica budžeta. Plan: ~$4.20 mesečno za 10 članaka dnevno. Faza 6 je sledeća.
+**Trenutno stanje:** Faza 5 završena uz optimizaciju troška (~$4.20 mesečno). Napravljen `docs/tradeoffs.md` — presek kompromisa zbog budžeta, za razgovor sa investitorom. Faza 6 je sledeća.
 
 ## Pregled faza
 
@@ -681,3 +681,21 @@ srpskom, što traži novo merenje kvaliteta; i tri provajdera u istom pipeline-u
 nešto može da otkaže.
 
 Ostaje kao **Faza 12**, ako se pokaže potreba.
+
+### Presek kompromisa zbog budžeta (6. septembra 2026)
+
+Napravljen je `docs/tradeoffs.md`: svaki red kaže šta je sada, zašto, koja bi bila bolja opcija i
+koliko košta, i da li je efekat **izmeren**, **procenjen** ili **nepoznat**. Uz to i put rasta na
+četiri nivoa budžeta ($5, $50, $200, $1.000 mesečno).
+
+Dva nalaza iz tog preseka menjaju sliku:
+
+- **Supabase granica od 500 MB uopšte nije stvarna prepreka.** Izmereno: prosečna vest je 3.521
+  bajt, najveći dan 810 vesti, dakle 2,7 MB dnevno. Retention od 10 dana troši **27 MB**. Bez
+  brisanja bismo granicu dodirnuli tek posle oko 184 dana. Prozor se može podići na 60+ dana bez
+  ijednog dinara, i to bi popravilo prepoznavanje priča koje se razvijaju.
+- **Objavljujemo 15% onoga što bismo mogli.** Izmereno: 65 tema dnevno prolazi kapije kvaliteta,
+  objavljuje se 10. Trideset članaka dnevno bi koštalo oko $12 mesečno.
+
+U `CLAUDE.md` je dodato pravilo: svaki kompromis zbog budžeta upisuje se u `docs/tradeoffs.md` u
+istom potezu, kao deo posla te faze.
