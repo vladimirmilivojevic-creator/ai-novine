@@ -4,6 +4,7 @@ import { createLogger } from '@ai-novine/core';
 import { countWords } from '../ingest/normalize.js';
 import { calculateCost, usageFromResponse, type CostBreakdown } from './cost.js';
 import { buildUserMessage, loadSystemPrompt, type TopicMaterial } from './prompt.js';
+import { repairAndValidate } from './repair.js';
 import { articleSchema, type GeneratedArticle } from './schema.js';
 
 const log = createLogger('generate');
@@ -25,6 +26,10 @@ export interface GenerationResult {
   elapsedMs: number;
   /** true kada je urednički prompt stigao iz keša, a ne naplaćen po punoj ceni. */
   promptCacheHit: boolean;
+  /** Šta je moralo da se popravi u odgovoru modela. */
+  repairs: string[];
+  /** true kada je prvi odgovor bio neispravan pa je zatražena ispravka. */
+  retried: boolean;
 }
 
 export class GenerationError extends Error {
@@ -62,43 +67,79 @@ export async function generateArticle(
   const effort =
     options.effort && SUPPORTS_EFFORT.has(options.model) ? { effort: options.effort } : {};
 
-  let response;
-  try {
-    response = await anthropic().messages.parse({
-      model: options.model,
-      max_tokens: options.maxOutputTokens,
-      system: [
-        {
-          type: 'text',
-          text: loadSystemPrompt(),
-          // Urednicka pravila se ne menjaju izmedju poziva, pa se keširaju.
-          cache_control: { type: 'ephemeral' },
-        },
-      ],
-      messages: [{ role: 'user', content: buildUserMessage(material) }],
-      output_config: {
-        format: zodOutputFormat(articleSchema),
-        ...effort,
-      },
+  const system = [
+    {
+      type: 'text' as const,
+      text: loadSystemPrompt(),
+      // Urednicka pravila se ne menjaju izmedju poziva, pa se keširaju.
+      cache_control: { type: 'ephemeral' as const },
+    },
+  ];
+  const messages: Anthropic.MessageParam[] = [
+    { role: 'user', content: buildUserMessage(material) },
+  ];
+
+  const call = async (): Promise<Anthropic.Message> => {
+    try {
+      return await anthropic().messages.create({
+        model: options.model,
+        max_tokens: options.maxOutputTokens,
+        system,
+        messages,
+        output_config: { format: zodOutputFormat(articleSchema), ...effort },
+      });
+    } catch (error) {
+      throw toGenerationError(error);
+    }
+  };
+
+  let response = await call();
+  let parsed = repairAndValidate(readJson(response));
+  let retried = false;
+
+  // Strukturisani izlaz nije tvrda garancija na svim modelima. Umesto da se
+  // ceo clanak baci zbog jedne pogresne reci, trazi se ispravka — jednom.
+  if (!parsed.article) {
+    log.warn(`${options.model}: odgovor ne odgovara semi, trazim ispravku.`, {
+      problemi: parsed.problems.slice(0, 3),
     });
-  } catch (error) {
-    throw toGenerationError(error);
+
+    messages.push({ role: 'assistant', content: textOf(response) });
+    messages.push({
+      role: 'user',
+      content: [
+        'Odgovor ne odgovara zadatoj šemi. Problemi:',
+        ...parsed.problems.map((problem) => `- ${problem}`),
+        '',
+        'Pošalji ispravljen JSON, isti sadržaj članka, bez ikakvog teksta van JSON-a.',
+      ].join('\n'),
+    });
+
+    const retryResponse = await call();
+    const retryParsed = repairAndValidate(readJson(retryResponse));
+    retried = true;
+
+    // Potrošnja oba poziva se sabira — oba su naplaćena.
+    response = mergeUsage(response, retryResponse);
+    parsed = { ...retryParsed, repairs: [...parsed.repairs, ...retryParsed.repairs] };
   }
 
-  const article = response.parsed_output;
-  if (!article) {
+  if (!parsed.article) {
     throw new GenerationError(
-      'Model je odgovorio, ali odgovor ne odgovara zadatoj šemi članka.',
+      `Model ni posle ispravke nije vratio ispravan članak: ${parsed.problems.slice(0, 3).join('; ')}`,
       'schema',
     );
   }
 
+  const article = parsed.article;
   const usage = usageFromResponse(response.usage);
   const cost = calculateCost(options.model, usage);
   const wordCount = countWords(`${article.lead} ${article.body}`);
 
   log.info(`Napisan članak (${options.model}).`, {
     reci: wordCount,
+    ...(parsed.repairs.length > 0 ? { popravke: parsed.repairs } : {}),
+    ...(retried ? { trazenaIspravka: true } : {}),
     kategorija: article.category,
     osetljivo: article.sensitive,
     obeStrane: article.bothSides !== null,
@@ -112,6 +153,41 @@ export async function generateArticle(
     wordCount,
     elapsedMs: Date.now() - startedAt,
     promptCacheHit: usage.cacheReadTokens > 0,
+    repairs: parsed.repairs,
+    retried,
+  };
+}
+
+/** Tekst odgovora — model vraća JSON kao običan tekstualni blok. */
+function textOf(response: Anthropic.Message): string {
+  return response.content
+    .filter((block): block is Anthropic.TextBlock => block.type === 'text')
+    .map((block) => block.text)
+    .join('');
+}
+
+function readJson(response: Anthropic.Message): unknown {
+  try {
+    return JSON.parse(textOf(response));
+  } catch {
+    return null;
+  }
+}
+
+/** Sabira potrošnju dva poziva, jer se oba naplaćuju. */
+function mergeUsage(first: Anthropic.Message, second: Anthropic.Message): Anthropic.Message {
+  return {
+    ...second,
+    usage: {
+      ...second.usage,
+      input_tokens: (first.usage.input_tokens ?? 0) + (second.usage.input_tokens ?? 0),
+      output_tokens: (first.usage.output_tokens ?? 0) + (second.usage.output_tokens ?? 0),
+      cache_creation_input_tokens:
+        (first.usage.cache_creation_input_tokens ?? 0) +
+        (second.usage.cache_creation_input_tokens ?? 0),
+      cache_read_input_tokens:
+        (first.usage.cache_read_input_tokens ?? 0) + (second.usage.cache_read_input_tokens ?? 0),
+    },
   };
 }
 

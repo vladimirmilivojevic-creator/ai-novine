@@ -8,6 +8,7 @@ import {
   loadSystemPrompt,
   type TopicMaterial,
 } from './prompt.js';
+import { repairAndValidate } from './repair.js';
 import { articleSchema } from './schema.js';
 import { selectClustersForGeneration, slugify, type ClusterCandidate } from './select.js';
 
@@ -283,5 +284,59 @@ describe('trošak', () => {
   it('procenjuje mesečni račun', () => {
     expect(monthlyEstimate(0.01, 25)).toBeCloseTo(7.5, 6);
     expect(formatUsd(0.0123456)).toBe('$0.012346');
+  });
+});
+
+describe('repairAndValidate', () => {
+  const base = {
+    title: 'Vlada usvojila budžet za narednu godinu',
+    lead: 'Vlada je usvojila predlog budžeta.',
+    body: 'Prvi pasus.\n\nDrugi pasus.',
+    category: 'ekonomija',
+    sensitive: false,
+    sensitivityReason: null,
+    sourcesDiverge: false,
+    bothSides: null,
+    keywords: ['budžet'],
+    notes: [],
+  };
+
+  it('prihvata ispravan odgovor bez ijedne popravke', () => {
+    const result = repairAndValidate(base);
+    expect(result.article).not.toBeNull();
+    expect(result.repairs).toEqual([]);
+  });
+
+  it('prevodi rubriku portala u kategoriju sistema', () => {
+    const result = repairAndValidate({ ...base, category: 'hronika' });
+    expect(result.article?.category).toBe('drustvo');
+    expect(result.repairs[0]).toContain('hronika');
+  });
+
+  it('podnosi velika slova i kvačice u kategoriji', () => {
+    expect(repairAndValidate({ ...base, category: 'DRUŠTVO' }).article?.category).toBe('drustvo');
+  });
+
+  it('prazan objekat umesto null-a kod „obe strane"', () => {
+    const result = repairAndValidate({ ...base, bothSides: {} });
+    expect(result.article?.bothSides).toBeNull();
+  });
+
+  it('izostavljena polja keywords i notes dobijaju prazan niz', () => {
+    const { keywords: _k, notes: _n, ...without } = base;
+    const result = repairAndValidate(without);
+    expect(result.article?.keywords).toEqual([]);
+    expect(result.repairs).toHaveLength(2);
+  });
+
+  it('vraća problem koji ne ume da popravi, umesto da izmišlja vrednost', () => {
+    const result = repairAndValidate({ ...base, category: 'nesto sasvim deseto' });
+    expect(result.article).toBeNull();
+    expect(result.problems.join(' ')).toContain('category');
+  });
+
+  it('odbija odgovor koji uopšte nije objekat', () => {
+    expect(repairAndValidate('samo tekst').article).toBeNull();
+    expect(repairAndValidate(null).problems).toHaveLength(1);
   });
 });

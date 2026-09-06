@@ -4,7 +4,7 @@
 > zašto, šta vlasnik treba da proveri, i status faze. Pun plan je u `docs/plan.md`.
 
 **Poslednje ažuriranje:** 6. septembar 2026.
-**Trenutno stanje:** Faza 5 — kod za pisanje članaka je gotov i proveren, ali poređenje modela čeka kredite na Anthropic nalogu. Bez njih nijedan poziv modelu ne prolazi.
+**Trenutno stanje:** Faza 5 — poređenje modela je odrađeno na stvarnim temama. Haiku 4.5 ne drži dužinu članka, Sonnet 5 je drži. Čeka se odluka vlasnika o modelu.
 
 ## Pregled faza
 
@@ -15,7 +15,7 @@
 | 2    | Engine 1 na 3 test izvora            | ✅ Gotovo, čeka potvrdu |
 | 3    | Engine 1 na sve izvore               | ✅ Gotovo, čeka potvrdu |
 | 4    | Klasterovanje i trending (Engine 2)  | ✅ Gotovo, čeka potvrdu |
-| 5    | AI generisanje teksta ⚠️ kritična kapija | 🔄 U radu — čeka kredite |
+| 5    | AI generisanje teksta ⚠️ kritična kapija | 🔄 Čeka odluku o modelu |
 | 6    | Ažuriranje umesto dupliranja         | ⬜ Čeka             |
 | 7    | Telegram odobravanje                 | ⬜ Čeka             |
 | 8    | Slike                                | ⬜ Čeka             |
@@ -542,3 +542,57 @@ iz samo jednog ugla. To je kapija iz sekcije 9 brief-a i radi kako treba.
 3. **Čita oba teksta i odlučuje.** Pitanje je jedno: da li tekst zvuči kao novinarski članak ili
    kao mašinski rerajt. Ako Haiku ne valja za srpski, prelazi se na Sonnet i trošak ide sa
    ~$21 na ~$45 mesečno — to je odluka vlasnika, ne moja.
+
+### Poređenje modela — izmereno 6. septembra 2026
+
+Krediti su dodati, poređenje je odrađeno na tri stvarne teme iz baze. Izveštaj sa punim tekstovima:
+`reports/poredjenje-modela.md`.
+
+#### Prvi krug
+
+| Model | Dužina članaka | Ijekavica | Greške u imenima |
+| --- | --- | --- | --- |
+| Haiku 4.5 | 325, 374, 232 reči | „mjesta", „gdje", „posjetili", „Posjet" u dva od tri članka | „Vladimirm Putinom", „Volodimrom Zelenskim", „na Grami" umesto „na Gramadi" |
+| Sonnet 5 | 407, 461, 366 reči | nema | nema |
+
+#### Popravka prompta
+
+U urednička pravila je dodata sekcija **3a: Jezik — ekavica, obavezno**, sa tabelom ijekavskih
+oblika i njihovih ekavskih parnjaka, spiskom hrvatskih i bosanskih reči koje se ne koriste, i
+pravilom da se imena prepisuju tačno onako kako stoje u izveštajima. Pojačano je i pravilo o
+dužini: dužina je zahtev, ne preporuka.
+
+#### Drugi krug, posle popravke
+
+| Model | Dužina | Ijekavica | Kategorija |
+| --- | --- | --- | --- |
+| Haiku 4.5 | **302, 99, 225 reči** — sva tri ispod praga od 350 | rešena | pogrešna na jednoj temi (`drustvo` umesto `svet`) |
+| Sonnet 5 | 431, 483, 336 reči | rešena | tačna |
+
+Prompt je rešio ijekavicu kod oba modela. **Dužinu nije rešio kod Haiku modela.** Članak od 99
+reči je pritom prekinut usred rečenice, sa nezatvorenim navodnikom — a izlaz je bio 439 tokena, pri
+granici od 4000, dakle model nije odsečen nego je sam stao.
+
+#### Trošak, izmeren
+
+| Model | Prosek po članku | 25 članaka dnevno |
+| --- | ---: | ---: |
+| Haiku 4.5 | $0.011972 | **$8.98 mesečno** |
+| Sonnet 5 | $0.041985 | **$31.49 mesečno** |
+
+Keširanje uredničkog prompta radi kod oba modela (7.987 odnosno 10.351 tokena pročitano iz keša),
+što je i bio uslov da ove cene stoje.
+
+Probano je i snižavanje `effort` parametra na Sonnet modelu radi uštede — ispalo je skuplje
+($0.061 naspram $0.036), jer je model napisao duži tekst. Ostaje `medium`.
+
+#### Zaključak koji vlasnik potvrđuje
+
+Haiku 4.5 nije u stanju da drži dužinu članka od 350 reči, koja je uslov iz sekcije 9 brief-a
+(zaštita od „Scaled Content Abuse"). Sonnet 5 je drži, tačno kategorizuje i piše čistom ekavicom.
+
+Preporuka: **Sonnet 5 za sve članke.** To znači ~$31 mesečno pri 25 članaka dnevno, umesto
+procenjenih ~$21. Ako je to previše, jeftinije rešenje nije slabiji model nego **manje članaka**:
+15 članaka dnevno sa Sonnet modelom je ~$19 mesečno.
+
+Odluka je vlasnikova; dok je ne donese, `config/editorial.json` ostaje na Haiku modelu.
