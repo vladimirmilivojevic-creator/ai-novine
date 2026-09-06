@@ -1,6 +1,9 @@
 import { Readability } from '@mozilla/readability';
 import { parseHTML } from 'linkedom';
-import { normalizeWhitespace, stripHtml } from './normalize.js';
+import { countWords, normalizeWhitespace, stripHtml } from './normalize.js';
+
+/** Odakle je tekst na kraju izvucen. */
+export type ExtractionMethod = 'readability' | 'jsonld' | 'container' | 'none';
 
 export interface ExtractedArticle {
   title: string | null;
@@ -11,18 +14,31 @@ export interface ExtractedArticle {
   language: string | null;
   publishedAt: string | null;
   canonicalUrl: string | null;
-  method: 'readability' | 'none';
+  method: ExtractionMethod;
 }
 
+/** Ispod ovoga tekst nije clanak nego ostatak strane. */
+export const MIN_ARTICLE_WORDS = 60;
+
 /**
- * Vadi tekst clanka iz HTML-a. Meta podaci (`og:` i `article:` oznake) citaju
- * se PRE Readability-ja, jer on menja dokument u mestu.
+ * Vadi tekst clanka iz HTML-a, u tri pokusaja.
+ *
+ * Readability je prvi i najbolji, ali ume da promasi: na stranama gde je clanak
+ * kratak a blok „povezane vesti" bogat, on izabere povezane vesti. Zato posle
+ * njega idu jos dva pokusaja — `articleBody` iz JSON-LD podataka, pa tekst iz
+ * poznatih kontejnera clanka. Uzima se prvi koji da dovoljno reci.
+ *
+ * Meta podaci se citaju PRE svega, jer Readability menja dokument u mestu.
  */
 export function extractArticle(html: string, url: string): ExtractedArticle {
   const { document } = parseHTML(withBaseHref(html, url));
 
+  // `og:title` je gotovo uvek cist naslov clanka, dok `<title>` nosi i rubriku i
+  // ime portala, a Readability zna da uzme naslov susednog bloka.
+  const ogTitle = metaContent(document, ['og:title', 'twitter:title']);
+
   const meta: Omit<ExtractedArticle, 'text' | 'method'> = {
-    title: metaContent(document, ['og:title', 'twitter:title']) ?? textOf(document, 'title'),
+    title: ogTitle ?? textOf(document, 'title'),
     excerpt: metaContent(document, ['og:description', 'description', 'twitter:description']),
     author: metaContent(document, ['article:author', 'author', 'og:article:author']),
     imageUrl: absolute(metaContent(document, ['og:image', 'twitter:image']), url),
@@ -38,6 +54,9 @@ export function extractArticle(html: string, url: string): ExtractedArticle {
       url,
     ),
   };
+
+  const jsonLd = readArticleBody(document);
+  const container = readContainerText(document);
 
   let parsed: {
     title?: string | null;
@@ -55,15 +74,105 @@ export function extractArticle(html: string, url: string): ExtractedArticle {
     parsed = null;
   }
 
-  const text = normalizeWhitespace(parsed?.textContent ?? '');
+  const readabilityText = cleanBodyText(parsed?.textContent ?? '');
+  const [text, method] = chooseText([
+    [readabilityText, 'readability'],
+    [cleanBodyText(jsonLd), 'jsonld'],
+    [cleanBodyText(container), 'container'],
+  ]);
 
   return {
     ...meta,
-    title: cleanTitle(parsed?.title ?? meta.title),
+    title: cleanTitle(ogTitle ?? parsed?.title ?? meta.title),
     author: meta.author ?? (parsed?.byline ? normalizeWhitespace(parsed.byline) : null),
     text,
-    method: text.length > 0 ? 'readability' : 'none',
+    method,
   };
+}
+
+/** Prvi kandidat sa dovoljno reci; ako nijedan nije dovoljan, najduzi od njih. */
+function chooseText(candidates: [string, ExtractionMethod][]): [string, ExtractionMethod] {
+  for (const [text, method] of candidates) {
+    if (countWords(text) >= MIN_ARTICLE_WORDS) return [text, method];
+  }
+
+  const longest = candidates.reduce<[string, ExtractionMethod]>(
+    (best, candidate) => (candidate[0].length > best[0].length ? candidate : best),
+    ['', 'none'],
+  );
+  return longest[0] ? longest : ['', 'none'];
+}
+
+/**
+ * `articleBody` iz JSON-LD podataka. Portali ga stavljaju zbog Google-a, i kad
+ * postoji, to je najcistiji tekst clanka koji strana uopste nudi.
+ */
+function readArticleBody(document: MinimalDocument): string {
+  const ARTICLE_TYPES = /(News|Blog|Report|Live)?Article|VideoObject/i;
+
+  for (const script of document.querySelectorAll('script[type="application/ld+json"]')) {
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(script.textContent ?? '');
+    } catch {
+      continue;
+    }
+
+    for (const node of flattenJsonLd(parsed)) {
+      const types = [node['@type']]
+        .flat()
+        .filter((type): type is string => typeof type === 'string');
+      if (!types.some((type) => ARTICLE_TYPES.test(type))) continue;
+
+      const body = node['articleBody'];
+      if (typeof body === 'string' && body.trim()) return normalizeWhitespace(stripHtml(body));
+    }
+  }
+  return '';
+}
+
+function flattenJsonLd(value: unknown): Record<string, unknown>[] {
+  if (Array.isArray(value)) return value.flatMap(flattenJsonLd);
+  if (typeof value !== 'object' || value === null) return [];
+
+  const node = value as Record<string, unknown>;
+  const graph = node['@graph'];
+  return graph ? [node, ...flattenJsonLd(graph)] : [node];
+}
+
+/**
+ * Tekst iz kontejnera koji srpski portali (uglavnom WordPress) koriste za telo
+ * clanka. Uzimaju se samo pasusi i podnaslovi, pa u tekst ne upadaju potpisi
+ * ispod slika i pozivi na pracenje drustvenih mreza.
+ */
+export function readContainerText(document: MinimalDocument): string {
+  const CONTAINERS = [
+    '[itemprop="articleBody"]',
+    'div.post-content',
+    'div.entry-content',
+    'div.article-body',
+    'div.article__body',
+    'div.single-content',
+    'div.news-text',
+    'div.text-content',
+    'article .content',
+  ];
+
+  for (const selector of CONTAINERS) {
+    const element = document.querySelector(selector);
+    if (!element) continue;
+
+    const parts: string[] = [];
+    for (const node of element.querySelectorAll('p, h2, h3, li')) {
+      if (node.closest('figure, figcaption, aside, nav, footer, .related, .banner')) continue;
+      const text = normalizeWhitespace(node.textContent ?? '');
+      if (text.length > 1) parts.push(text);
+    }
+
+    const joined = parts.join(' ');
+    if (countWords(joined) >= MIN_ARTICLE_WORDS) return joined;
+  }
+  return '';
 }
 
 /**
@@ -79,7 +188,7 @@ function withBaseHref(html: string, url: string): string {
   return `${tag}${html}`;
 }
 
-type MinimalDocument = ReturnType<typeof parseHTML>['document'];
+export type MinimalDocument = ReturnType<typeof parseHTML>['document'];
 
 function metaContent(document: MinimalDocument, names: string[]): string | null {
   for (const name of names) {
@@ -109,9 +218,34 @@ function absolute(value: string | null, base: string): string | null {
   }
 }
 
-/** Skida rep tipa " - Naziv portala" koji portali dodaju u `<title>`. */
+/**
+ * Skida repove tipa " - Politika - Dnevni list Danas" koje portali dodaju u
+ * `<title>`. Skida ih vise, jednog po jednog, ali nikad toliko da od naslova
+ * ostane pola recenice.
+ */
 function cleanTitle(title: string | null): string | null {
   if (!title) return null;
-  const cleaned = normalizeWhitespace(title).replace(/\s+[|—–-]\s+[^|—–-]{2,40}$/u, '');
-  return cleaned.length >= 15 ? cleaned : normalizeWhitespace(title);
+
+  let cleaned = normalizeWhitespace(title);
+  for (let step = 0; step < 3; step += 1) {
+    const shorter = cleaned.replace(/\s+[|—–-]\s+[^|—–-]{2,40}$/u, '');
+    if (shorter === cleaned || shorter.length < 20) break;
+    cleaned = shorter;
+  }
+  return cleaned || normalizeWhitespace(title);
+}
+
+/**
+ * Ciscenje repova koji nisu deo clanka: putanja kroz rubrike na vrhu strane
+ * („Pocetna » Vesti » Politika »") i brojac komentara. Oba bi inace usla u
+ * tekst koji se u Fazi 5 salje modelu.
+ */
+export function cleanBodyText(raw: string): string {
+  let text = normalizeWhitespace(raw);
+
+  const breadcrumb = text.slice(0, 250).lastIndexOf('»');
+  if (breadcrumb !== -1) text = text.slice(breadcrumb + 1).trimStart();
+
+  text = text.replace(/^\d+\s+komentar(a|i)?\b[\s:.-]*/iu, '');
+  return text.trim();
 }

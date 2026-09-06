@@ -38,7 +38,7 @@ export interface RawItemRow {
   language: string | null;
   published_at: string | null;
   fetched_at: string;
-  extraction: 'readability' | 'feed' | 'none';
+  extraction: 'readability' | 'jsonld' | 'container' | 'feed' | 'none';
 }
 
 /** Novi red pre upisa — baza sama popunjava `id`, `fetched_at` i `created_at`. */

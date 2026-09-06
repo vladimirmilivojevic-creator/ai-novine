@@ -17,7 +17,7 @@ import {
   type NewRawItem,
 } from '@ai-novine/db';
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { extractArticle } from './extract.js';
+import { extractArticle, MIN_ARTICLE_WORDS } from './extract.js';
 import {
   canonicalizeUrl,
   contentHash,
@@ -242,9 +242,9 @@ async function buildRow(
         const page = await fetchText(candidate.url, { accept: 'text/html' });
         if (page.ok) {
           const article = extractArticle(page.body, page.url);
-          if (article.method === 'readability' && countWords(article.text) >= 60) {
+          if (article.method !== 'none' && countWords(article.text) >= MIN_ARTICLE_WORDS) {
             text = article.text;
-            extraction = 'readability';
+            extraction = article.method;
             result.extracted += 1;
             title = article.title ?? title;
             summary = article.excerpt ?? summary;

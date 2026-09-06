@@ -34,7 +34,9 @@ const TRACKING_TABLE = `
  * identiteta servera.
  */
 async function connect(connectionString: string): Promise<pg.Client> {
-  const strict = new pg.Client({ connectionString, ssl: { rejectUnauthorized: true } });
+  const target = parsePostgresUrl(connectionString);
+
+  const strict = new pg.Client({ ...target, ssl: { rejectUnauthorized: true } });
   try {
     await strict.connect();
     return strict;
@@ -48,9 +50,69 @@ async function connect(connectionString: string): Promise<pg.Client> {
         razlog: (error as Error).message,
       },
     );
-    const relaxed = new pg.Client({ connectionString, ssl: { rejectUnauthorized: false } });
+    const relaxed = new pg.Client({ ...target, ssl: { rejectUnauthorized: false } });
     await relaxed.connect();
     return relaxed;
+  }
+}
+
+export interface PostgresTarget {
+  host: string;
+  port: number;
+  user: string;
+  password: string;
+  database: string;
+}
+
+/**
+ * Rastavlja `postgresql://` vezu na delove, rucno.
+ *
+ * Razlog: lozinka sme da sadrzi `@`, `/` i `?`. Standardni parseri preseku
+ * string na prvom takvom znaku i onda pokusaju da se poveze na pogresan host.
+ * Zato se prvo trazi POSLEDNJI `@` — sve pre njega je korisnik i lozinka, sve
+ * posle je host, port i ime baze. Lozinka sa `@` tako radi i kad je upisana
+ * doslovno, i kad je kodirana kao `%40`.
+ */
+export function parsePostgresUrl(raw: string): PostgresTarget {
+  const value = raw.trim();
+  if (!/^postgres(ql)?:\/\//i.test(value)) {
+    throw new Error('SUPABASE_DB_URL mora da pocinje sa postgresql:// ili postgres://');
+  }
+
+  const withoutScheme = value.replace(/^postgres(ql)?:\/\//i, '');
+  const separator = withoutScheme.lastIndexOf('@');
+  if (separator === -1) {
+    throw new Error('SUPABASE_DB_URL nema korisnika i lozinku (nedostaje "@" pre imena servera)');
+  }
+
+  const userInfo = withoutScheme.slice(0, separator);
+  const serverPart = withoutScheme.slice(separator + 1);
+
+  const colon = userInfo.indexOf(':');
+  const user = decodeIfEncoded(colon === -1 ? userInfo : userInfo.slice(0, colon));
+  const password = colon === -1 ? '' : decodeIfEncoded(userInfo.slice(colon + 1));
+
+  const slash = serverPart.indexOf('/');
+  const hostPort = slash === -1 ? serverPart : serverPart.slice(0, slash);
+  const database = slash === -1 ? 'postgres' : (serverPart.slice(slash + 1).split('?')[0] ?? '');
+
+  const portMatch = /:(\d+)$/.exec(hostPort);
+  const host = portMatch ? hostPort.slice(0, portMatch.index) : hostPort;
+  const port = portMatch?.[1] ? Number.parseInt(portMatch[1], 10) : 5432;
+
+  if (!host) throw new Error('SUPABASE_DB_URL nema ime servera');
+  if (!user) throw new Error('SUPABASE_DB_URL nema korisnicko ime');
+
+  return { host, port, user, password, database: decodeIfEncoded(database) || 'postgres' };
+}
+
+/** `%40` postaje `@`; doslovno upisan `@` ostaje kakav jeste. */
+function decodeIfEncoded(value: string): string {
+  if (!value.includes('%')) return value;
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
   }
 }
 

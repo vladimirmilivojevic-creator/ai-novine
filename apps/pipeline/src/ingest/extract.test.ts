@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { extractArticle } from './extract.js';
+import { parseHTML } from 'linkedom';
+import { cleanBodyText, extractArticle, readContainerText } from './extract.js';
 
 const ARTICLE_HTML = `<!DOCTYPE html>
 <html lang="sr">
@@ -80,5 +81,70 @@ describe('extractArticle na stranici bez clanka', () => {
     expect(() =>
       extractArticle('<html><body><p>bez zatvaranja', 'https://primer.rs/'),
     ).not.toThrow();
+  });
+});
+
+describe('cleanTitle kroz extractArticle', () => {
+  it('skida i rubriku i ime portala iz <title> kad nema og:title', () => {
+    const html = `<html><head><title>Koalicija na izborima nastupa bez lidera - Politika - Dnevni list Danas</title></head>
+      <body><article><p>${'reč '.repeat(80)}</p></article></body></html>`;
+    expect(extractArticle(html, 'https://primer.rs/a').title).toBe(
+      'Koalicija na izborima nastupa bez lidera',
+    );
+  });
+
+  it('ne seče naslov toliko da ostane krnj', () => {
+    const html = `<html><head><title>Kratko - Danas</title></head><body><p>tekst</p></body></html>`;
+    expect(extractArticle(html, 'https://primer.rs/a').title).toBe('Kratko - Danas');
+  });
+});
+
+describe('cleanBodyText', () => {
+  it('skida putanju kroz rubrike sa vrha strane', () => {
+    expect(cleanBodyText('Početna » Vesti » Politika » Vlada je danas usvojila')).toBe(
+      'Vlada je danas usvojila',
+    );
+  });
+
+  it('skida brojač komentara', () => {
+    expect(cleanBodyText('0 komentara Branimir Kuzmanović je rekao')).toBe(
+      'Branimir Kuzmanović je rekao',
+    );
+  });
+
+  it('ne dira tekst koji te repove nema', () => {
+    expect(cleanBodyText('  Vlada je   danas usvojila budžet ')).toBe(
+      'Vlada je danas usvojila budžet',
+    );
+  });
+});
+
+describe('rezervni put kroz JSON-LD i kontejner', () => {
+  const body = 'Ministar je izjavio da su projekcije prihoda konzervativne. '.repeat(10);
+
+  it('koristi articleBody iz JSON-LD kad Readability nema dovoljno teksta', () => {
+    const html = `<html><head>
+      <script type="application/ld+json">${JSON.stringify({
+        '@graph': [{ '@type': 'NewsArticle', articleBody: body }],
+      })}</script></head>
+      <body><div><p>Kratko.</p></div></body></html>`;
+
+    const result = extractArticle(html, 'https://primer.rs/a');
+    expect(result.method).toBe('jsonld');
+    expect(result.text).toContain('projekcije prihoda');
+  });
+
+  it('cita tekst iz kontejnera clanka, bez potpisa ispod slike', () => {
+    const html = `<html><body>
+      <div class="post-content"><p>${body}</p>
+      <figure><figcaption>Foto: Agencija</figcaption></figure>
+      <aside class="related"><p>Povezana vest koja nije deo clanka.</p></aside></div>
+      </body></html>`;
+
+    const { document } = parseHTML(html);
+    const text = readContainerText(document);
+    expect(text).toContain('projekcije prihoda');
+    expect(text).not.toContain('Foto: Agencija');
+    expect(text).not.toContain('Povezana vest');
   });
 });

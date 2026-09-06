@@ -4,7 +4,7 @@
 > zašto, šta vlasnik treba da proveri, i status faze. Pun plan je u `docs/plan.md`.
 
 **Poslednje ažuriranje:** 6. septembar 2026.
-**Trenutno stanje:** Ključevi podešeni i provereni. Faza 2 u radu. Odluka o izvorima iz Faze 1 (Politika, Prva, BIRN, RTS, Euronews) još nije doneta — blokira Fazu 3, ne Fazu 2.
+**Trenutno stanje:** Faza 2 gotova — 148 stvarnih vesti u bazi. Faza 3 u radu. Odluka o izvorima iz Faze 1 (Politika, Prva, BIRN, RTS, Euronews) još nije doneta — blokira samo scraping deo Faze 3.
 
 ## Pregled faza
 
@@ -12,8 +12,8 @@
 | ---- | ------------------------------------ | ------------------- |
 | 0    | Priprema i kostur                    | ✅ Gotovo, potvrđeno |
 | 1    | RSS discovery izveštaj               | ✅ Gotovo, čeka potvrdu |
-| 2    | Engine 1 na 3 test izvora            | 🔄 U radu           |
-| 3    | Engine 1 na sve izvore               | ⬜ Čeka             |
+| 2    | Engine 1 na 3 test izvora            | ✅ Gotovo, čeka potvrdu |
+| 3    | Engine 1 na sve izvore               | 🔄 U radu           |
 | 4    | Klasterovanje i trending (Engine 2)  | ⬜ Čeka             |
 | 5    | AI generisanje teksta ⚠️ kritična kapija | ⬜ Čeka          |
 | 6    | Ažuriranje umesto dupliranja         | ⬜ Čeka             |
@@ -179,3 +179,71 @@ ugla" ima pokriće u svakoj grupi.
    scraping po predlogu iz izveštaja, ili izbacivanje.
 3. Odluči šta sa Politikom (blokira botove).
 4. Pogleda `git diff config/sources.json` — 16 izvora je dobilo `feeds` polje.
+
+---
+
+## Faza 2 — Engine 1 na tri test izvora ✅
+
+**Status:** gotovo, čeka potvrdu vlasnika (pregled tabele `raw_items` u Supabase Table Editor-u).
+**Test izvori:** N1 i Danas (kritički ugao), Kurir (provladin ugao).
+
+### Šta je urađeno
+
+- **Šema u bazi** (`packages/db/migrations/`): `sources`, `fetch_state`, `raw_items`,
+  `pipeline_runs`, plus `schema_migrations` koju vodi sam pokretač. RLS je uključen na svim
+  tabelama, bez ijedne politike za anonimne posetioce — sajt ne može da čita sirove vesti, a
+  pipeline može, jer `service_role` ključ zaobilazi RLS.
+- **Pokretač migracija** (`npm run pipeline -- migrate`): primenjuje samo ono što nije primenjeno,
+  svaku migraciju u sopstvenoj transakciji. Ako `SUPABASE_DB_URL` nije postavljen, ispisuje tačne
+  korake za ručnu primenu kroz dashboard.
+- **`ingest` komanda**: uslovni GET (ETag / Last-Modified) → parsiranje feeda → odbacivanje URL-ova
+  koji su već u bazi → otvaranje stranice članka → izvlačenje teksta → upis. Prekidač gasi izvor
+  posle tri uzastopna neuspeha.
+- **Izvlačenje teksta u tri pokušaja**: Readability, pa `articleBody` iz JSON-LD podataka, pa tekst
+  iz poznatih kontejnera članka (`div.post-content`, `.entry-content`, `[itemprop="articleBody"]`…).
+  Uzima se prvi koji da najmanje 60 reči.
+- **Deduplikacija na dva nivoa**: `url_hash` jedinstven globalno, `(source_id, content_hash)`
+  jedinstven po izvoru.
+
+### Rezultat dva ciklusa
+
+| Mera | Vrednost |
+| --- | --- |
+| Redova u `raw_items` | 148 (N1 50, Kurir 50, Danas 48) |
+| Način izvlačenja | 140 Readability, 7 kontejner, 1 samo feed |
+| Medijana dužine teksta | 252–385 reči po izvoru |
+| Grešaka | 0 |
+| Trajanje ciklusa | 33–43 sekunde za tri izvora |
+
+Drugi ciklus je uzeo sledećih 25 članaka po izvoru iz istog feeda — prvih 25 je prepoznao kao već
+poznate i preskočio ih pre nego što je otvorio ijednu stranicu. To je dokaz da deduplikacija radi.
+
+### Odluke i razlozi
+
+| Odluka | Zašto |
+| --- | --- |
+| Provera „imamo li već ovaj URL" ide **pre** otvaranja stranice članka | Feed daje 50–100 stavki po ciklusu. Bez toga bi se svakih 20 minuta ponovo skidalo istih 50 stranica sa svakog portala. |
+| Isti tekst sa **različitih** izvora se čuva | To je upravo signal za klasterovanje u Fazi 4. Duplikat je samo isti tekst sa **istog** izvora. |
+| Ručni parser `postgresql://` veze | Lozinka sme da sadrži `@`, `/` i `?`. Standardni parseri preseku string na prvom takvom znaku i pokušaju vezu ka pogrešnom serveru. Parser traži **poslednji** `@` — radi i sa doslovnim `@` i sa `%40`. |
+| Tri pokušaja izvlačenja teksta umesto samo Readability-ja | Na dva Danasova članka Readability je uzeo blok „povezane vesti" umesto tela članka — isti pogrešan tekst za dva različita URL-a. Prag od 60 reči ga je odbio, a rezervni put je izvukao pravi tekst. Sedam članaka od 148 danas prolazi baš tim putem. |
+| Kratke vesti se čuvaju | Vest od 97 reči je stvarna vest. Odbacivanje po dužini radi se kasnije, u uredničkim kapijama Faze 5 (najmanje 350 reči za objavu), ne pri prikupljanju. |
+
+### Otvoreno
+
+- **SSL do baze ne proverava sertifikat.** Supabase pooler šalje lanac koji Node ne prepoznaje
+  („self-signed certificate in certificate chain"), pa pokretač migracija prelazi na šifrovanu vezu
+  bez provere identiteta servera i to javno upozori. Rešenje je preuzeti Supabase CA sertifikat i
+  pinovati ga — uraditi pre produkcije (Faza 11).
+- **Uslovni GET radi samo kod Danasa.** Kurir i N1 ne šalju `ETag` ni `Last-Modified`, pa se njihov
+  feed preuzima svaki put. Feed je ~50 KB, trošak je zanemarljiv.
+- **Sitne stavke ulaze u bazu** (npr. „Dnevnik u 19" sa 7 reči, kvizovi). Ne smetaju: kapije Faze 4
+  i 5 traže najmanje tri izvora i 350 reči.
+- Odluka o izvorima iz Faze 1 (Politika, Prva, BIRN, RTS, Euronews) i dalje čeka — blokira samo
+  scraping deo Faze 3.
+
+### Šta vlasnik proverava
+
+1. Supabase dashboard → **Table Editor** → tabela `raw_items`. Treba da vidi 148 redova sa pravim
+   naslovima, tekstom i vremenom objave.
+2. Tabela `sources` → 26 redova, kolone `consecutive_failures` na 0 i `disabled_until` prazne.
+3. Tabela `pipeline_runs` → dva reda sa `ok = true`.
