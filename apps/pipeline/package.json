@@ -14,6 +14,8 @@
     "@ai-novine/core": "*",
     "@ai-novine/db": "*",
     "@anthropic-ai/sdk": "^0.124.0",
-    "commander": "^15.0.0"
+    "@mozilla/readability": "^0.6.0",
+    "commander": "^15.0.0",
+    "linkedom": "^0.18.13"
   }
 }

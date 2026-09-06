@@ -60,6 +60,16 @@ export const ENV_SPECS: EnvVarSpec[] = [
     validate: (value) => expectSupabaseKey(value, 'service_role'),
   },
   {
+    name: 'SUPABASE_DB_URL',
+    phase: 'baza',
+    required: false,
+    description: 'direktna Postgres veza — treba samo za migracije (npm run pipeline -- migrate)',
+    validate: (value) =>
+      value.startsWith('postgres://') || value.startsWith('postgresql://')
+        ? null
+        : 'ocekuje se postgresql:// veza iz Supabase dashboard-a (Connect → Session pooler)',
+  },
+  {
     name: 'ANTHROPIC_API_KEY',
     phase: 'ai',
     required: true,

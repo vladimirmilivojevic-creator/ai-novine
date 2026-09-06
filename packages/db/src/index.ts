@@ -21,3 +21,7 @@ export function createPublicClient(): SupabaseClient {
     auth: { persistSession: false },
   });
 }
+
+export * from './migrate.js';
+export * from './repository.js';
+export * from './schema.js';

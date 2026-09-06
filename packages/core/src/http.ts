@@ -10,6 +10,8 @@ export interface FetchOptions {
   accept?: string;
   /** Preko koliko bajtova tela odgovora se odseca (odbrana od ogromnih strana). */
   maxBytes?: number;
+  /** Dodatna zaglavlja — npr. `if-none-match` za uslovni GET. */
+  headers?: Record<string, string>;
 }
 
 export interface FetchResult {
@@ -92,6 +94,7 @@ export async function fetchText(url: string, options: FetchOptions = {}): Promis
           'user-agent': defaults.userAgent,
           accept: options.accept ?? '*/*',
           'accept-language': 'sr,sr-Latn;q=0.9,en;q=0.5',
+          ...options.headers,
         },
       });
     } catch (error) {

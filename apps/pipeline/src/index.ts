@@ -4,6 +4,8 @@ import { logger } from '@ai-novine/core';
 import { runConfigCheck } from './commands/config-check.js';
 import { runDiscover } from './commands/discover.js';
 import { runDoctor } from './commands/doctor.js';
+import { runIngest } from './commands/ingest.js';
+import { runMigrate } from './commands/migrate.js';
 
 const program = new Command();
 
@@ -44,11 +46,33 @@ program
   });
 
 program
-  .command('ingest')
-  .description('Dohvata nove clanke sa izvora i upisuje ih u bazu (Faza 2 i 3)')
-  .action(() => {
-    notYet('ingest', 2);
+  .command('migrate')
+  .description('Primenjuje SQL migracije iz packages/db/migrations na Supabase bazu')
+  .option('--check', 'samo prikazi koje migracije nisu primenjene', false)
+  .action(async (options: { check: boolean }) => {
+    await runMigrate({ check: options.check });
   });
+
+program
+  .command('ingest')
+  .description('Dohvata nove clanke sa izvora i upisuje ih u bazu')
+  .option('--only <ids>', 'samo zadati izvori, npr. --only n1,danas,kurir')
+  .option('--concurrency <broj>', 'koliko izvora istovremeno (podrazumevano 3)', '3')
+  .option('--limit <broj>', 'najvise novih clanaka po izvoru (podrazumevano 25)', '25')
+  .option('--no-full-text', 'ne otvaraj stranice clanaka, koristi samo ono sto feed daje')
+  .action(
+    async (options: { only?: string; concurrency: string; limit: string; fullText: boolean }) => {
+      await runIngest({
+        only: options.only
+          ?.split(',')
+          .map((id) => id.trim())
+          .filter(Boolean),
+        concurrency: Math.max(1, Number.parseInt(options.concurrency, 10) || 3),
+        limit: Math.max(1, Number.parseInt(options.limit, 10) || 25),
+        fullText: options.fullText,
+      });
+    },
+  );
 
 program
   .command('editorial')
