@@ -25,3 +25,4 @@ export function createPublicClient(): SupabaseClient {
 export * from './migrate.js';
 export * from './repository.js';
 export * from './schema.js';
+export * from './updates.js';

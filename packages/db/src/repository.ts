@@ -383,7 +383,11 @@ export async function openClusters(
   const { data, error } = await client
     .from('clusters')
     .select('*')
-    .eq('status', 'open')
+    // I teme koje VEC imaju clanak ostaju u igri. To je sustina pravila iz
+    // sekcije 5 brief-a: nova vest o prici koja je pokrivena mora da udje u
+    // postojecu temu, jer bi inace otvorila novu i dobila drugi, skoro
+    // identican clanak.
+    .in('status', ['open', 'covered'])
     .gte('updated_at', cutoff)
     .order('updated_at', { ascending: false })
     .limit(limit);

@@ -1,17 +1,17 @@
 # Teme dana
 
-**Vreme:** 6. 9. 2026. 15:47:14
-**Prikazano tema:** 12
+**Vreme:** 6. 9. 2026. 18:25:47
+**Prikazano tema:** 8
 
 Teme su grupisane leksički, bez ijednog AI poziva. „Prolazi kapije" znači da temu javlja najmanje 3 nezavisna izvora iz najmanje 2 različita ugla — tek takva tema ide na pisanje članka u Fazi 5.
 
-## 1. Сува планина у облаку дима – пожар најактивнији на превоју Девојачки гроб, на Грамади локализован
+## 1. Borba sa vatrom na Suvoj planini: Avioni gase nepristupačna žarišta, kuće za sada nisu ugrožene
 
-**Skor:** 214.31 · **tekstova:** 16 · **izvora:** 13 · **uglova:** 4 (mejnstrim, provladin, agencija, kriticki)
+**Skor:** 172.63 · **tekstova:** 24 · **izvora:** 13 · **uglova:** 4 (mejnstrim, provladin, agencija, kriticki)
 
 ✅ **Prolazi kapije kvaliteta**
 
-**Ključne reči:** planina, oblaku, Suvoj, dima, požar, prevoju, lokalizovan, Helikopteri
+**Ključne reči:** planini, oblak, Suvoj, Požar, dima, prevo, lokalizovan, Mitrović
 **Imena i nazivi:** Devojački, Gramadi, Suve, Suvoj, Uprave Sektora, Gadžin Han, Gorske, Gramada RTS-u
 
 | Izvor | Naslov |
@@ -28,37 +28,20 @@ Teme su grupisane leksički, bez ijednog AI poziva. „Prolazi kapije" znači da
 | RTS | [Сува планина у облаку дима – пожар најактивнији на превоју Девојачки гроб, на Грамади локализован](https://rts.rs/vesti/hronika/6033287/pozari-suva-planina.html) |
 | Informer | [Sila brani Suvu planinu: "Iljušin i helikopteri MUP gase požar](https://informer.rs/drustvo/srbija/1148182/pozar-suva-planina-vatrogasci) |
 | Srbija Danas | [Helikopteri MUP-a nad Suvom planinom: Vatra gori na 1.800 metara, više od 50 vatrogasaca u borbi sa požarom](https://sd.rs/vesti/drustvo/helikopteri-mup-nad-suvom-planinom-vatra-gori-na-1800-metara-vise-od-50-vatrogasaca-u-borbi-sa-pozarom-2026-09-06) |
+| Tanjug | [Srđan Mitrović: Situacija sa požarom na Suvoj planini nešto povoljnija, gasi ga i iljušin](https://tanjug.rs/srbija/drustvo/279002/srdan-mitrovic-situacija-sa-pozarom-na-suvoj-planini-nesto-povoljnija-gasi-ga-i-iljusin/vest) |
 | Blic | [Dramatična borba sa vatrom na Suvoj planini: Helikopteri MUP-a u akciji](https://blic.rs/vesti/drustvo/dramaticna-borba-sa-vatrom-na-suvoj-planini-helikopteri-mup-a-u-akciji/sp7110d) |
 | Pink | [POŽAR I DALJE BESNI NA SUVOJ PLANINI: Kod Svrljiga lokalizovan, a kod Devojačkog groba i dalje aktivan](https://pink.rs/drustvo/810530/pozar-i-dalje-besni-na-suvoj-planini-kod-svrljiga-lokalizovan-a-kod-devojackog-groba-i-dalje-aktivan) |
 | Vecernje novosti | [SUVA PLANINA JOŠ UVEK POD OPSADOM VATRE: U gašenje požara uključili se helikopteri MUP-a](https://novosti.rs/drustvo/vesti/1645633/suva-planina-jos-uvek-pod-opsadom-vatre-gasenje-pozara-ukljucili-helikopteri-mup) |
 | Blic | ["Iljušin" i MUP u borbi sa požarom na Suvoj planini: Drama na Devojačkom grobu](https://blic.rs/vesti/drustvo/iljusin-i-mup-u-borbi-sa-pozarom-na-suvoj-planini-drama-na-devojackom-grobu/6vmkw8z) |
+| Vecernje novosti | [SITUACIJA NA SUVOJ PLANINI NEŠTO POVOLJNIJA Mitrović: U gašenje požara se uključio i "iljušin"](https://novosti.rs/drustvo/vesti/1645686/situacija-suvoj-planini-nesto-povoljnija-mitrovic-gasenje-pozara-ukljucio-iljusin) |
+| N1 | [MUP: Požar na Suvoj planini se proširio u tri pravca, gase vatrogasci, šumari, građani i helikopteri](https://n1info.rs/vesti/mup-pozar-na-suvoj-planini-se-prosirio-u-tri-pravca-gase-vatrogasci-sumari-gradjani-i-helikopteri) |
+| Nova.rs | [Požar na Suvoj planini proširio se u tri pravca: Gase vatrogasci, šumari, građani i helikopteri](https://nova.rs/vesti/hronika/pozar-na-suvoj-planini-prosirio-se-u-tri-pravca-gase-vatrogasci-sumari-gradjani-i-helikopteri) |
+| Danas | [MUP: Požar na Suvoj planini i dalje gori, gašenje na više lokacija moguće samo iz vazduha](https://danas.rs/vesti/drustvo/mup-pozar-na-suvoj-planini-i-dalje-gori-gasenje-na-vise-lokacija-moguce-samo-iz-vazduha) |
+| Telegraf | [Borba sa vatrom na Suvoj planini: Avioni gase nepristupačna žarišta, kuće za sada nisu ugrožene](https://telegraf.rs/vesti/srbija/4391586-borba-sa-vatrom-na-suvoj-planini-avioni-gase-nepristupacna-zarista-kuce-za-sada-nisu-ugrozene) |
+| Euronews Srbija | [Treći dan borbe sa požarom na Suvoj planini: Vatra i dalje gori na nepristupačnom terenu](https://euronews.rs/srbija/aktuelno/241470/pozar-na-suvoj-planini-vise-zarista-ka-beloj-palanci/vest) |
+| Insajder | [MUP: Požar na Suvoj planini se širi u tri pravca, nema ugroženih objekata](https://insajder.net/prenosimo/mup-pozar-na-suvoj-planini-se-siri-u-tri-pravca-nema-ugrozenih-objekata) |
 
-## 2. Putin sa Vitkofom i Kušnerom: Kontakti Vašingtona i Moskve uvek korisni
-
-**Skor:** 141.22 · **tekstova:** 13 · **izvora:** 9 · **uglova:** 4 (kriticki, agencija, provladin, mejnstrim)
-
-✅ **Prolazi kapije kvaliteta**
-
-**Ključne reči:** korisni, Kontakti, Vitkofom, Kušnerom, Kijevu, Vašingtona, Putin, osigura
-**Imena i nazivi:** Moskve, Rusija, Beta, Donald Tramp, Džaredu Kušneru, Kušner, Kušnerom Kontakti Vašingtona, Moskvu
-
-| Izvor | Naslov |
-| --- | --- |
-| Danas | [Posle sastanka s Putinom, Ukrajina sledeća stanica Trampovih mirovnih izaslanika - BBC News na srpskom -](https://danas.rs/bbc-news-serbian/posle-sastanka-s-putinom-ukrajina-sledeca-stanica-trampovih-mirovnih-izaslanika) |
-| N1 | [Putin sa Vitkofom i Kušnerom: Kontakti Vašingtona i Moskve uvek korisni](https://n1info.rs/svet/putin-sa-vitkofom-i-kusnerom-kontakti-vasingtona-i-moskve-uvek-korisni) |
-| Alo | [Dogovor na pomolu? Vitkof i Kušner stigli u Kijev, prvi put od početka rata](https://alo.rs/vesti/ukrajina/16935470/dogovor-na-pomolu-vitkof-i-kusner-stigli-u-kijev-prvi-put-od-pocetka-rata.html) |
-| Insajder | [Vitkof i Kušner stigli u Kijev, prvi put od početka rata](https://insajder.net/prenosimo/vitkof-i-kusner-stigli-u-kijev-prvi-put-od-pocetka-rata) |
-| Telegraf | [Vitkof i Kušner stigli u Kijev, prvi put od početka rata](https://telegraf.rs/vesti/svet/4391506-vitkof-i-kusner-stigli-u-kijev-prvi-put-od-pocetka-rata) |
-| Tanjug | [Vitkof i Kušner stigli u Kijev, prvi put od početka rata](https://tanjug.rs/svet/politika/278987/vitkof-i-kusner-stigli-u-kijev-prvi-put-od-pocetka-rata/vest) |
-| Vecernje novosti | [PRVI PUT OD POČETKA RATA: Vitkof i Kušner stigli u Kijev (FOTO)](https://novosti.rs/planeta/svet/1645655/prvi-put-pocetka-rata-vitkof-kusner-stigli-kijev-foto) |
-| Informer | [(FOTO) Znate li ko će se uključiti u pregovore u Kijevu?! Cirkuliše vest koju niko nije očekivao](https://informer.rs/planeta/vesti/1148188/kijev-stiv-vitkof-dzerar-kusner-evropa) |
-| Srbija Danas | [Pravo iz Moskve kod Zelenskog: Vitkof i Kušner stigli u Kijev, prvi put od početka rata (VIDEO)](https://sd.rs/ukrajina/vesti/pravo-iz-moskve-kod-zelenskog-vitkof-i-kusner-stigli-u-kijev-prvi-put-od-pocetka-rata-video-2026-09-06) |
-| N1 | [Trampovi izaslanici u Kijevu, Rusija i Ukrajina nastavile napade uprkos obećanju da neće dok su Amerikanci tu](https://n1info.rs/svet/trampovi-izaslanici-u-kijevu-rusija-i-ukrajina-nastavile-napade-uprkos-obecanju-da-nece-dok-su-amerikanci-tu) |
-| Vecernje novosti | [ZELENSKI SAOPŠTIO: Kijev spremio predloge za kraj rata](https://novosti.rs/planeta/svet/1645672/zelenski-saopstio-kijev-spremio-predloge-kraj-rata) |
-| Insajder | [Putin sa Vitkofom i Kušnerom: Moskvi odgovara saradnja sa Vašingtonom, Ukrajina smanjila napade](https://insajder.net/prenosimo/putin-sa-vitkofom-i-kusnerom-moskvi-odgovara-saradnja-sa-vasingtonom-ukrajina-smanjila-napade) |
-| Telegraf | [Počeo sastanak Zelenskog sa američkim izaslanicima Kušnerom i Vitkofom](https://telegraf.rs/vesti/svet/4391547-poceo-sastanak-zelenskog-sa-americkim-izaslanicima-kusnerom-i-vitkofom) |
-
-## 3. Kako i kada da se prijavite za 6.000 dinara državne pomoći
+## 2. Kako i kada da se prijavite za 6.000 dinara državne pomoći
 
 **Skor:** 141.02 · **tekstova:** 10 · **izvora:** 10 · **uglova:** 4 (kriticki, provladin, mejnstrim, agencija)
 
@@ -69,62 +52,56 @@ Teme su grupisane leksički, bez ijednog AI poziva. „Prolazi kapije" znači da
 
 | Izvor | Naslov |
 | --- | --- |
-| Alo | [Večeras u ponoć počinje prijava za 6.000 dinara pomoći](https://alo.rs/biz/novac/16935480/veceras-u-ponoc-pocinje-prijava-za-6000-dinara-ministar-mali-pojasnio-gde-i-kako-se-prijavljuje-za-novac.html) |
-| Vreme | [Kako i kada da se prijavite za 6.000 dinara državne pomoći](https://vreme.com/drustvo/drzavna-pomoc-6000-dinara-predizborna-kampanja-uprava-za-trezor) |
-| Blic | [SVE JE SPREMNO, U PONOĆ POČINJE PRIJAVA ZA 6.000 DINARA! Mali otkrio sve detalje o državnoj pomoći: Evo kada stiže novac (VIDEO)](https://blic.rs/biznis/pomoc-drzave/u-ponoc-pocinje-prijava-gradjana-za-pomoc-drzave-od-6000-dinara-video/qv5jbh4) |
-| Informer | [Sve je spremno! Siniša Mali se hitno oglasio (VIDEO)](https://informer.rs/drustvo/vesti/1148192/sinisa-mali-novcana-pomoc-6000-dinara) |
-| Insajder | [Mali: U ponoć počinje prijava punoletnih građana za 6.000 dinara](https://insajder.net/prenosimo/mali-u-ponoc-pocinje-prijava-punoletnih-gradana-za-6000-dinara) |
-| Kurir | [Sve je spremno, u ponoć počinje prijava za 6.000 dinara: Mali otkriva sve detalje o državnoj pomoći i kada počinje isplata novaca](https://biznis.kurir.rs/info-biz/10096867/prijava-za-drzavnu-pomoc-od-6-000-dinara-pocinje-u-ponoc) |
-| Vecernje novosti | [SVE SPREMNO ZA SUTRAŠNJI POČETAK PRIJAVA: Evo koje dve kategorije građana mogu da dobiju jednokratnu novčanu naknadu (VIDEO)](https://novosti.rs/ekonomija/vesti/1645637/sve-spremno-sutrasnji-pocetak-prijava-evo-koje-dve-kategorije-gradjana-mogu-dobiju-jednokratnu-novcanu-naknadu-video) |
-| RTS | [У поноћ почиње пријављивање за помоћ од 6.000 динара](https://rts.rs/vesti/drustvo/6033326/isplata-6000-dinara-gradjani-prijava-ponoc.html) |
-| Telegraf | [Prijava za 6.000 dinara kreće u ponoć: Evo ko mora da se prijavi, a kome leže bez prijave](https://biznis.telegraf.rs/novcanik/4391533-prijava-za-6000-dinara-krece-u-ponoc-evo-ko-mora-da-se-prijavi-a-kome-leze-bez-prijave) |
 | Tanjug | [Siniša Mali: Sve je spremno, u ponoć počinje prijava punoletnih građana za 6.000 dinara](https://tanjug.rs/ekonomija/srbija/278989/sinisa-mali-sve-je-spremno-u-ponoc-pocinje-prijava-punoletnih-gradana-za-6000-dinara/vest) |
+| Vecernje novosti | [SVE SPREMNO ZA SUTRAŠNJI POČETAK PRIJAVA: Evo koje dve kategorije građana mogu da dobiju jednokratnu novčanu naknadu (VIDEO)](https://novosti.rs/ekonomija/vesti/1645637/sve-spremno-sutrasnji-pocetak-prijava-evo-koje-dve-kategorije-gradjana-mogu-dobiju-jednokratnu-novcanu-naknadu-video) |
+| Vreme | [Kako i kada da se prijavite za 6.000 dinara državne pomoći](https://vreme.com/drustvo/drzavna-pomoc-6000-dinara-predizborna-kampanja-uprava-za-trezor) |
+| Insajder | [Mali: U ponoć počinje prijava punoletnih građana za 6.000 dinara](https://insajder.net/prenosimo/mali-u-ponoc-pocinje-prijava-punoletnih-gradana-za-6000-dinara) |
+| Alo | [Večeras u ponoć počinje prijava za 6.000 dinara pomoći](https://alo.rs/biz/novac/16935480/veceras-u-ponoc-pocinje-prijava-za-6000-dinara-ministar-mali-pojasnio-gde-i-kako-se-prijavljuje-za-novac.html) |
+| Blic | [SVE JE SPREMNO, U PONOĆ POČINJE PRIJAVA ZA 6.000 DINARA! Mali otkrio sve detalje o državnoj pomoći: Evo kada stiže novac (VIDEO)](https://blic.rs/biznis/pomoc-drzave/u-ponoc-pocinje-prijava-gradjana-za-pomoc-drzave-od-6000-dinara-video/qv5jbh4) |
+| Kurir | [Sve je spremno, u ponoć počinje prijava za 6.000 dinara: Mali otkriva sve detalje o državnoj pomoći i kada počinje isplata novaca](https://biznis.kurir.rs/info-biz/10096867/prijava-za-drzavnu-pomoc-od-6-000-dinara-pocinje-u-ponoc) |
+| RTS | [У поноћ почиње пријављивање за помоћ од 6.000 динара](https://rts.rs/vesti/drustvo/6033326/isplata-6000-dinara-gradjani-prijava-ponoc.html) |
+| Informer | [Sve je spremno! Siniša Mali se hitno oglasio (VIDEO)](https://informer.rs/drustvo/vesti/1148192/sinisa-mali-novcana-pomoc-6000-dinara) |
+| Telegraf | [Prijava za 6.000 dinara kreće u ponoć: Evo ko mora da se prijavi, a kome leže bez prijave](https://biznis.telegraf.rs/novcanik/4391533-prijava-za-6000-dinara-krece-u-ponoc-evo-ko-mora-da-se-prijavi-a-kome-leze-bez-prijave) |
 
-## 4. Idemo, devojke! Odbojkašice Srbije igraju meč za bronzu
+## 3. Počeo sastanak Zelenskog sa američkim izaslanicima Kušnerom i Vitkofom
 
-**Skor:** 100 · **tekstova:** 10 · **izvora:** 8 · **uglova:** 4 (provladin, agencija, mejnstrim, kriticki)
-
-✅ **Prolazi kapije kvaliteta**
-
-**Ključne reči:** Idemo, bronzu, Poljska, Odbojkašice, prvenstvu, Tijana, Bošković, Turske
-**Imena i nazivi:** Italija, Poljska, Srbije, Dobro, Evropskom, Izabranice Zoran Terzića, MEČA, Najbolja
-
-| Izvor | Naslov |
-| --- | --- |
-| Danas | [Kad i gde možete da gledate meč odbojkašica Srbije za treće mesto na Evropskom prvenstvu?](https://danas.rs/sport/srbija-poljska-evropsko-prvenstvo-trece-mesto-uzivo-prenos-livestream) |
-| Vecernje novosti | [PRENOS, SRBIJA - POLJSKA: Naše odbojkašice u borbi za bronzu na Evropskom prvenstvu](https://novosti.rs/sport/ostali-sportovi/1645629/najnovije-sportske-vesti-odbojka-evropsko-prvenstvo-zene-srbija-poljska-prenos-rezultat-uzivo-lajv-bronzana-medalja-tijana-boskovic-zoran-terzic) |
-| Mondo | [Uživo, Srbija - Poljska: Odbojkašice biju bitku za bronzu na EP](https://mondo.rs/Sport/Ostali-sportovi/a2278517/uzivo-srbija-poljska-mec-za-bronzu-na-ep.html) |
-| Kurir | [SRBIJA - POLJSKA: Naše dame idu po evropsku bronzu!](https://kurir.rs/sport/ostali-sportovi/10096719/srbija-poljska-ep-u-odbojci-za-zene-uzivo-prenos-livestream) |
-| Informer | [Idemo, devojke! Odbojkašice Srbije igraju meč za bronzu](https://informer.rs/sport/ostali-sportovi/1148223/odbojkasice-srbije-bronza) |
-| Nova.rs | [Srbija protiv Poljske za bronzu na Evropskom prvenstvu](https://nova.rs/sport/sport-ostalo/srbija-poljska-mec-za-trece-mesto-uzivo-prenos-live) |
-| Nova.rs | [Srbija dobila najbolju moguću vest pred meč za bronzu, posle ovoga se mnogo lakše diše](https://nova.rs/sport/sport-ostalo/srbija-dobila-najbolju-mogucu-vest-pred-mec-za-bronzu-posle-ovoga-se-mnogo-lakse-dise) |
-| B92 | [Srbija se bori za bronzu! - Vesti](https://b92.net/sport/odbojka/vesti/265222/uzivo-prenos-srbija-poljska-odbojka-zene-borba-za-bronzu/vest) |
-| Mondo | [Od šoka protiv Turske do borbe za medalju: Srbija danas napada bronzu protiv Poljske](https://mondo.rs/Sport/Ostali-sportovi/a2278443/srbija-poljska-borba-za-trece-mesto-uzivo-prenos.html) |
-| Tanjug | [Odbojkašice Srbije igraju danas protiv Poljske za bronzu na Evropskom prvenstvu](https://tanjug.rs/sport/odbojka/278957/odbojkasice-srbije-igraju-danas-protiv-poljske-za-bronzu-na-evropskom-prvenstvu/vest) |
-
-## 5. REPER COBI OŽENIO PEVAČICU IZ JUŽNE AFRIKE: Evo kako je izlgledalo slavlje: Skromna mladenačka torta, harfa, ROBOTI...
-
-**Skor:** 84.41 · **tekstova:** 10 · **izvora:** 8 · **uglova:** 3 (provladin, mejnstrim, kriticki)
+**Skor:** 127.68 · **tekstova:** 26 · **izvora:** 9 · **uglova:** 4 (kriticki, agencija, provladin, mejnstrim)
 
 ✅ **Prolazi kapije kvaliteta**
 
-**Ključne reči:** COBI, izlgledalo, mladenačka, harfa, AFRIKE, Skromna, REPER, OŽENIO
-**Imena i nazivi:** Cobi, Kat Dosa, Čačku, Cobi Foto PrintscreanIako, COBI OŽENIO PEVAČICU, Evroviziju, Izvor Instagram/ana_mariiyaa, JUŽNE AFRIKE Evo
+**Ključne reči:** korisni, kontakt, Vitkofom, Kušnerom, Zelenskog, Kijevu, Moskvi, Putinom
+**Imena i nazivi:** Moskve, Rusija, Beta, Donald Tramp, Džaredu Kušneru, Kušner, Kušnerom Kontakti Vašingtona, Moskvu
 
 | Izvor | Naslov |
 | --- | --- |
-| Kurir | [REPER COBI OŽENIO PEVAČICU IZ JUŽNE AFRIKE: Evo kako je izlgledalo slavlje: Skromna mladenačka torta, harfa, ROBOTI...](https://kurir.rs/stars/10096753/reper-cobi-ozenio-pevacicu-kat-dosa-iz-juzne-afrike) |
-| Pink | [COBI STAO NA LUDI KAMEN SA 17 GODINA MLAĐOM PEVAČICOM: Rođena u Južnoj Africi, a evo odakle je svi znate](https://pink.rs/showbiz/810543/cobi-stao-na-ludi-kamen-sa-17-godina-mladom-pevacicom-rodena-u-juznoj-africi-a-evo-odakle-je-svi-znate) |
-| Pink | [COBI SE TAJNO OŽENIO MLADOM PEVAČICOM: Venčanje u vinariji, ona zablistala u beloj kratkoj haljini, a TRUBAČI NAPRAVILI LOM](https://pink.rs/showbiz/810542/cobi-se-tajno-ozenio-mladom-pevacicom-vencanje-u-vinariji-ona-zablistala-u-beloj-kratkoj-haljini-a-trubaci-napravili-lom) |
-| Telegraf | [Svi znaju Cobija, a ovo je njegova misteriozna žena: Odrasla je u Portugalu i Južnoj Africi, a dobro je znate](https://ona.telegraf.rs/ona-price/4391519-svi-znaju-cobija-a-ovo-je-njegova-misteriozna-zena-odrasla-je-u-portugalu-i-juznoj-africi-a-dobro-je-znate) |
-| Mondo | [Majka iz Angole, a ona rođena u Čačku: Ko je Katarina Kardozo, 17 godina mlađa supruga repera Cobija? (Video)](https://mondo.rs/Zabava/Zvezde-i-tracevi/a2278484/ko-je-kat-dosa-pevacica-koja-se-udala-za-cobija.html) |
-| Mondo | [Cobi se oženio pevačicom iz Južne Afrike: Tajno venčanje održano u Prokuplju, isplivao snimak (Video)](https://mondo.rs/Zabava/Zvezde-i-tracevi/a2278477/vencali-se-cobi-i-ket-dosa.html) |
-| Alo | [Oženio se Cobi! Isplivale prve fotografije sa venčanja u Prokuplju](https://alo.rs/vip/estrada/16935386/ozenio-se-cobi-isplivale-prve-fotografije-sa-vencanja-u-prokuplju-.html) |
-| Vecernje novosti | [OŽENIO SE COBI: Mlada pevačica iz Južne Afrike, 17 leta mlađa, sudbonosno "Da" izgovorili u Prokuplju](https://novosti.rs/scena/poznati/1645631/ozenio-reper-cobi-mlada-pevacica-juzne-afrike-17-leta-mladja-sudbonosno-izgovorili-prokuplju) |
-| Srbija Danas | [Oženio se Cobi, mlada je takođe pevačica i znate je iz OVOG takmičenja!](https://sd.rs/vip/vip/ozenio-se-cobi-mlada-je-takode-pevacica-i-znate-je-iz-ovog-takmicenja-2026-09-06) |
-| Nova.rs | [Oženio se Cobi: Ovo je njegova supruga - rođena u Južnoj Africi, 17 godina mlađa od repera, a svi je znate iz popularnog takmičenja](https://nova.rs/zabava/showbiz/ozenio-se-cobi-ovo-je-njegova-supruga-rodjena-u-juznoj-africi-17-godina-mladja-od-repera-a-svi-je-znate-iz-popularnog-takmicenja) |
+| Danas | [Posle sastanka s Putinom, Ukrajina sledeća stanica Trampovih mirovnih izaslanika - BBC News na srpskom -](https://danas.rs/bbc-news-serbian/posle-sastanka-s-putinom-ukrajina-sledeca-stanica-trampovih-mirovnih-izaslanika) |
+| N1 | [Putin sa Vitkofom i Kušnerom: Kontakti Vašingtona i Moskve uvek korisni](https://n1info.rs/svet/putin-sa-vitkofom-i-kusnerom-kontakti-vasingtona-i-moskve-uvek-korisni) |
+| Alo | [Dogovor na pomolu? Vitkof i Kušner stigli u Kijev, prvi put od početka rata](https://alo.rs/vesti/ukrajina/16935470/dogovor-na-pomolu-vitkof-i-kusner-stigli-u-kijev-prvi-put-od-pocetka-rata.html) |
+| Tanjug | [Avion Vitkofa i Kušnera sleteo u Poljsku nakon razgovora sa Putinom](https://tanjug.rs/svet/politika/278941/avion-vitkofa-i-kusnera-sleteo-u-poljsku-nakon-razgovora-sa-putinom/vest) |
+| Insajder | [Vitkof i Kušner stigli u Kijev, prvi put od početka rata](https://insajder.net/prenosimo/vitkof-i-kusner-stigli-u-kijev-prvi-put-od-pocetka-rata) |
+| Telegraf | [Vitkof i Kušner stigli u Kijev, prvi put od početka rata](https://telegraf.rs/vesti/svet/4391506-vitkof-i-kusner-stigli-u-kijev-prvi-put-od-pocetka-rata) |
+| Mondo | [Iz Moskve pravo kod Zelenskog: Američki izaslanici stigli u Kijev, na stolu novi plan za kraj rata u Ukrajini](https://mondo.rs/Info/Svet/a2278553/vitkof-i-kusner-stigli-u-kijev.html) |
+| Tanjug | [Vitkof i Kušner stigli u Kijev, prvi put od početka rata](https://tanjug.rs/svet/politika/278987/vitkof-i-kusner-stigli-u-kijev-prvi-put-od-pocetka-rata/vest) |
+| Vecernje novosti | [PRVI PUT OD POČETKA RATA: Vitkof i Kušner stigli u Kijev (FOTO)](https://novosti.rs/planeta/svet/1645655/prvi-put-pocetka-rata-vitkof-kusner-stigli-kijev-foto) |
+| Informer | [(FOTO) Znate li ko će se uključiti u pregovore u Kijevu?! Cirkuliše vest koju niko nije očekivao](https://informer.rs/planeta/vesti/1148188/kijev-stiv-vitkof-dzerar-kusner-evropa) |
+| Tanjug | [Zelenski najavio pregovore sa izaslanicima SAD i evropskim partnerima u Kijevu](https://tanjug.rs/svet/politika/278995/zelenski-najavio-pregovore-sa-izaslanicima-sad-i-evropskim-partnerima-u-kijevu/vest) |
+| Srbija Danas | [Pravo iz Moskve kod Zelenskog: Vitkof i Kušner stigli u Kijev, prvi put od početka rata (VIDEO)](https://sd.rs/ukrajina/vesti/pravo-iz-moskve-kod-zelenskog-vitkof-i-kusner-stigli-u-kijev-prvi-put-od-pocetka-rata-video-2026-09-06) |
+| N1 | [Trampovi izaslanici u Kijevu, Rusija i Ukrajina nastavile napade uprkos obećanju da neće dok su Amerikanci tu](https://n1info.rs/svet/trampovi-izaslanici-u-kijevu-rusija-i-ukrajina-nastavile-napade-uprkos-obecanju-da-nece-dok-su-amerikanci-tu) |
+| Vecernje novosti | [ZELENSKI SAOPŠTIO: Kijev spremio predloge za kraj rata](https://novosti.rs/planeta/svet/1645672/zelenski-saopstio-kijev-spremio-predloge-kraj-rata) |
+| Insajder | [Putin sa Vitkofom i Kušnerom: Moskvi odgovara saradnja sa Vašingtonom, Ukrajina smanjila napade](https://insajder.net/prenosimo/putin-sa-vitkofom-i-kusnerom-moskvi-odgovara-saradnja-sa-vasingtonom-ukrajina-smanjila-napade) |
+| Telegraf | [Počeo sastanak Zelenskog sa američkim izaslanicima Kušnerom i Vitkofom](https://telegraf.rs/vesti/svet/4391547-poceo-sastanak-zelenskog-sa-americkim-izaslanicima-kusnerom-i-vitkofom) |
+| Pink | [Počeo sastanak Zelenskog sa američkim izaslanicima Kušnerom i Vitkofom](https://pink.rs/svet/810566/poceo-sastanak-zelenskog-sa-americkim-izaslanicima-kusnerom-i-vitkofom) |
+| Kurir | [SPECIJALNA MISIJA AMERIKANACA! Kušner i Vitkof stigli iz Moskve pravo kod Zelenskog: Trampovi ljudi drže sudbinu rata u rukama](https://kurir.rs/planeta/10096991/Zelenski-se-sastao-sa-americkim-izaslanicima) |
+| Alo | [Odluka na Kijevu? Počeo sastanak Zelenskog sa američkim izaslanicima Kušnerom i Vitkofom](https://alo.rs/vesti/ukrajina/16935553/odluka-na-kijevu-poceo-sastanak-zelenskog-sa-americkim-izaslanicima-kusnerom-i-vitkofom.html) |
+| Alo | [Zelenski objavio: Kijev spremio predloge za kraj rata](https://alo.rs/vesti/politika/16935544/zelenski-objavio-kijev-spremio-predloge-za-kraj-rata.html) |
+| Srbija Danas | [Oči u oči sa Zelenskim nakon sastanka sa Putinom: Trampovi izaslanici stigli u Kijev](https://sd.rs/ukrajina/vesti/oci-u-oci-sa-zelenskim-nakon-sastanka-sa-putinom-trampovi-izaslanici-stigli-u-kijev-2026-09-06) |
+| Srbija Danas | [(VIDEO) Cure detalji tročasovnog sastanka u Moskvi: Amerikanci izneli niz ideja, ali ovo je Putinov cilj](https://sd.rs/ukrajina/vesti/video-cure-detalji-trocasovnog-sastanka-u-moskvi-amerikanci-izneli-niz-ideja-ali-ovo-je-putinov-cilj-trampovi-izaslanici-sada-kod-zelenskog-2026-09-06) |
+| Insajder | [Zelenski najavio pregovore sa izaslanicima SAD i evropskim partnerima u Kijevu](https://insajder.net/prenosimo/zelenski-najavio-pregovore-sa-izaslanicima-sad-i-evropskim-partnerima-u-kijevu) |
+| Insajder | [Peskov: Putin naredio trodnevnu obustavu napada na Kijev zbog posete Vitkofa i Kušnera](https://insajder.net/prenosimo/peskov-putin-naredio-trodnevnu-obustavu-napada-na-kijev-zbog-posete-vitkofa-i-kusnera) |
+| Blic | [Zelenski sa američkim izaslanicima Kušnerom i Vitkofom](https://blic.rs/vesti/svet/zelenski-sa-americkim-izaslanicima-kusnerom-i-vitkofom/s4wc4xj) |
+| Insajder | [Vitkof i Kušner stigli u Moskvu, na aerodromu Vnukovo dočekao ih Kiril Dmitrijev](https://insajder.net/prenosimo/vitkof-i-kusner-stigli-u-moskvu-na-aerodromu-vnukovo-docekao-ih-kiril-dmitrijev) |
 
-## 6. Vučić: Šta me briga šta kaže Marta Kos dok imam Prigrevicu uz sebe
+## 4. Vučić: Šta me briga šta kaže Marta Kos dok imam Prigrevicu uz sebe
 
 **Skor:** 83.91 · **tekstova:** 10 · **izvora:** 9 · **uglova:** 3 (mejnstrim, provladin, kriticki)
 
@@ -146,50 +123,7 @@ Teme su grupisane leksički, bez ijednog AI poziva. „Prolazi kapije" znači da
 | Srbija Danas | [Predsednik o studentskoj listi: "Zloupotrebljavali su decu koja su mislila da se nešto pitaju"](https://sd.rs/vesti/info/predsednik-o-studentskoj-listi-zloupotrebljavali-su-decu-koja-su-mislila-da-se-nesto-pitaju-2026-09-06) |
 | Nova.rs | [Vučić: Plenumi ne odlučuju ko će biti na Studentskoj listi za izbore](https://nova.rs/vesti/politika/vucic-plenumi-ne-odlucuju-ko-ce-biti-na-studentskoj-listi-za-izbore) |
 
-## 7. "Nemačka opet hoće rat!" Lavrov: Taj incident je početak pravog rata!
-
-**Skor:** 77.34 · **tekstova:** 7 · **izvora:** 7 · **uglova:** 4 (provladin, kriticki, mejnstrim, agencija)
-
-✅ **Prolazi kapije kvaliteta**
-
-**Ključne reči:** Lavrov, hoće, opet, rata, izvući, Lajpcigu, zaključke, Nemačka
-**Imena i nazivi:** Berlinu, Bona, Bonu, Drugog, Evrope, Fridriha Merca, Generalnog, Lajpcigu
-
-| Izvor | Naslov |
-| --- | --- |
-| Insajder | [Lavrov: Navodi Zapada o umešanosti Rusije u incident u Lajpcigu početak su pravog rata](https://insajder.net/prenosimo/lavrov-navodi-zapada-o-umesanosti-rusije-u-incident-u-lajpcigu-pocetak-su-pravog-rata) |
-| B92 | [Stiglo šokantno upozorenje iz Moskve: "Ovo je početak pravog rata!"](https://b92.net/info/svet/265223/lavrov-navodi-zapada-o-umesanosti-rusije-u-incident-u-lajpcigu-pocetak-su-pravog-rata/vest) |
-| Srbija Danas | ["Lekcije iz istorije nisu naučene" Lavrov žestoko o Nemačkoj i njenom jačanju vojske](https://sd.rs/ukrajina/vesti/lekcije-iz-istorije-nisu-naucene-lavrov-zestoko-o-nemackoj-i-njenom-jacanju-vojske-2026-09-06) |
-| Vecernje novosti | [LAVROV UPOZORAVA: Nemačka opet želi rat sa Rusijom - Moskva će izvući zaključke iz Mercovih poteza](https://novosti.rs/planeta/svet/1645668/lavrov-upozorava-nemacka-opet-zeli-rat-rusijom-moskva-izvuci-zakljucke-mercovih-poteza) |
-| Alo | ["Nemačka opet hoće rat!" Lavrov: Taj incident je početak pravog rata!](https://alo.rs/vesti/svet/16935517/nemacka-opet-hoce-rat-lavrov-taj-incident-je-pocetak-pravog-rata.html) |
-| Telegraf | [Lavrov je upravo uputio JEZIVU PORUKU Nemačkoj, ali i celoj Evropi!](https://telegraf.rs/vesti/svet/4391537-lavrov-je-upravo-uputio-jezivu-poruku-nemackoj-ali-i-celoj-evropi) |
-| Tanjug | [Lavrov: Navodi Zapada o umešanosti Rusije u incident u Lajpcigu početak su pravog rata](https://tanjug.rs/svet/politika/278994/lavrov-navodi-zapada-o-umesanosti-rusije-u-incident-u-lajpcigu-pocetak-su-pravog-rata/vest) |
-
-## 8. Pred sahranu Ratka Mladića stigla važna molba njegove porodice! Upućen apel svima: Ne kupujte cveće i vence, mom ocu bilo bi draže da pomognemo nekom detetu
-
-**Skor:** 75.6 · **tekstova:** 12 · **izvora:** 8 · **uglova:** 3 (provladin, mejnstrim, agencija)
-
-✅ **Prolazi kapije kvaliteta**
-
-**Ključne reči:** Mladića, kupujte, ocu, sahranu, Darko, Upućen, generala, cveće
-**Imena i nazivi:** Ratka Mladića, Beogradu.Kurir.rs/Srna, Darko Mladić.General Ratko Mladić, Darko Mladić.Prema, Hvala, Mladić.Darko Mladić, Povodom, Topčiderskom
-
-| Izvor | Naslov |
-| --- | --- |
-| Pink | [Pred sahranu Ratka Mladića stigla važna molba njegove porodice! Upućen apel svima: Ne kupujte cveće i vence, mom ocu bilo bi draže da pomognemo nekom](https://pink.rs/drustvo/810520/pred-sahranu-ratka-mladica-stigla-vazna-molba-njegove-porodice-upucen-apel-svima-ne-kupujte-cvece-i-vence-mom-ocu-bilo-bi-draze-da-pomognemo-nekom) |
-| Kurir | [ZBOG GENERALA ĆE SE CEO SVET SJATITI U BEOGRADU! Sin Ratka Mladića otkrio kakve je poruke dobijao prethodnih d](https://kurir.rs/vesti/drustvo/10096788/darko-mladic-pred-sahranu-oca-verujem-da-ce-sve-proteci-mirno-i-dostojanstveno) |
-| Euronews Srbija | [Porodica Mladić: Novac umesto za cveće i vence za generala uplatiti za obolelu decu](https://euronews.rs/srbija/drustvo/241428/ratko-mladic-umesto-cveca-za-sahranu-novac-za-decu/vest) |
-| Informer | [Potresne reči Darka Mladića pred sutrašnji ispraćaj generala: "Narod pokazuje ogromnu ljubav, sahrana mora proći dostojanstveno!"](https://informer.rs/politika/vesti/1148193/reci-darka-mladica-pred-ispracaj-generala) |
-| Pink | [Darko Mladić: Vidim ljubav prema mom ocu, verujem da će sahrana biti dostojanstvena](https://pink.rs/politika/810547/darko-mladic-vidim-ljubav-prema-mom-ocu-verujem-da-ce-sahrana-biti-dostojanstvena) |
-| Kurir | [Pred sahranu Ratka Mladića stigla važna molba njegove porodice! Upućen apel svima: Ne kupujte cveće i vence, mom ocu bilo bi draže da pomognemo nekom detetu](https://kurir.rs/vesti/drustvo/10096657/porodica-ratka-mladica-apeluje-umesto-cveca-za-sahranu-novac-uplatite-za-obolelu-decu) |
-| Alo | [Darko Mladić se oglasio o sahrani oca: Otkrio kakve su reakcije ljudi](https://alo.rs/vesti/drustvo/16935423/darko-mladic-se-oglasio-o-sahrani-oca-otkrio-kakve-su-reakcije-ljudi.html) |
-| Vecernje novosti | [DARKO MLADIĆ POSLE BROJNIH PORUKA I PODRŠKE: Vidim veliku ljubav prema mojem ocu](https://novosti.rs/vesti/politika/1645622/darko-mladic-posle-brojnih-poruka-podrske-vidim-veliku-ljubav-prema-mojem-ocu) |
-| Euronews Srbija | [Darko Mladić: Vidim ljubav prema mom ocu, verujem da će sahrana biti dostojanstvena](https://euronews.rs/srbija/politika/241454/darko-mladic-sahrana-ratka-mladica-mirno-i-dostojanstveno/vest) |
-| Mondo | ["Bilo bi mu draže da pomognemo nekom detetu": Sin Ratka Mladića poslao važnu poruku pred sahranu](https://mondo.rs/Info/Politika/a2278454/sin-ratka-mladica-poslao-vaznu-poruku-pred-sahranu.html) |
-| Tanjug | [Porodica Mladić: Novac umesto za cveće i vence za generala uplatiti za obolelu decu](https://tanjug.rs/srbija/drustvo/278952/porodica-mladic-novac-umesto-za-cvece-i-vence-za-generala-uplatiti-za-obolelu-decu/vest) |
-| Tanjug | [Darko Mladić: Vidim ljubav prema mom ocu, verujem da će sahrana biti dostojanstvena](https://tanjug.rs/srbija/drustvo/278982/darko-mladic-vidim-ljubav-prema-mom-ocu-verujem-da-ce-sahrana-biti-dostojanstvena/vest) |
-
-## 9. Нове таксе за услуге МУП-а од 12. септембра
+## 5. Нове таксе за услуге МУП-а од 12. септембра
 
 **Skor:** 74.19 · **tekstova:** 9 · **izvora:** 9 · **uglova:** 3 (mejnstrim, kriticki, provladin)
 
@@ -210,59 +144,75 @@ Teme su grupisane leksički, bez ijednog AI poziva. „Prolazi kapije" znači da
 | Vecernje novosti | [OVO PLAĆATE OD 12. SEPTEMBRA: Novi troškovi izrade dokumenata i tablica](https://novosti.rs/ekonomija/vesti/1645530/ovo-placate-12-septembra-novi-troskovi-izrade-dokumenata-tablica) |
 | RTS | [Нове таксе за услуге МУП-а од 12. септембра](https://rts.rs/vesti/politika/6033236/cena-takse-tablice-dokumenta.html) |
 
-## 10. Indonezija otkazala letove u Džakarti i drugim gradovima posle erupcije vulkana Anak Krakatau
+## 6. Odbojkašice Srbije osvojile bronzanu medalju na Evropskom prvenstvu
 
-**Skor:** 56.24 · **tekstova:** 6 · **izvora:** 6 · **uglova:** 4 (kriticki, provladin, mejnstrim, agencija)
-
-✅ **Prolazi kapije kvaliteta**
-
-**Ključne reči:** vulkana, vulkanski, Indonežanski, erupcije, letove, aerodroma, Indonezija, Anak
-**Imena i nazivi:** Džakarti, Anak Krakatau, Sukarno-Hata, Centar, Džakarte, ErNav Indonezija, Generalni, Halim Perdanakusuma
-
-| Izvor | Naslov |
-| --- | --- |
-| B92 | [Eruptirala tri vulkana: 150.000 putnika zarobljeno na međunarodnim aerodromima FOTO/VIDEO](https://b92.net/putovanja/aktuelno/aktuelno/265200/eruptirao-jos-jedan-vulkan-u-indoneziji-150000-putnika-zaglavljeno-na-aerodromima/vest) |
-| Tanjug | [Eruptirao još jedan vulkan u Indoneziji, 150.000 putnika zaglavljeno na aerodromima](https://tanjug.rs/svet/drustvo/278990/eruptirao-jos-jedan-vulkan-u-indoneziji-150000-putnika-zaglavljeno-na-aerodromima/vest) |
-| Telegraf | [Otkazani letovi, 150.000 putnika zarobljeno: Erupcije tri vulkana u Indoneziji](https://telegraf.rs/vesti/svet/4391532-otkazani-letovi-150000-putnika-zarobljeno-erupcije-tri-vulkana-u-indoneziji) |
-| Alo | [Vulkan je eruptirao, situacija je dramatična: 150.000 putnika zaglavljeno na aerodromima](https://alo.rs/vesti/svet/16935508/vulkan-je-eruptirao-situacija-je-dramaticna.html) |
-| Srbija Danas | [Letovi otkazani, 150.000 putnika zarobljeno: Erupcije vulkana izazvale potpuni haos - pepeo prekrio gradove, aerodromi paralisani](https://sd.rs/vesti/svet/letovi-otkazani-150000-putnika-zarobljeno-erupcije-vulkana-izazvale-potpuni-haos-pepeo-prekrio-gradove-aerodromi-paralisani-2026-09-06) |
-| Insajder | [Indonezija otkazala letove u Džakarti i drugim gradovima posle erupcije vulkana Anak Krakatau](https://insajder.net/prenosimo/indonezija-otkazala-letove-u-dzakarti-i-drugim-gradovima-posle-erupcije-vulkana-anak-krakatau) |
-
-## 11. Marš AfD na vlast: Politički zemljotres u Saksoniji-Anhaltu
-
-**Skor:** 48.61 · **tekstova:** 8 · **izvora:** 7 · **uglova:** 3 (kriticki, mejnstrim, provladin)
+**Skor:** 68.35 · **tekstova:** 15 · **izvora:** 8 · **uglova:** 4 (provladin, agencija, mejnstrim, kriticki)
 
 ✅ **Prolazi kapije kvaliteta**
 
-**Ključne reči:** AfD, azila, Anhaltu, zemljotres, Saksoniji, pooštravanje, Marš, Pokrajinski
-**Imena i nazivi:** Saksoniji-Anhaltu, AfD-a, Nemačkoj, Nemačku AfD, Politički, Saksonije-Anhalta.Sporno, Ulrih Zigmund, Deportovati
+**Ključne reči:** idem, Odbojkašice, prvenstva, osvojile, Istanbulu, Turske, bronzi, Evropskog
+**Imena i nazivi:** Italija, Poljska, Srbije, Dobro, Evropskom, Izabranice Zoran Terzića, MEČA, Najbolja
 
 | Izvor | Naslov |
 | --- | --- |
-| Kurir | [NEMAČKI BISKUP STRAHUJE OD POBEDE AFD: "Ljudi se lako zavedu i to me plaši, bez reči sam kada vidim kako se um](https://kurir.rs/planeta/10096796/nemacki-biskup-strahuje-od-pobede-afd-a) |
-| Insajder | [Otvorena birališta u nemačkoj oblasti Saksoniji-Anhaltu, na vlast može da dođe krajnja desnica](https://insajder.net/prenosimo/otvorena-biralista-u-nemackoj-oblasti-saksoniji-anhaltu-na-vlast-moze-da-dode-krajnja-desnica) |
-| Vreme | [Marš AfD na vlast: Politički zemljotres u Saksoniji-Anhaltu](https://vreme.com/svet/strah-od-pobede-desnice-sta-ce-afd-da-uradi-ako-danas-osvoji-vlast-u-saksoniji-anhaltu) |
-| Danas | [Otvorena birališta u nemačkoj oblasti Saksoniji-Anhaltu, na vlast može da dođe krajnja desnica x1 - Svet](https://danas.rs/svet/otvorena-biralista-u-nemackoj-oblasti-saksoniji-anhaltu-na-vlast-moze-da-dodje-krajnja-desnica-x1) |
-| Nova.rs | [Otvorena birališta u nemačkoj oblasti Saksoniji-Anhaltu, na vlast može da dođe krajnja desnica](https://nova.rs/vesti/svet/otvorena-biralista-u-nemackoj-oblasti-saksoniji-anhaltu-na-vlast-moze-da-dodje-krajnja-desnica) |
-| Blic | [Da li je večeras kraj Nemačke kakvu znamo](https://blic.rs/vesti/svet/da-li-je-veceras-kraj-nemacke-kakvu-znamo/crs8k44) |
-| Kurir | ["AFD JE DOBAR ZA NEMAČKU, SIRIJCI SE PONAŠAJU KAO ŽIVOTINJE" Počelo glasanje u Saksoniji-Anhalt, krajnja desnica pred pobedom, ali im to ne garantuje vlast!](https://kurir.rs/planeta/10096692/izbori-u-saksoniji-anhalt-ocekuje-se-pobeda-afd-a) |
-| Happy TV | [IZBORI U SAKSONIJI-ANHALTU NAJAVLJUJU NEIZVESNU TRKU: AfD pred istorijskom šansom da osvoji vlast](https://happytv.rs/vesti/drustvo/izbori-u-saksoniji-anhaltu-najavljuju-neizvesnu-trku-afd-pred-istorijskom-sansom-da-osvoji-vlast/929434) |
+| Nova.rs | [Srbija dobila najbolju moguću vest pred meč za bronzu, posle ovoga se mnogo lakše diše](https://nova.rs/sport/sport-ostalo/srbija-dobila-najbolju-mogucu-vest-pred-mec-za-bronzu-posle-ovoga-se-mnogo-lakse-dise) |
+| Danas | [Kad i gde možete da gledate meč odbojkašica Srbije za treće mesto na Evropskom prvenstvu?](https://danas.rs/sport/srbija-poljska-evropsko-prvenstvo-trece-mesto-uzivo-prenos-livestream) |
+| Tanjug | [Vučić čestitao odbojkašicama Srbije na osvojenoj bronzanoj medalji na EP](https://tanjug.rs/sport/odbojka/279025/vucic-cestitao-odbojkasicama-srbije-na-osvojenoj-bronzanoj-medalji-na-ep/vest) |
+| Nova.rs | [Srbija protiv Poljske za bronzu na Evropskom prvenstvu](https://nova.rs/sport/sport-ostalo/srbija-poljska-mec-za-trece-mesto-uzivo-prenos-live) |
+| Vecernje novosti | [PRENOS, SRBIJA - POLJSKA: Naše odbojkašice u borbi za bronzu na Evropskom prvenstvu](https://novosti.rs/sport/ostali-sportovi/1645629/najnovije-sportske-vesti-odbojka-evropsko-prvenstvo-zene-srbija-poljska-prenos-rezultat-uzivo-lajv-bronzana-medalja-tijana-boskovic-zoran-terzic) |
+| B92 | [Srbija se bori za bronzu! - Vesti](https://b92.net/sport/odbojka/vesti/265222/uzivo-prenos-srbija-poljska-odbojka-zene-borba-za-bronzu/vest) |
+| Tanjug | [Odbojkašice Srbije igraju danas protiv Poljske za bronzu na Evropskom prvenstvu](https://tanjug.rs/sport/odbojka/278957/odbojkasice-srbije-igraju-danas-protiv-poljske-za-bronzu-na-evropskom-prvenstvu/vest) |
+| Kurir | [TERZIĆU POZLILO I NAPUSTIO DVORANU: Selektor otkrio šta se dogodilo u Istanbulu!](https://kurir.rs/sport/ostali-sportovi/10097083/zoran-terzic-napustio-dvoranu-zbog-zdravstvenih-problema) |
+| Informer | [Idemo, devojke! Odbojkašice Srbije igraju meč za bronzu](https://informer.rs/sport/ostali-sportovi/1148223/odbojkasice-srbije-bronza) |
+| Mondo | [Od šoka protiv Turske do borbe za medalju: Srbija danas napada bronzu protiv Poljske](https://mondo.rs/Sport/Ostali-sportovi/a2278443/srbija-poljska-borba-za-trece-mesto-uzivo-prenos.html) |
+| Insajder | [Odbojkašice Srbije poražene od Turske u polufinalu Evropskog prvenstva](https://insajder.net/prenosimo/odbojkasice-srbije-porazene-od-turske-u-polufinalu-evropskog-prvenstva) |
+| Mondo | [Uživo, Srbija - Poljska: Odbojkašice biju bitku za bronzu na EP](https://mondo.rs/Sport/Ostali-sportovi/a2278517/uzivo-srbija-poljska-mec-za-bronzu-na-ep.html) |
+| Kurir | [SRBIJA - POLJSKA: Naše dame idu po evropsku bronzu!](https://kurir.rs/sport/ostali-sportovi/10096719/srbija-poljska-ep-u-odbojci-za-zene-uzivo-prenos-livestream) |
+| N1 | [Odbojkašice Srbije osvojile bronzu na Evropskom prvenstvu](https://n1info.rs/sport-klub/ostali-sportovi/odbojkasice-srbije-osvojile-bronzu-na-evropskom-prvenstvu) |
+| Tanjug | [Odbojkašice Srbije osvojile bronzanu medalju na Evropskom prvenstvu](https://tanjug.rs/sport/odbojka/279017/odbojkasice-srbije-osvojile-bronzanu-medalju-na-evropskom-prvenstvu/vest) |
 
-## 12. Radikali na izborima na listi Ujedinjena Srbija, podržavaju Vučića za premijera
+## 7. "Nemačka nam ovim objavljuje rat": Dramatično upozorenje Sergeja Lavrova, žestoko optužio Merca
 
-**Skor:** 47.4 · **tekstova:** 6 · **izvora:** 6 · **uglova:** 3 (agencija, kriticki, provladin)
+**Skor:** 67.13 · **tekstova:** 12 · **izvora:** 7 · **uglova:** 4 (provladin, kriticki, mejnstrim, agencija)
 
 ✅ **Prolazi kapije kvaliteta**
 
-**Ključne reči:** Radikali, podržavaju, Ujedinjena, SRS, premijera, Srpska, Hamzagić, Vučića
-**Imena i nazivi:** Srbiji, Srbija, Ujedinjena Srbija, Centralne, FOTO BETA/Amir Hamzagić Srpska, Republike Srbije"."U, Srbije Aleksandra Vučića, Srpske
+**Ključne reči:** Lavrov, nemački, hoce, Lajpcigu, opet, Merc, rata, Lavrova
+**Imena i nazivi:** Berlinu, Bona, Bonu, Drugog, Evrope, Fridriha Merca, Generalnog, Lajpcigu
 
 | Izvor | Naslov |
 | --- | --- |
-| Nova.rs | [Iznenađenje: Radikali uz Vučića](https://nova.rs/vesti/politika/iznenadjenje-radikali-uz-vucica) |
-| N1 | [Radikali na izbore izlaze na listi SNS-a "Ujedinjena Srbija", podržali Vučića za premijera](https://n1info.rs/vesti/radikali-na-izbore-izlaze-na-listi-sns) |
-| Beta | [Radikali na izborima na listi Ujedinjena Srbija, podržavaju Vučića za premijera](https://beta.rs/content/251515-radikali-na-izborima-na-listi-ujedinjena-srbija-podrzavaju-vucica-za-premijera) |
-| Informer | [Radikali doneli odluku: Podrška Vučića kao kandidatu za premijera!](https://informer.rs/politika/vesti/1148208/srs-izbori-seselj-sns-vucic) |
-| Vecernje novosti | [SRPSKI RADIKALI PRESEKLI: Vučić naš izbor za premijera - SRS izlazi na izbore na listi „Ujedinjena Srbija“](https://novosti.rs/vesti/politika/1645676/srpski-radikali-presekli-vucic-nas-izbor-premijera-srs-izlazi-izbore-listi-ujedinjena-srbija) |
-| Danas | [Radikali na izborima na listi Ujedinjena Srbija, podržavaju Vučića za premijera](https://danas.rs/vesti/politika/srs-sns-ujedinjena-srbija-izbori) |
+| Insajder | [Lavrov: Navodi Zapada o umešanosti Rusije u incident u Lajpcigu početak su pravog rata](https://insajder.net/prenosimo/lavrov-navodi-zapada-o-umesanosti-rusije-u-incident-u-lajpcigu-pocetak-su-pravog-rata) |
+| B92 | [Stiglo šokantno upozorenje iz Moskve: "Ovo je početak pravog rata!"](https://b92.net/info/svet/265223/lavrov-navodi-zapada-o-umesanosti-rusije-u-incident-u-lajpcigu-pocetak-su-pravog-rata/vest) |
+| Srbija Danas | ["Lekcije iz istorije nisu naučene" Lavrov žestoko o Nemačkoj i njenom jačanju vojske](https://sd.rs/ukrajina/vesti/lekcije-iz-istorije-nisu-naucene-lavrov-zestoko-o-nemackoj-i-njenom-jacanju-vojske-2026-09-06) |
+| Vecernje novosti | [LAVROV UPOZORAVA: Nemačka opet želi rat sa Rusijom - Moskva će izvući zaključke iz Mercovih poteza](https://novosti.rs/planeta/svet/1645668/lavrov-upozorava-nemacka-opet-zeli-rat-rusijom-moskva-izvuci-zakljucke-mercovih-poteza) |
+| Blic | [Lavrov se hitno oglasio: "Ovo je objava rata!"](https://blic.rs/vesti/svet/lavrov-se-hitno-oglasio-ovo-je-objava-rata/rb00y87) |
+| Kurir | ["OVO JE OBJAVA RATA!" Moskva se hitno oglasila i poslala jezivu poruku EVROPSKOJ SILI: To je samo početak!](https://kurir.rs/planeta/10097072/Lavrov-zestoko-optuzio-Nemacku) |
+| Alo | ["Nemačka opet hoće rat!" Lavrov: Taj incident je početak pravog rata!](https://alo.rs/vesti/svet/16935517/nemacka-opet-hoce-rat-lavrov-taj-incident-je-pocetak-pravog-rata.html) |
+| Mondo | ["Nemačka nam ovim objavljuje rat": Dramatično upozorenje Sergeja Lavrova, žestoko optužio Merca](https://mondo.rs/Info/Svet/a2278539/lavrov-optuzio-merca-za-objavljivanje-rata.html) |
+| Telegraf | [Lavrov je upravo uputio JEZIVU PORUKU Nemačkoj, ali i celoj Evropi!](https://telegraf.rs/vesti/svet/4391537-lavrov-je-upravo-uputio-jezivu-poruku-nemackoj-ali-i-celoj-evropi) |
+| N1 | [Lavrov: Optužbe protiv Rusije o dronu u Lajpcigu predstavljaju početak pravog rata](https://n1info.rs/svet/lavrov-optuzbe-protiv-rusije-o-dronu-u-lajpcigu-predstavljaju-pocetak-pravog-rata) |
+| Danas | [Lavrov: Optužbe protiv Rusije o dronu u Lajpcigu predstavljaju početak pravog rata](https://danas.rs/svet/lavrov-optuzbe-protiv-rusije-o-dronu-u-lajpcigu-predstavljaju-pocetak-pravog-rata) |
+| Tanjug | [Lavrov: Navodi Zapada o umešanosti Rusije u incident u Lajpcigu početak su pravog rata](https://tanjug.rs/svet/politika/278994/lavrov-navodi-zapada-o-umesanosti-rusije-u-incident-u-lajpcigu-pocetak-su-pravog-rata/vest) |
+
+## 8. 'Epske nebuloze, ali potvrđuju jedno: CRTA je aktivan politički učesnik u ovim izborima' Brnabić o izjavi Dimitrijevića
+
+**Skor:** 51.79 · **tekstova:** 9 · **izvora:** 6 · **uglova:** 3 (provladin, kriticki, agencija)
+
+✅ **Prolazi kapije kvaliteta**
+
+**Ključne reči:** Brnabić, CRTA, crti, Dimitrijevića, aktivan, učesnik, nvo, ovim
+**Imena i nazivi:** Srbiju, CRTA, Aleksandar Vučić, Ana Brnabic, Brnabićeva, CRTI Postoji, NVO CRTA, Pavle Dimitrijević
+
+| Izvor | Naslov |
+| --- | --- |
+| N1 | [Brnabić: Ne sprovodimo funkcionersku kampanju, stranačke aktivnosti imamo van radnog vremena](https://n1info.rs/vesti/brnabic-ne-sprovodimo-funkcionersku-kampanju-stranacke-aktivnosti-imamo-van-radnog-vremena) |
+| Informer | [Brnabićeva morala da crta CRTI: Postoji jasna granica između države i partije](https://informer.rs/politika/vesti/1148212/ana-brnabic-crta-politika) |
+| Nova.rs | [Brnabić: Ne sprovodimo funkcionersku kampanju, stranačke aktivnosti imamo van radnog vremena](https://nova.rs/vesti/politika/brnabic-ne-sprovodimo-funkcionersku-kampanju-stranacke-aktivnosti-imamo-van-radnog-vremena) |
+| Vecernje novosti | [BRNABIĆ ODGOVORILA DIMITRIJEVIĆU: CRTA je aktivan politički učesnik u ovim izborima](https://novosti.rs/vesti/politika/1645660/brnabic-odgovorila-dimitrijevicu-crta-aktivan-politicki-ucesnik-ovim-izborima) |
+| Danas | [Brnabić: Ne sprovodimo funkcionersku kampanju, stranačke aktivnosti imamo van radnog vremena](https://danas.rs/vesti/politika/brnabic-ne-sprovodimo-funkcionersku-kampanju-stranacke-aktivnosti-imamo-van-radnog-vremena) |
+| Beta | [Brnabić: Ne sprovodimo funkcionersku kampanju, stranačke aktivnosti imamo van radnog vremena](https://beta.rs/content/251520-brnabic-ne-sprovodimo-funkcionersku-kampanju-stranacke-aktivnosti-imamo-van-radnog-vremena) |
+| Alo | [Brnabić o izjavi Dimitrijevića: CRTA je aktivan politički učesnik u ovim izborima](https://alo.rs/vesti/politika/16935534/brnabic-crta-je-aktivan-politicki-ucesnik-u-ovim-izborima.html) |
+| Pink | ['Epske nebuloze, ali potvrđuju jedno: CRTA je aktivan politički učesnik u ovim izborima' Brnabić o izjavi Dimitrijevića](https://pink.rs/politika/810565/epske-nebuloze-ali-potvrduju-jedno-crta-je-aktivan-politicki-ucesnik-u-ovim-izborima-brnabic-o-izjavi-dimitrijevica) |
+| Kurir | [PRIPREMAJU NOVI ALIBI ZA IZBORNI PORAZ! Ana Brnabić odgovorila Dimitrijeviću iz CRTE: Vi ste aktivan politički učesnik u ovim izborima](https://kurir.rs/vesti/politika/10096903/brnabic-odgovara-dimitrijevicu) |
 

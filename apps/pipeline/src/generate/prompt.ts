@@ -35,11 +35,25 @@ export interface SourceMaterial {
   publishedAt: string | null;
 }
 
+export interface ExistingArticle {
+  title: string;
+  lead: string;
+  body: string;
+  /** Koliko je verzija članak već imao — ide modelu kao kontekst. */
+  revision: number;
+}
+
 export interface TopicMaterial {
   topicTitle: string;
   keywords: string[];
   entities: string[];
   sources: SourceMaterial[];
+  /**
+   * Kada je popunjeno, ovo nije pisanje novog članka nego **dopuna** već
+   * objavljenog. Izveštaji u `sources` su tada samo oni koji su stigli posle
+   * poslednje verzije.
+   */
+  existingArticle?: ExistingArticle;
 }
 
 let cachedSystemPrompt: string | undefined;
@@ -59,8 +73,9 @@ export function loadSystemPrompt(): string {
  */
 export function buildUserMessage(material: TopicMaterial): string {
   const parts: string[] = [];
+  const existing = material.existingArticle;
 
-  parts.push('# Materijal za jedan članak');
+  parts.push(existing ? '# Dopuna već objavljenog članka' : '# Materijal za jedan članak');
   parts.push('');
   parts.push(`Tema: ${material.topicTitle}`);
   if (material.keywords.length > 0) {
@@ -70,16 +85,33 @@ export function buildUserMessage(material: TopicMaterial): string {
     parts.push(`Imena i nazivi koji se pominju: ${material.entities.slice(0, 10).join(', ')}`);
   }
   parts.push('');
-  parts.push(
-    `Sledi ${material.sources.length} nezavisnih izveštaja o istom događaju. Označeni su uglom ` +
-      'iz kog izveštavaju. Napiši jedan članak po uredničkim pravilima.',
-  );
+
+  if (existing) {
+    parts.push(`## Članak koji se dopunjuje (verzija ${existing.revision})`);
+    parts.push('');
+    parts.push(`Naslov: ${existing.title}`);
+    parts.push('');
+    parts.push(`Uvod: ${existing.lead}`);
+    parts.push('');
+    parts.push(existing.body);
+    parts.push('');
+    parts.push(
+      `Sledi ${material.sources.length} NOVIH izveštaja koji su stigli posle te verzije. ` +
+        'Ugradi ono što je stvarno novo, po pravilima za dopunu. Vrati ceo članak, ne samo izmene.',
+    );
+  } else {
+    parts.push(
+      `Sledi ${material.sources.length} nezavisnih izveštaja o istom događaju. Označeni su uglom ` +
+        'iz kog izveštavaju. Napiši jedan članak po uredničkim pravilima.',
+    );
+  }
   parts.push('');
 
   const sources = material.sources.slice(0, MAX_SOURCES_IN_PROMPT);
 
   for (const [index, source] of sources.entries()) {
-    parts.push(`## Izveštaj ${index + 1} — ${ANGLE_LABELS[source.angle]}`);
+    const heading = material.existingArticle ? 'Novi izveštaj' : 'Izveštaj';
+    parts.push(`## ${heading} ${index + 1} — ${ANGLE_LABELS[source.angle]}`);
     if (source.publishedAt) parts.push(`Objavljeno: ${source.publishedAt}`);
     parts.push('');
     parts.push(`Naslov: ${normalizeWhitespace(source.title)}`);

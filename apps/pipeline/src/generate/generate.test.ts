@@ -9,7 +9,7 @@ import {
   loadSystemPrompt,
   type TopicMaterial,
 } from './prompt.js';
-import { repairAndValidate } from './repair.js';
+import { mergeShortParagraphs, repairAndValidate } from './repair.js';
 import { articleSchema, paragraphsToText } from './schema.js';
 import { selectClustersForGeneration, slugify, type ClusterCandidate } from './select.js';
 
@@ -435,5 +435,50 @@ describe('tema koju jeftiniji model nije uspeo da napiše', () => {
 
     // Obe idu jačem: prva jer je pala, druga jer troši svoju jednu kvotu.
     expect(outcome.selected.map((s) => s.tier)).toEqual(['flagship', 'flagship']);
+  });
+});
+
+describe('mergeShortParagraphs', () => {
+  const long = 'Vlada je na sednici razmatrala predlog i o njemu glasala posle rasprave. '.repeat(
+    4,
+  );
+
+  it('spaja prekratak pasus sa prethodnim', () => {
+    const merged = mergeShortParagraphs([long, 'Kratko.', long]);
+    expect(merged).toHaveLength(2);
+    expect(merged[0]).toContain('Kratko.');
+  });
+
+  it('prvi prekratak pasus spaja sa sledećim', () => {
+    const merged = mergeShortParagraphs(['Kratak uvod.', long]);
+    expect(merged).toHaveLength(1);
+    expect(merged[0]?.startsWith('Kratak uvod.')).toBe(true);
+  });
+
+  it('ne dira pasuse koji su dovoljno dugi', () => {
+    expect(mergeShortParagraphs([long, long, long])).toHaveLength(3);
+  });
+
+  it('izbacuje prazne pasuse', () => {
+    expect(mergeShortParagraphs([long, '   ', long])).toHaveLength(2);
+  });
+
+  it('kroz repairAndValidate spasava članak koji bi inače pao', () => {
+    const withShort = {
+      title: 'Naslov',
+      lead: 'Uvod.',
+      body: [...BODY.slice(0, 4), 'Jedna kratka rečenica na kraju.'],
+      category: 'politika',
+      sensitive: false,
+      sensitivityReason: null,
+      sourcesDiverge: false,
+      bothSides: null,
+      keywords: [],
+      notes: [],
+    };
+
+    const result = repairAndValidate(withShort);
+    expect(result.article).not.toBeNull();
+    expect(result.repairs.join(' ')).toContain('pasus');
   });
 });

@@ -102,9 +102,14 @@ export interface ArticleRow {
   published_at: string | null;
   created_at: string;
   updated_at: string;
+  revision: number;
+  last_update_at: string | null;
 }
 
-export type NewArticle = Omit<ArticleRow, 'id' | 'created_at' | 'updated_at'>;
+export type NewArticle = Omit<
+  ArticleRow,
+  'id' | 'created_at' | 'updated_at' | 'revision' | 'last_update_at'
+>;
 
 export interface ArticleBatchRow {
   id: string;

@@ -8,6 +8,7 @@ import {
 import {
   articlesWrittenToday,
   monthlySpend,
+  updatesToday,
   clusterSourceItems,
   clustersWithoutArticle,
   createServiceClient,
@@ -21,6 +22,7 @@ import { generateArticle, GenerationError } from '../generate/generate.js';
 import type { TopicMaterial } from '../generate/prompt.js';
 import { selectClustersForGeneration, slugify } from '../generate/select.js';
 import { runBatchCycle } from './editorial-batch.js';
+import { maxUpdatesPerRun, runArticleUpdates } from './updates.js';
 import { paragraphsToText } from '../generate/schema.js';
 
 const log = createLogger('editorial');
@@ -74,6 +76,19 @@ export async function runEditorial(options: EditorialOptions): Promise<void> {
   });
 
   const written = await articlesWrittenToday(client, editorial.models.flagship);
+  const updatesDone = await updatesToday(client);
+
+  // Dopune idu PRE pisanja novih clanaka: prica koja se razvija je vrednija od
+  // jos jedne nove teme (brief, sekcije 5 i 9).
+  //
+  // Dopuna se placa kao i pisanje, pa TROSI ISTU DNEVNU GRANICU. Bez toga bi
+  // svaki ciklus dodavao poziv modelu van plana i budzet bi tiho probijen.
+  const roomToday = Math.max(0, editorial.limits.maxArticlesPerDay - written.total - updatesDone);
+  const updates = await runArticleUpdates(client, editorial, {
+    budgetLeft: budget - spent,
+    maxUpdates: Math.min(maxUpdatesPerRun(editorial), roomToday),
+    dryRun: options.dryRun,
+  });
   const candidates = await clustersWithoutArticle(client, 60);
 
   const outcome = selectClustersForGeneration(
@@ -91,7 +106,8 @@ export async function runEditorial(options: EditorialOptions): Promise<void> {
       maxPerRun: options.limit ?? editorial.limits.maxArticlesPerEditorialRun,
       maxPerDay: editorial.limits.maxArticlesPerDay,
       maxFlagshipPerDay: editorial.limits.maxFlagshipArticlesPerDay,
-      writtenToday: written.total,
+      // Dopune se broje kao i novi clanci — obe stvari kostaju isto.
+      writtenToday: written.total + updatesDone + updates.updated,
       flagshipWrittenToday: written.flagship,
     },
   );
@@ -101,6 +117,7 @@ export async function runEditorial(options: EditorialOptions): Promise<void> {
     izabrano: outcome.selected.length,
     odbijeno: outcome.rejected.length,
     danasNapisano: written.total,
+    danasDopunjeno: updatesDone + updates.updated,
     dnevnaGranica: editorial.limits.maxArticlesPerDay,
   });
 
@@ -240,6 +257,8 @@ export async function runEditorial(options: EditorialOptions): Promise<void> {
 
     const stats = {
       napisano: written_,
+      dopunjeno: updates.updated,
+      trosakDopunaUsd: Number(updates.cost.toFixed(6)),
       osetljivih: sensitive,
       presloNaJaciModel: escalated,
       mesecnoUkupnoUsd: Number((spent + totalCost).toFixed(6)),
@@ -248,7 +267,7 @@ export async function runEditorial(options: EditorialOptions): Promise<void> {
       trajanjeSekundi: Math.round((Date.now() - startedAt) / 1000),
     };
 
-    await finishRun(client, runId, errors.length === 0, stats, errors);
+    await finishRun(client, runId, errors.length === 0, stats, [...errors, ...updates.errors]);
     log.info('Urednički ciklus završen.', { ...stats, trosak: formatUsd(totalCost) });
   } catch (error) {
     await finishRun(client, runId, false, {}, [...errors, (error as Error).message]);

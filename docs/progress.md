@@ -4,7 +4,7 @@
 > zašto, šta vlasnik treba da proveri, i status faze. Pun plan je u `docs/plan.md`.
 
 **Poslednje ažuriranje:** 6. septembar 2026.
-**Trenutno stanje:** Faza 5 završena uz optimizaciju troška (~$4.20 mesečno). Napravljen `docs/tradeoffs.md` — presek kompromisa zbog budžeta, za razgovor sa investitorom. Faza 6 je sledeća.
+**Trenutno stanje:** Faza 6 gotova — priča koja se razvija dobija jedan članak koji raste, sa istorijom izmena i nepromenjenim URL-om. Faza 7 (Telegram odobravanje) je sledeća.
 
 ## Pregled faza
 
@@ -16,8 +16,8 @@
 | 3    | Engine 1 na sve izvore               | ✅ Gotovo, čeka potvrdu |
 | 4    | Klasterovanje i trending (Engine 2)  | ✅ Gotovo, čeka potvrdu |
 | 5    | AI generisanje teksta ⚠️ kritična kapija | ✅ Gotovo, čeka potvrdu |
-| 6    | Ažuriranje umesto dupliranja         | ⬜ Čeka             |
-| 7    | Telegram odobravanje                 | ⬜ Čeka             |
+| 6    | Ažuriranje umesto dupliranja         | ✅ Gotovo, čeka potvrdu |
+| 7    | Telegram odobravanje                 | 🔜 Sledeća          |
 | 8    | Slike                                | ⬜ Čeka             |
 | 9    | Frontend                             | ⬜ Čeka             |
 | 10   | Pravne stranice, komentari, SEO      | ⬜ Čeka             |
@@ -699,3 +699,63 @@ Dva nalaza iz tog preseka menjaju sliku:
 
 U `CLAUDE.md` je dodato pravilo: svaki kompromis zbog budžeta upisuje se u `docs/tradeoffs.md` u
 istom potezu, kao deo posla te faze.
+
+---
+
+## Faza 6 — Ažuriranje umesto dupliranja ✅
+
+**Status:** gotovo, čeka potvrdu vlasnika.
+
+### Problem koji je rešen
+
+Do sada je nova vest o priči koja **već ima članak** otvarala novu temu, a nova tema bi dobila drugi,
+skoro identičan članak. To je tačno ono što brief zabranjuje u sekciji 5 i ono što Google
+„Scaled Content Abuse" politika kažnjava.
+
+Uzrok je bio u jednom redu: teme sa statusom `covered` bile su isključene iz grupisanja, pa nova vest
+nije imala gde da uđe.
+
+### Kako sada radi
+
+1. **Pokrivene teme ostaju u igri pri grupisanju.** Nova vest o već pokrivenoj priči ulazi u
+   postojeću temu, ne otvara novu.
+2. **Tema koja je dobila nove izveštaje postaje kandidat za dopunu**, ali samo ako ih donosi
+   najmanje dva **različita** izvora. Prag postoji da se članak ne dira zbog jednog portala koji je
+   prepakovao istu vest — dopuna košta koliko i pisanje.
+3. **Dopunu piše isti model koji je napisao članak**, pa tekst ostaje ujednačen.
+4. **Stara verzija ide u `article_revisions`**, nova u `articles`, broj verzije se podiže,
+   `last_update_at` se upisuje. **Slug i URL ostaju isti** — link koji je negde podeljen i dalje
+   vodi na najnoviju verziju.
+5. **Trošak se sabira** kroz sve verzije, pa članak zna koliko je ukupno koštao.
+6. Najviše pet dopuna po članku (`maxUpdatesPerArticle`), pa se priča smatra zaokruženom.
+
+Urednička pravila su dobila sekciju **10a** o dopuni: šta se zadržava, gde se ugrađuje novo, kada se
+menja naslov (samo ako više ne opisuje priču), i šta se ne radi — bez „kako smo ranije javili", bez
+pasusa koji ponavlja ono što već piše.
+
+### Provereno na stvarnoj priči
+
+Članak **„Odbojkašice Srbije igraju za bronzu Evropskog prvenstva"** je posle pet novih izveštaja
+postao **„Odbojkašice Srbije osvojile bronzanu medalju"** — verzija 2, 583 reči, sa beleškom o
+promeni: *„Dodat konačan rezultat meča za bronzu (3:1 protiv Poljske), statistika susreta i
+strelaca."* Stara verzija je u istoriji, URL nepromenjen.
+
+Druga priča (dolazak američkih izaslanika u Kijev) dopunjena je sa 13 novih izveštaja iz 8 izvora,
+na 867 reči.
+
+### Dve popravke otkrivene tokom provere
+
+1. **Prekratak pasus obarao je celu dopunu.** Model bi jednu rečenicu odvojio u svoj pasus i članak
+   od 800 reči bi propao zbog preloma. Sada se prekratak pasus **spaja sa susednim** umesto da se
+   odgovor odbaci. Prva dopuna koja je pala prošla je iz prvog pokušaja posle ove popravke.
+2. **Dopune se nisu brojale u dnevnu granicu.** Sa šest ciklusa dnevno i dve dopune po ciklusu, to
+   bi bilo dvanaest plaćenih poziva van plana — budžet bi tiho probijen. Sada dopuna troši isto
+   mesto u dnevnoj granici kao i nov članak, i u neposrednom i u paketnom režimu.
+
+### Šta vlasnik proverava
+
+1. Supabase Table Editor → tabela `articles`, kolona `revision`: članak o odbojkašicama ima
+   verziju 2.
+2. Tabela `article_revisions` → tu je stara verzija istog članka, sa razlogom izmene.
+3. Prati jednu priču koja se razvija kroz nekoliko ciklusa i proverava da nastaje **jedan članak
+   koji raste**, a ne četiri skoro identična.

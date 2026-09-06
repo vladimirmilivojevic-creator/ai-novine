@@ -1,5 +1,10 @@
 import { normalizeForMatching } from '@ai-novine/core';
-import { articleSchema, CATEGORY_VALUES, type GeneratedArticle } from './schema.js';
+import {
+  articleSchema,
+  CATEGORY_VALUES,
+  MIN_PARAGRAPH_CHARS,
+  type GeneratedArticle,
+} from './schema.js';
 
 /**
  * Popravka odgovora modela pre provere šemom.
@@ -70,6 +75,18 @@ export function repairAndValidate(raw: unknown): RepairResult {
     }
   }
 
+  // Prekratak pasus se spaja sa susednim umesto da obori ceo članak. Model
+  // ponekad odvoji jednu rečenicu u svoj pasus — to je stvar preloma, ne
+  // sadržaja, i nema razloga da zbog toga plaćeni odgovor ode u smeće.
+  const body = value['body'];
+  if (Array.isArray(body) && body.every((part) => typeof part === 'string')) {
+    const merged = mergeShortParagraphs(body as string[]);
+    if (merged.length !== body.length) {
+      repairs.push(`spojeno ${body.length - merged.length} prekratkih pasusa`);
+      value['body'] = merged;
+    }
+  }
+
   // Prazan tekst umesto null-a kod polja koja smeju da izostanu.
   if (value['sensitivityReason'] === '') {
     value['sensitivityReason'] = null;
@@ -103,4 +120,33 @@ export function repairAndValidate(raw: unknown): RepairResult {
       (issue) => `${issue.path.join('.') || 'koren'}: ${issue.message}`,
     ),
   };
+}
+
+/**
+ * Spaja pasuse kraće od donje granice sa susednim. Prvi pasus se spaja sa
+ * sledećim, svi ostali sa prethodnim — tako redosled misli ostaje isti.
+ */
+export function mergeShortParagraphs(paragraphs: string[]): string[] {
+  const result: string[] = [];
+
+  for (const paragraph of paragraphs) {
+    const text = paragraph.trim();
+    if (!text) continue;
+
+    const previous = result[result.length - 1];
+    if (text.length < MIN_PARAGRAPH_CHARS && previous !== undefined) {
+      result[result.length - 1] = `${previous} ${text}`;
+      continue;
+    }
+    result.push(text);
+  }
+
+  // Ako je prvi pasus ostao prekratak, on se spaja sa sledećim.
+  const first = result[0];
+  const second = result[1];
+  if (first !== undefined && second !== undefined && first.length < MIN_PARAGRAPH_CHARS) {
+    result.splice(0, 2, `${first} ${second}`);
+  }
+
+  return result;
 }

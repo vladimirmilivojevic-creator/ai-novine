@@ -19,6 +19,7 @@ import {
   pendingBatches,
   recordBatchSubmission,
   startRun,
+  updatesToday,
 } from '@ai-novine/db';
 import { batchState, collectBatch, submitBatch, type BatchItem } from '../generate/batch.js';
 import { formatUsd } from '../generate/cost.js';
@@ -26,6 +27,7 @@ import type { TopicMaterial } from '../generate/prompt.js';
 import { paragraphsToText } from '../generate/schema.js';
 import { selectClustersForGeneration, slugify } from '../generate/select.js';
 import { countWords } from '../ingest/normalize.js';
+import { maxUpdatesPerRun, runArticleUpdates } from './updates.js';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 const log = createLogger('editorial');
@@ -257,6 +259,24 @@ export async function collectBatches(
 /** Zajednički ulaz za oba koraka, radi jednostavnijeg poziva iz komande. */
 export async function runBatchCycle(client: SupabaseClient, limit?: number): Promise<void> {
   const editorial = loadEditorialConfig();
+
+  // Redosled: pokupi prethodni paket, dopuni već objavljene članke, pošalji
+  // novi paket.
+  //
+  // Dopune idu neposredno, ne kroz paket — priča koja se razvija ne trpi
+  // zakašnjenje od jednog ciklusa. Zato troše istu dnevnu granicu kao i novi
+  // članci; inače bi svaki ciklus dodavao plaćene pozive van plana.
   await collectBatches(client, editorial);
+
+  const spent = await monthlySpend(client);
+  const written = await articlesWrittenToday(client, editorial.models.flagship);
+  const updatesDone = await updatesToday(client);
+  const roomToday = Math.max(0, editorial.limits.maxArticlesPerDay - written.total - updatesDone);
+
+  await runArticleUpdates(client, editorial, {
+    budgetLeft: editorial.limits.monthlyBudgetUsd - spent,
+    maxUpdates: Math.min(maxUpdatesPerRun(editorial), roomToday),
+  });
+
   await submitBatches(client, editorial, limit);
 }
