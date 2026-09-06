@@ -48,6 +48,17 @@ export class GenerationError extends Error {
 let client: Anthropic | undefined;
 
 function anthropic(): Anthropic {
+  // Prazan kljuc daje nerazumljivu gresku iz SDK-a („Could not resolve
+  // authentication method"), pa se proverava ovde. GitHub Actions siri
+  // nepostojeci secret u PRAZAN STRING, ne u nepostavljenu varijablu — zato
+  // provera gleda i praznu vrednost.
+  if (!process.env['ANTHROPIC_API_KEY']?.trim()) {
+    throw new GenerationError(
+      'Nedostaje ANTHROPIC_API_KEY. Lokalno ide u .env, a u GitHub Actions u Settings → ' +
+        'Secrets and variables → Actions. Bez njega nijedan poziv modelu ne prolazi.',
+      'auth',
+    );
+  }
   client ??= new Anthropic({ maxRetries: 2, timeout: 120_000 });
   return client;
 }
@@ -234,6 +245,10 @@ function mergeUsage(first: Anthropic.Message, second: Anthropic.Message): Anthro
  * naloga i pipeline treba da stane, dok je ograničenje brzine prolazno.
  */
 function toGenerationError(error: unknown): GenerationError {
+  // Naša greška se ne pakuje ponovo — inače bi izgubila vrstu (`auth`,
+  // `credit`) po kojoj urednički ciklus odlučuje da li da stane.
+  if (error instanceof GenerationError) return error;
+
   if (error instanceof Anthropic.AuthenticationError) {
     return new GenerationError('Anthropic ključ je odbijen (401).', 'auth', { cause: error });
   }

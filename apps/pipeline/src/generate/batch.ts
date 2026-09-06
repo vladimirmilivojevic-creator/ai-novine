@@ -2,6 +2,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod';
 import { createLogger } from '@ai-novine/core';
 import { calculateCost, usageFromResponse, type CostBreakdown } from './cost.js';
+import { GenerationError } from './generate.js';
 import { buildUserMessage, loadSystemPrompt, type TopicMaterial } from './prompt.js';
 import { repairAndValidate } from './repair.js';
 import { articleSchema, type GeneratedArticle } from './schema.js';
@@ -27,6 +28,15 @@ const log = createLogger('batch');
 let client: Anthropic | undefined;
 
 function anthropic(): Anthropic {
+  // Isto kao u generate.ts: prazan kljuc iz nepostojeceg secreta mora da da
+  // razumljivu poruku, a ne gresku iz dubine SDK-a.
+  if (!process.env['ANTHROPIC_API_KEY']?.trim()) {
+    throw new GenerationError(
+      'Nedostaje ANTHROPIC_API_KEY. Lokalno ide u .env, a u GitHub Actions u Settings → ' +
+        'Secrets and variables → Actions. Bez njega nijedan poziv modelu ne prolazi.',
+      'auth',
+    );
+  }
   client ??= new Anthropic({ maxRetries: 2, timeout: 120_000 });
   return client;
 }
