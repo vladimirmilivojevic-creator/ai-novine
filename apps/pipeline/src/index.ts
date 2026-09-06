@@ -4,6 +4,7 @@ import { logger } from '@ai-novine/core';
 import { runCluster } from './commands/cluster.js';
 import { runCompare } from './commands/compare.js';
 import { runConfigCheck } from './commands/config-check.js';
+import { runCovers } from './commands/covers.js';
 import { runDiscover } from './commands/discover.js';
 import { runDoctor } from './commands/doctor.js';
 import { runEditorial } from './commands/editorial.js';
@@ -125,6 +126,20 @@ program
   .option('--dry-run', 'samo prikazi sta bi bilo poslato, bez slanja', false)
   .action(async (options: { dryRun: boolean }) => {
     await runReview({ dryRun: options.dryRun });
+  });
+
+program
+  .command('covers')
+  .description('Crta naslovne slike clanaka i otprema ih u Supabase Storage (Faza 8)')
+  .option('--preview', 'nacrtaj svih 18 sablona u reports/naslovnice/, bez baze i mreze', false)
+  .option('--limit <broj>', 'najvise clanaka po pokretanju (podrazumevano 20)', '20')
+  .option('--dry-run', 'nacrtaj slike ali ih ne otpremaj i ne upisuj adresu', false)
+  .action(async (options: { preview: boolean; limit: string; dryRun: boolean }) => {
+    await runCovers({
+      preview: options.preview,
+      limit: Math.max(1, Number.parseInt(options.limit, 10) || 20),
+      dryRun: options.dryRun,
+    });
   });
 
 program

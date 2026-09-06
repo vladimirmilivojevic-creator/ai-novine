@@ -104,11 +104,21 @@ export interface ArticleRow {
   updated_at: string;
   revision: number;
   last_update_at: string | null;
+  cover_url: string | null;
+  cover_variant: string | null;
+  cover_at: string | null;
 }
 
 export type NewArticle = Omit<
   ArticleRow,
-  'id' | 'created_at' | 'updated_at' | 'revision' | 'last_update_at'
+  | 'id'
+  | 'created_at'
+  | 'updated_at'
+  | 'revision'
+  | 'last_update_at'
+  | 'cover_url'
+  | 'cover_variant'
+  | 'cover_at'
 >;
 
 export interface ArticleBatchRow {

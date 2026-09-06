@@ -4,7 +4,7 @@
 > zašto, šta vlasnik treba da proveri, i status faze. Pun plan je u `docs/plan.md`.
 
 **Poslednje ažuriranje:** 6. septembar 2026.
-**Trenutno stanje:** Faza 7 gotova i provereno na telefonu — prvi članak je odobren i objavljen pritiskom dugmeta. Faza 8 (slike) je sledeća.
+**Trenutno stanje:** Faza 8 gotova — svaki članak dobija naslovnu sliku nacrtanu kodom. Faza 9 (sajt) je sledeća.
 
 ## Pregled faza
 
@@ -843,3 +843,73 @@ zahtev još čeka; ponovljen pritisak dobije odgovor „o ovom članku je već o
 
 Greška „query is too old" na starom pritisku je očekivana — Telegram dozvoljava potvrdu pritiska
 samo kratko vreme. Odluka se svejedno upisuje; ne potvrđuje se samo animacija na dugmetu.
+
+---
+
+## Faza 8 — Naslovne slike ✅
+
+*Završeno 7. septembra 2026.*
+
+Svaki članak dobija sliku 1200×630 nacrtanu kodom: geometrija, boja rubrike i naslov. Nijedna
+slika nije generisana modelom i nijedna ne prikazuje stvarnu osobu — brief, sekcija 8, to izričito
+traži, a usput je to i jedini način da slika ne košta ništa.
+
+### Kako radi
+
+`satori` pretvara opis rasporeda u SVG, `@resvg/resvg-js` SVG u PNG. Oba rade lokalno, bez mreže
+i bez naloga. PNG ide u Supabase Storage kantu `covers`, a adresa u kolonu `articles.cover_url`.
+
+Šablona ima 18: šest rubrika × tri varijacije geometrije (`traka`, `mreza`, `blok`). Rubrika bira
+boju i ton podloge, varijacija bira raspored. Zaglavlje, naslov i vodeni žig su svuda isti, pa se
+sve slike prepoznaju kao isti list.
+
+Varijacija se bira iz identifikatora članka (FNV-1a), ne nasumično. Isti članak zato uvek dobija
+istu sliku, i pre nego što je ijedna sačuvana.
+
+### Vodeni žig
+
+Na svakoj slici, upečen u sam PNG: **„Tekst generisala veštačka inteligencija · AI Novine"**.
+Nije prekrivka koja se skida stilom nego deo slike, pa preživi i deljenje na društvenim mrežama,
+gde je često jedino što čitalac vidi pre nego što klikne.
+
+### Slika prati naslov
+
+Faza 6 sme da promeni naslov postojećeg članka. Bez zaštite bi slika zauvek nosila prvi naslov, pa
+bi pregled linka na Fejsbuku govorio jedno a članak drugo. Zato se pamti `cover_at`: svaka slika
+starija od poslednje dopune se precrta, na istu adresu (ime fajla je slug).
+
+### Izmereno
+
+| | |
+| --- | ---: |
+| Šablona | 18 |
+| Vreme crtanja jedne slike | 0,25 s |
+| Veličina jedne slike | 43–47 KB |
+| Trošak po slici | $0 |
+| Slika koje staje u besplatnih 1 GB | oko 22.000 |
+| Pri 10 članaka dnevno | 1 GB traje preko 6 godina |
+
+Pet stvarnih članaka iz baze je dobilo sliku i sve su javno dostupne (HTTP 200, `image/png`).
+Ponovno pokretanje ne pravi ništa novo — komanda je idempotentna.
+
+### Font
+
+Inter (SIL Open Font License) je spakovan u repo, u `assets/fonts/`. Razlog je srpska latinica:
+č, ć, ž, š i đ moraju postojati u fontu, inače satori ta slova preskoči i naslov izađe sa rupama.
+Test crta svako od tih deset slova posebno i pada ako neko od njih nestane.
+
+### Nova komanda
+
+```
+npm run pipeline -- covers --preview      # svih 18 šablona u reports/naslovnice/
+npm run pipeline -- covers                # članci bez slike: nacrtaj i otpremi
+npm run pipeline -- covers --dry-run      # nacrtaj, ali ne otpremaj i ne upisuj
+```
+
+Korak „Naslovne slike" je dodat u `editorial.yml`, posle pisanja. Namerno je zaseban: ako crtanje
+padne, članak i dalje postoji — tekst je proizvod, slika je omot.
+
+### Šta vlasnik proverava
+
+Otvara 18 slika iz `reports/naslovnice/` i kaže da li vizuelni identitet drži. Ako neka boja ili
+raspored ne valjaju, menja se `apps/pipeline/src/images/palette.ts`, jedna komanda precrta sve.

@@ -73,3 +73,13 @@ jobs:
           npm run pipeline -- editorial \
             ${{ github.event.inputs.mode == 'sync' && ' ' || '--batch' }} \
             ${{ github.event.inputs.limit && format('--limit {0}', github.event.inputs.limit) || '' }}
+
+      # Slika se crta posle pisanja, iz istog razloga iz kog je zaseban korak:
+      # ako crtanje padne, članak i dalje postoji, samo bez omota, i sledeći
+      # ciklus ga ponovo uzme. Ne zove nijedan model, pa ne košta ništa.
+      - name: Naslovne slike
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: npm run pipeline -- covers --limit 20

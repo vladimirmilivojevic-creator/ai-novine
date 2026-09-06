@@ -94,3 +94,41 @@ export function serbianWallClockToIso(wall: WallClock): string | null {
   const utc = zonedWallClockToUtc(wall, SERBIA_TIME_ZONE);
   return utc === null ? null : new Date(utc).toISOString();
 }
+
+/** Meseci na srpskoj latinici; Intl za `sr` daje isto, ali zavisi od ICU podataka. */
+const SERBIAN_MONTHS = [
+  'januar',
+  'februar',
+  'mart',
+  'april',
+  'maj',
+  'jun',
+  'jul',
+  'avgust',
+  'septembar',
+  'oktobar',
+  'novembar',
+  'decembar',
+];
+
+/**
+ * Datum ispisan kako se pise u srpskom tekstu: „7. septembar 2026."
+ *
+ * Racuna se po beogradskom vremenu bez obzira gde proces radi — u GitHub
+ * Actions runneru je sat na UTC, pa bi bez ovoga clanak objavljen u 01:30 po
+ * beogradskom nosio jucerasnji datum.
+ */
+export function serbianDateLabel(instant: Date, timeZone: string = SERBIA_TIME_ZONE): string {
+  const parts = new Intl.DateTimeFormat('en-US', {
+    timeZone,
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+  }).formatToParts(instant);
+
+  const value = (type: Intl.DateTimeFormatPartTypes): number =>
+    Number(parts.find((part) => part.type === type)?.value ?? '0');
+
+  const month = SERBIAN_MONTHS[value('month') - 1] ?? '';
+  return `${value('day')}. ${month} ${value('year')}.`;
+}

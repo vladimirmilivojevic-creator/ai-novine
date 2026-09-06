@@ -717,3 +717,81 @@ export async function markClusterNeedsFlagship(
     .eq('id', clusterId);
   if (error) fail(`Oznacavanje teme ${clusterId} nije proslo`, error);
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Naslovne slike (Faza 8)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Da li clanak treba (pre)crtati.
+ *
+ * Dva slucaja: nikad nije imao sliku, ili je dopunjen posle nego sto je slika
+ * nacrtana — a dopuna sme da promeni naslov, koji je na slici ispisan.
+ */
+export function coverIsStale(
+  article: Pick<ArticleRow, 'cover_url' | 'cover_at' | 'last_update_at'>,
+): boolean {
+  if (!article.cover_url) return true;
+  if (!article.last_update_at) return false;
+  if (!article.cover_at) return true;
+  return Date.parse(article.cover_at) < Date.parse(article.last_update_at);
+}
+
+/**
+ * Clanci kojima treba slika: oni bez nje, plus oni dopunjeni posle crtanja.
+ *
+ * Slika se crta posle pisanja, u zasebnom koraku, da neuspelo crtanje nikad ne
+ * obori pisanje clanka — tekst je proizvod, slika je omot.
+ */
+export async function articlesNeedingCover(
+  client: SupabaseClient,
+  limit = 20,
+): Promise<ArticleRow[]> {
+  const { data: bezSlike, error } = await client
+    .from('articles')
+    .select('*')
+    .is('cover_url', null)
+    .neq('status', 'rejected')
+    .order('created_at', { ascending: false })
+    .limit(limit);
+  if (error) fail('Citanje clanaka bez slike nije proslo', error);
+
+  const found = new Map((bezSlike as ArticleRow[]).map((article) => [article.id, article]));
+  if (found.size >= limit) return [...found.values()].slice(0, limit);
+
+  // Dopunjeni clanci: PostgREST ne uporedjuje dve kolone, pa se poredjenje
+  // radi ovde. Prozor je nedelju dana — starije dopune se vise ne desavaju.
+  const since = new Date(Date.now() - 7 * 24 * 3600_000).toISOString();
+  const { data: dopunjeni, error: updateError } = await client
+    .from('articles')
+    .select('*')
+    .not('last_update_at', 'is', null)
+    .gte('last_update_at', since)
+    .neq('status', 'rejected')
+    .order('last_update_at', { ascending: false })
+    .limit(limit);
+  if (updateError) fail('Citanje dopunjenih clanaka nije proslo', updateError);
+
+  for (const article of dopunjeni as ArticleRow[]) {
+    if (found.size >= limit) break;
+    if (coverIsStale(article)) found.set(article.id, article);
+  }
+
+  return [...found.values()].slice(0, limit);
+}
+
+export async function setArticleCover(
+  client: SupabaseClient,
+  articleId: string,
+  cover: { url: string; variant: string },
+): Promise<void> {
+  const { error } = await client
+    .from('articles')
+    .update({
+      cover_url: cover.url,
+      cover_variant: cover.variant,
+      cover_at: new Date().toISOString(),
+    })
+    .eq('id', articleId);
+  if (error) fail(`Upis slike za clanak ${articleId} nije prosao`, error);
+}

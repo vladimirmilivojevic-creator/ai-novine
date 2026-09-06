@@ -122,9 +122,10 @@ Brojevi su izvučeni iz istorije izmena projekta, faza po faza.
 | 5 | Pisanje članaka | 147 |
 | 5a | Smanjenje troška | 161 |
 | 6 | Dopuna postojećih članaka | 166 |
-| 7 | Odobravanje osetljivih članaka | **182** |
+| 7 | Odobravanje osetljivih članaka | 182 |
+| 8 | Naslovne slike članaka | **206** |
 
-Svaka izmena koda automatski pokreće svih 182 provere na tuđem računaru (GitHub), i to **dvaput** —
+Svaka izmena koda automatski pokreće svih 206 provera na tuđem računaru (GitHub), i to **dvaput** —
 jednom u jednoj vremenskoj zoni, jednom u drugoj, upravo zbog one greške sa pomerenim vremenom.
 
 ---
@@ -171,6 +172,14 @@ sada stiže na vaš telefon pre objave, sa dugmadima „odobri" i „odbij". Re�
 nego što sajt uopšte postoji na internetu — bot sam proverava da li ste odgovorili, umesto da čeka
 da ga neko pozove.
 
+**Faza 8 — slike uz članke.** Svaki članak dobija svoju naslovnu sliku. Slike se **crtaju
+programski** — boja rubrike, geometrijski oblik i naslov — a ne generišu veštačkom inteligencijom
+i ne preuzimaju sa drugih sajtova. To znači tri stvari: ne koštaju ništa, ne mogu prikazati stvarnu
+osobu u situaciji u kojoj nije bila, i nema pitanja čija je slika. Na svakoj piše **„Tekst
+generisala veštačka inteligencija · AI Novine"**, i to upečeno u samu sliku, tako da natpis ostane
+i kada neko sliku podeli na Fejsbuku bez otvaranja članka. Šablona ima 18, po tri za svaku od šest
+rubrika, pa se članci međusobno razlikuju a sve slike i dalje izgledaju kao isti list.
+
 ---
 
 ## 4. Šta trenutno postoji, u brojkama
@@ -184,7 +193,8 @@ da ga neko pozove.
 | Dopuna postojećih članaka | 2 |
 | Dužina članaka | 374–867 reči |
 | Ukupno potrošeno na veštačku inteligenciju do sada | $0,22 |
-| Automatskih provera koje se stalno pokreću | 182 |
+| Napravljenih naslovnih slika | 5 |
+| Automatskih provera koje se stalno pokreću | 206 |
 
 Mali broj članaka nije slabost sistema nego posledica toga što je do sada radio uglavnom probno.
 Kada se pusti u redovan rad, piše deset članaka dnevno.
@@ -193,10 +203,8 @@ Kada se pusti u redovan rad, piše deset članaka dnevno.
 
 ## 5. Šta još nije napravljeno
 
-Projekat ima jedanaest faza; završeno je osam (0 do 7). Preostaje:
+Projekat ima jedanaest faza; završeno je devet (0 do 8). Preostaje:
 
-- **Faza 8** — slike za članke. Crtaće se programski, u prepoznatljivom izgledu, bez ijednog dinara
-  troška i bez pravnog rizika koji nosi prikazivanje stvarnih osoba.
 - **Faza 9** — sam sajt: naslovna strana, rubrike, stranica članka, prikaz „obe strane", pretraga.
 - **Faza 10** — pravne stranice, komentari čitalaca i podešavanja za pretraživače.
 - **Faza 11** — puštanje u rad na adresi ainovine.rs i dva dana posmatranja.
