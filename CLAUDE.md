@@ -6,8 +6,9 @@
 izvor istine o tome dokle se stiglo: koje su faze završene, koje su odluke donete i zašto, i koji
 je sledeći korak na redu. Bez njega ćeš ponoviti posao ili raditi pogrešnu fazu.
 
-Puni plan projekta je u `docs/plan.md`, originalni zahtev vlasnika u `docs/brief.md`, a presek
-kompromisa zbog budžeta u `docs/tradeoffs.md`.
+Puni plan projekta je u `docs/plan.md`, originalni zahtev vlasnika u `docs/brief.md`, presek
+kompromisa zbog budžeta u `docs/tradeoffs.md`, a izveštaj za nekoga ko nije programer u
+`docs/izvestaj-za-investitore.md`.
 
 ## Šta je ovo
 
@@ -41,13 +42,19 @@ npm run lint                # eslint
 npm run format              # prettier --write
 npm run test                # vitest
 npm run pipeline -- config  # proverava config/ fajlove
-npm run pipeline -- <cmd>   # discover | ingest | editorial | sweep
+npm run pipeline -- <cmd>   # discover | migrate | ingest | cluster | editorial | compare | sweep
 ```
 
 ## Pravila rada u ovom projektu
 
-- **Radi fazu po fazu.** Posle svake faze: ažuriraj `docs/progress.md`, objasni šta je urađeno,
-  reci vlasniku tačno šta da proveri, i sačekaj njegovu potvrdu pre sledeće faze.
+- **Radi fazu po fazu.** Posle svake faze: ažuriraj **sva tri dokumenta** — `docs/progress.md`
+  (šta je urađeno i zašto, tehnički), `docs/tradeoffs.md` (svaki kompromis zbog budžeta) i
+  `docs/izvestaj-za-investitore.md` (šta je faza donela sajtu, običnim jezikom, plus tačan broj
+  automatskih provera). Zatim objasni šta je urađeno, reci vlasniku tačno šta da proveri, i sačekaj
+  njegovu potvrdu pre sledeće faze.
+- **Izveštaj za investitore piše se za nekoga ko nikad nije programirao.** Bez skraćenica i
+  stručnih izraza; gde je izraz neizbežan, objasni ga u istoj rečenici. Brojevi u njemu moraju biti
+  izvučeni iz git istorije, CI logova ili baze — nikad iz sećanja.
 - **Vlasnik je student IT-a, ne DevOps ekspert.** Za svaki korak koji on radi ručno (nalozi, API
   ključevi, DNS, klikovi po dashboard-ovima) daj tačne korake: gde da klikne, šta da nalepi, gde.
   Sve što se može uraditi kodom — uradi sam, bez čekanja.
