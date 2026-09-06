@@ -15,6 +15,7 @@ import {
   pendingReviews,
   readState,
   recordReviewSent,
+  reviewForArticle,
   writeState,
   type ReviewRow,
 } from '@ai-novine/db';
@@ -166,6 +167,19 @@ async function collectDecisions(client: SupabaseClient, chatId: string): Promise
     const decidedBy = callback.from.username ?? String(callback.from.id);
 
     try {
+      // Dva pritiska na isto dugme stizu kao dva odgovora. Odluka se primenjuje
+      // jednom; drugi put se samo potvrdi, da se ne prepisuje vec upisano stanje
+      // i ne pokusava izmena poruke koja je vec izmenjena.
+      const existing = await reviewForArticle(client, parsed.articleId);
+      if (existing && existing.status !== 'pending') {
+        await answerCallbackQuery(callback.id, 'O ovom clanku je vec odluceno.');
+        log.info('Ponovljen pritisak dugmeta je preskocen.', {
+          clanak: parsed.articleId,
+          vecOdluceno: existing.status,
+        });
+        continue;
+      }
+
       const article = await getArticle(client, parsed.articleId);
       await applyReviewDecision(client, parsed.articleId, parsed.decision, decidedBy);
 

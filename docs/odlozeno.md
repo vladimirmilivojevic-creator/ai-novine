@@ -9,6 +9,9 @@ dešava ako se ne uradi — bez toga je spisak samo lista želja.
 
 **Stanje: 7. septembar 2026. · otvoreno 13 · zatvoreno 0**
 
+> Provereno na telefonu: odobravanje radi kroz ceo lanac. Ostaje samo to da odluka stigne u
+> sledećem ciklusu umesto istog trenutka — stavka 4.
+
 ---
 
 ## Obavezno pre puštanja u rad

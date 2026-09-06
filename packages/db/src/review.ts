@@ -143,3 +143,17 @@ export async function writeState(
     .upsert({ key, value, updated_at: new Date().toISOString() }, { onConflict: 'key' });
   if (error) fail(`Upis stanja ${key} nije prosao`, error);
 }
+
+/** Zahtev za odobravanje jednog clanka; `null` ako clanak nije ni poslat. */
+export async function reviewForArticle(
+  client: SupabaseClient,
+  articleId: string,
+): Promise<ReviewRow | null> {
+  const { data, error } = await client
+    .from('review_queue')
+    .select('*')
+    .eq('article_id', articleId)
+    .maybeSingle();
+  if (error) fail(`Citanje zahteva za clanak ${articleId} nije proslo`, error);
+  return (data as ReviewRow | null) ?? null;
+}

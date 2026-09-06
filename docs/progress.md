@@ -4,7 +4,7 @@
 > zašto, šta vlasnik treba da proveri, i status faze. Pun plan je u `docs/plan.md`.
 
 **Poslednje ažuriranje:** 6. septembar 2026.
-**Trenutno stanje:** Faza 7 gotova — osetljivi članci idu na Telegram na odobrenje, radi bez javne adrese. Čeka se pritisak dugmeta radi provere. Faza 8 (slike) je sledeća.
+**Trenutno stanje:** Faza 7 gotova i provereno na telefonu — prvi članak je odobren i objavljen pritiskom dugmeta. Faza 8 (slike) je sledeća.
 
 ## Pregled faza
 
@@ -17,7 +17,7 @@
 | 4    | Klasterovanje i trending (Engine 2)  | ✅ Gotovo, čeka potvrdu |
 | 5    | AI generisanje teksta ⚠️ kritična kapija | ✅ Gotovo, čeka potvrdu |
 | 6    | Ažuriranje umesto dupliranja         | ✅ Gotovo, čeka potvrdu |
-| 7    | Telegram odobravanje                 | ✅ Gotovo, čeka potvrdu |
+| 7    | Telegram odobravanje                 | ✅ Gotovo, provereno |
 | 8    | Slike                                | 🔜 Sledeća          |
 | 9    | Frontend                             | ⬜ Čeka             |
 | 10   | Pravne stranice, komentari, SEO      | ⬜ Čeka             |
@@ -823,3 +823,23 @@ za odobrenje dok se Telegram ne podesi.
 2. Pritisne **✅ Odobri** ili **❌ Odbij**.
 3. Javi mi — pokrenuću `review` da pokupi odluku, pa ćemo zajedno videti da je stanje članka u bazi
    promenjeno i da se tekst poruke izmenio.
+
+### Provera na telefonu i jedna popravka (7. septembra 2026)
+
+Vlasnik je pritisnuo „Odobri". Ceo lanac je prošao: odluka pokupljena, članak prešao u
+`published` sa vremenom objave, zahtev u redu za odobravanje označen kao `approved`, a pomeraj
+pročitanih poruka upisan u bazu.
+
+Usput su se videle dve stvari koje vredi zapisati:
+
+**Pritisci dugmeta stižu sa zakašnjenjem, ali ne propadaju.** Prva provera je pokazala nula poruka
+na čekanju kod Telegrama, pa je izgledalo da pritisak nije stigao. Nekoliko minuta kasnije stigla su
+oba pritiska. Zaključak: Telegram čuva pritisak do 24 sata i on se ne gubi ako pipeline u tom
+trenutku ne radi — samo se ne vidi odmah.
+
+**Dva pritiska su primenila istu odluku dvaput.** Nije napravilo štetu (drugi pokušaj je naišao na
+već objavljen članak), ali je pokazalo da nedostaje provera. Sada se odluka primenjuje samo ako
+zahtev još čeka; ponovljen pritisak dobije odgovor „o ovom članku je već odlučeno".
+
+Greška „query is too old" na starom pritisku je očekivana — Telegram dozvoljava potvrdu pritiska
+samo kratko vreme. Odluka se svejedno upisuje; ne potvrđuje se samo animacija na dugmetu.
