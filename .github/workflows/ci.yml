@@ -36,3 +36,11 @@ jobs:
 
       - name: Vitest
         run: npm run test
+
+      # Runner radi u UTC-u, razvojni racunar u Europe/Belgrade. Greska koja
+      # pretpostavi lokalnu zonu prolazi na jednom, pada na drugom — zato se
+      # testovi vrte jos jednom u trecoj zoni.
+      - name: Vitest u drugoj vremenskoj zoni
+        run: npm run test
+        env:
+          TZ: America/New_York

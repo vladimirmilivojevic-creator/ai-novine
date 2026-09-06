@@ -2,6 +2,9 @@ import { describe, expect, it } from 'vitest';
 import {
   extractEntities,
   foldDiacritics,
+  isLiveBlogTitle,
+  isMultiEventTitle,
+  isUnsuitableTopicTitle,
   normalizeForMatching,
   stem,
   STOP_WORDS,
@@ -97,5 +100,37 @@ describe('extractEntities', () => {
 
   it('ne vraća ništa kad imena nema', () => {
     expect(extractEntities('vlada je usvojila budzet za narednu godinu')).toEqual([]);
+  });
+});
+
+describe('isMultiEventTitle', () => {
+  it('prepoznaje pregled dana sa dva događaja razdvojena tačkom-zarezom', () => {
+    expect(
+      isMultiEventTitle(
+        'ИРГЦ: Погодили смо амерички носач авиона и разарач; владине снаге напале Хуте у Јемену',
+      ),
+    ).toBe(true);
+  });
+
+  it('uživo blog NIJE pregled dana — on je jedan događaj i ostaje u temi', () => {
+    expect(isMultiEventTitle('UŽIVO: Izbori u Srbiji, prvi rezultati')).toBe(false);
+    expect(isLiveBlogTitle('UŽIVO: Izbori u Srbiji, prvi rezultati')).toBe(true);
+    expect(isLiveBlogTitle('Rat u Ukrajini, minut po minut')).toBe(true);
+  });
+
+  it('ni pregled dana ni uživo blog ne mogu da budu naslov teme', () => {
+    expect(isUnsuitableTopicTitle('UŽIVO: Izbori u Srbiji, prvi rezultati')).toBe(true);
+    expect(isUnsuitableTopicTitle('Vučić: Uskoro ćemo saopštiti visinu penzija')).toBe(false);
+  });
+
+  it('ne dira običan naslov, ni onaj sa dvotačkom', () => {
+    expect(isMultiEventTitle('U izraelskim napadima na jug Libana poginule četiri osobe')).toBe(
+      false,
+    );
+    expect(isMultiEventTitle('Vučić: Uskoro ćemo saopštiti visinu povećanja penzija')).toBe(false);
+  });
+
+  it('ne proglašava nabrajanje sa kratkim delovima za pregled dana', () => {
+    expect(isMultiEventTitle('Sneg, kiša; hladno')).toBe(false);
   });
 });

@@ -1,4 +1,4 @@
-import type { Angle } from '@ai-novine/core';
+import { isUnsuitableTopicTitle, type Angle } from '@ai-novine/core';
 import {
   buildIdf,
   combinedSimilarity,
@@ -169,7 +169,7 @@ export function clusterItems(
 
   for (const state of outcome.clusters) {
     state.keywords = topKeywords(state, vectors);
-    if (!state.titleSample && state.members[0]) state.titleSample = state.members[0].title;
+    state.titleSample = representativeTitle(state, unit) ?? state.titleSample;
   }
 
   outcome.absorbedIds = states
@@ -239,6 +239,31 @@ function absorb(target: ClusterState, other: ClusterState): void {
   }
 
   other.absorbedInto = target;
+}
+
+/**
+ * Naslov teme je naslov teksta koji je najbliži centroidu — dakle onaj koji
+ * najbolje predstavlja ono o čemu tema govori.
+ *
+ * Prvi tekst po vremenu za to nije dobar izbor: ako tema počne „pregledom
+ * dana" koji nabraja više događaja, ceo klaster dobije pogrešnu etiketu.
+ * Takvi naslovi se preskaču dok god postoji ijedan drugi.
+ */
+function representativeTitle(
+  state: ClusterState,
+  unit: Map<string, Map<string, number>>,
+): string | null {
+  if (state.members.length === 0) return null;
+
+  const ranked = state.members
+    .map((member) => ({
+      title: member.title,
+      unsuitable: isUnsuitableTopicTitle(member.title),
+      closeness: cosineSimilarity(unit.get(member.id) ?? new Map(), state.vector),
+    }))
+    .sort((a, b) => Number(a.unsuitable) - Number(b.unsuitable) || b.closeness - a.closeness);
+
+  return ranked[0]?.title ?? null;
 }
 
 function addToCluster(

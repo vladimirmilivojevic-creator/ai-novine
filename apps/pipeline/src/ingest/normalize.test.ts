@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 import {
   canonicalizeUrl,
   contentHash,
@@ -110,11 +110,28 @@ describe('toIsoDate', () => {
 
 describe('parseSerbianDate', () => {
   const now = new Date('2026-09-06T12:00:00Z').getTime();
+  const originalTimeZone = process.env['TZ'];
+
+  afterEach(() => {
+    if (originalTimeZone === undefined) delete process.env['TZ'];
+    else process.env['TZ'] = originalTimeZone;
+  });
 
   it('cita datum i vreme razdvojene zarezom, kako ih RTS ispisuje', () => {
-    const iso = parseSerbianDate('nedelja, 06.09.2026, 09:07 -> 13:48 Izvor', now);
-    expect(iso?.slice(0, 10)).toBe('2026-09-06');
-    expect(new Date(iso!).getUTCHours()).toBe(7);
+    // 09:07 u Beogradu je 07:07 UTC (letnje racunanje vremena).
+    expect(parseSerbianDate('nedelja, 06.09.2026, 09:07 -> 13:48 Izvor', now)).toBe(
+      '2026-09-06T07:07:00.000Z',
+    );
+  });
+
+  it('daje isti trenutak bez obzira na vremensku zonu masine', () => {
+    const results = ['UTC', 'Europe/Belgrade', 'America/New_York'].map((zone) => {
+      process.env['TZ'] = zone;
+      return parseSerbianDate('06.09.2026, 09:07', now);
+    });
+
+    expect(new Set(results).size).toBe(1);
+    expect(results[0]).toBe('2026-09-06T07:07:00.000Z');
   });
 
   it('cita datum bez vremena i bez vodece nule', () => {

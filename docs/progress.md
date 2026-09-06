@@ -4,7 +4,7 @@
 > zašto, šta vlasnik treba da proveri, i status faze. Pun plan je u `docs/plan.md`.
 
 **Poslednje ažuriranje:** 6. septembar 2026.
-**Trenutno stanje:** Faza 4 gotova — 636 vesti grupisano u 404 teme, izveštaj u `reports/teme-dana.md` čeka pregled. Faza 5 (AI pisanje) je sledeća i to je kritična kapija projekta.
+**Trenutno stanje:** Faza 4 gotova i pregledana; dve greške koje je vlasnik uhvatio su popravljene (vremenska zona u CI-ju, „pregled dana“ kao most između tema). Faza 5 (AI pisanje) je sledeća i to je kritična kapija projekta.
 
 ## Pregled faza
 
@@ -413,3 +413,54 @@ grupisanja, ne pomeranje praga.
 2. Za svaku pogledaj spisak naslova unutar teme: **da li svi zaista pripadaju istoj priči?**
 3. Javi ako vidiš temu koja je pogrešno spojena, ili priču koja je razbijena na dve teme —
    po tome se podešavaju pragovi.
+
+### Dopuna posle pregleda vlasnika (6. septembra 2026)
+
+**Dve greške koje je vlasnik uhvatio, obe stvarne.**
+
+#### 1. CI je padao crveno dok je lokalno bilo zeleno — vremenska zona
+
+`parseSerbianDate` je sastavljala datum sa `new Date(godina, mesec, dan, sat, minut)`, a taj
+konstruktor gradi vreme u zoni **mašine na kojoj kod radi**. Razvojni računar je Europe/Belgrade,
+GitHub Actions runner je UTC — otuda razlika od tačno dva sata i pad testa u CI-ju.
+
+Ovo nije bio problem testa nego proizvoda: srpski portal koji ispiše „09:07" misli na beogradsko
+vreme, pa bi svaki članak sa RTS-a u produkciji (Actions i Vercel rade u UTC-u) dobio vreme objave
+pomereno za sat ili dva.
+
+Popravka: `packages/core/src/timezone.ts` čita odstupanje zone kroz `Intl` i pretvara beogradsko
+zidno vreme u tačan trenutak, uz ispravno letnje računanje vremena (CET zimi, CEST leti). Zona se
+sada navodi izričito i rezultat ne zavisi od mašine.
+
+Tri zaštite da se ne vrati:
+
+- test koji istu proveru vrti kroz četiri zone (`UTC`, `Europe/Belgrade`, `America/New_York`,
+  `Asia/Tokyo`) i traži identičan rezultat,
+- testovi datuma tvrde tačan UTC trenutak, ne „sat je 7",
+- CI vrti ceo skup testova **dvaput**: jednom u UTC-u i jednom u `America/New_York`.
+
+**Promena u načinu rada:** izveštaj o fazi od sada uključuje i status CI run-a na GitHub-u, ne samo
+lokalni `npm run check`. Lokalno zeleno ne znači zeleno.
+
+#### 2. Tema koja je spajala dve priče — „pregled dana" kao most
+
+Vlasnik je u izveštaju uočio temu koja je mešala izraelske napade na jug Libana sa iranskim
+tvrdnjama o pogođenom američkom nosaču aviona. Bio je u pravu, i uzrok je bio precizan:
+
+RTS objavljuje **pregled dana sa Bliskog istoka** — jedan tekst koji pokriva više nepovezanih
+događaja („ИРГЦ: Погодили смо носач авиона; владине снаге напале Хуте у Јемену"). Takav tekst se
+delom poklapa sa više tema odjednom, pa je ušao u temu o Libanu i, pošto je bio prvi po vremenu,
+dao joj svoj naslov.
+
+Dve popravke:
+
+| Šta | Zašto |
+| --- | --- |
+| **Naslov teme je tekst najbliži centroidu**, a ne prvi po vremenu | Naslov sada opisuje ono o čemu tema stvarno govori. Ovo popravlja i sve buduće slučajeve, ne samo ovaj. |
+| **Pregledi dana se izostavljaju iz grupisanja** | Prepoznaju se po tački-zarezu koji razdvaja dve samostalne izjave. Ne ulaze u temu jer bi podigli broj izvora teme na koju se odnose samo delom, a u Fazi 5 bi model dobio izvorni tekst koji je pola o nečem drugom. |
+
+Uživo blogovi (`UŽIVO:`, „minut po minut") se **ne** izbacuju — oni po pravilu prate jedan događaj,
+pa ostaju u temi; samo ne mogu da budu njen naslov.
+
+Rezultat: tema o Libanu ima 7 tekstova iz 5 izvora i svih sedam je stvarno o izraelskim napadima.
+Iranska priča stoji odvojeno, kako i treba.

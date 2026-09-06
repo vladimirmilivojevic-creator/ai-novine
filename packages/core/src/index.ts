@@ -7,4 +7,5 @@ export * from './paths.js';
 export * from './robots.js';
 export * from './serbian.js';
 export * from './sitemap.js';
+export * from './timezone.js';
 export * from './types.js';

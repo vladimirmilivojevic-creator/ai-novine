@@ -421,3 +421,33 @@ function addEntity(counts: Map<string, number>, run: string[]): void {
   if (STOP_WORDS.has(key)) return;
   counts.set(entity, (counts.get(entity) ?? 0) + 1);
 }
+
+/**
+ * „Pregled dana" — jedan tekst koji pokriva više NEPOVEZANIH događaja, prepoznat
+ * po tački-zarezu koji razdvaja dve samostalne izjave:
+ * „ИРГЦ: Погодили смо носач авиона; владине снаге напале Хуте у Јемену".
+ *
+ * Takav tekst se izostavlja iz grupisanja. Ne zato što nije vest, nego zato što
+ * pripada u tri teme odjednom: kao član podiže broj izvora teme na koju se samo
+ * delom odnosi, a u Fazi 5 bi model dobio izvorni tekst koji je pola o nečem
+ * drugom.
+ */
+export function isMultiEventTitle(title: string): boolean {
+  const parts = title.split(';').map((part) => part.trim());
+  return parts.length > 1 && parts.every((part) => part.split(/\s+/).length >= 4);
+}
+
+/**
+ * Uživo blog ili minut-po-minut praćenje. Za razliku od pregleda dana, ovo je
+ * po pravilu jedan događaj, pa tekst OSTAJE u temi — samo ne sme da bude naslov
+ * teme, jer „UŽIVO: Izbori u Srbiji" ne kaže šta se u temi dogodilo.
+ */
+export function isLiveBlogTitle(title: string): boolean {
+  const normalized = normalizeForMatching(title);
+  return /\buzivo\b|\bblog\b|\blive\b|minut po minut|sta se desava/.test(normalized);
+}
+
+/** Naslov koji ne opisuje jedan događaj, pa ne može da predstavlja temu. */
+export function isUnsuitableTopicTitle(title: string): boolean {
+  return isMultiEventTitle(title) || isLiveBlogTitle(title);
+}

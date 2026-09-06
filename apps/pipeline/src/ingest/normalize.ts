@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { serbianWallClockToIso } from '@ai-novine/core';
 
 /**
  * Parametri koji ne menjaju sadrzaj strane, samo prate odakle je posetilac
@@ -96,32 +97,37 @@ export function toIsoDate(value: string | null | undefined): string | null {
 }
 
 /**
- * Datum u srpskom zapisu — `6.9.2026.` ili `06.09.2026 14:30`.
+ * Datum u srpskom zapisu — `6.9.2026.` ili `06.09.2026, 09:07`.
  *
  * Poneki portal (RTS, na primer) nema nijednu masinski citljivu oznaku datuma,
- * pa je vidljivi datum na strani jedino sto postoji. Prihvata se samo datum iz
- * poslednjih 30 dana i ne iz buducnosti — tako se izbegava da se uhvati datum
- * iz teksta clanka ili iz podnozja strane.
+ * pa je vidljivi datum na strani jedino sto postoji.
+ *
+ * Vreme se ODUVEK cita kao beogradsko, bez obzira gde kod radi. Bez toga bi
+ * isti clanak dobio jedno vreme na razvojnom racunaru (Europe/Belgrade), a
+ * drugo na GitHub Actions i Vercel serverima (UTC) — razlika od sat ili dva.
+ *
+ * Prihvata se samo datum iz poslednjih 30 dana i ne iz buducnosti, da se ne
+ * uhvati datum iz teksta clanka ili iz podnozja strane.
  */
 export function parseSerbianDate(text: string, now = Date.now()): string | null {
   const pattern = /(\d{1,2})\.\s?(\d{1,2})\.\s?(\d{4})\.?(?:[\s,]+(\d{1,2}):(\d{2}))?/g;
 
   for (const match of text.matchAll(pattern)) {
     const [, day, month, year, hour, minute] = match;
-    const date = new Date(
-      Number(year),
-      Number(month) - 1,
-      Number(day),
-      hour ? Number(hour) : 12,
-      minute ? Number(minute) : 0,
-    );
 
-    if (Number.isNaN(date.getTime())) continue;
-    if (date.getDate() !== Number(day) || date.getMonth() !== Number(month) - 1) continue;
+    const iso = serbianWallClockToIso({
+      year: Number(year),
+      month: Number(month),
+      day: Number(day),
+      // Bez vremena uzima se podne, da greska u oba smera bude najmanja.
+      hour: hour ? Number(hour) : 12,
+      minute: minute ? Number(minute) : 0,
+    });
+    if (!iso) continue;
 
-    const age = now - date.getTime();
+    const age = now - new Date(iso).getTime();
     if (age < -86_400_000 || age > 30 * 86_400_000) continue;
-    return date.toISOString();
+    return iso;
   }
   return null;
 }

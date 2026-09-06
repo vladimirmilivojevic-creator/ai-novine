@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import {
   activeSources,
   createLogger,
+  isMultiEventTitle,
   loadDotEnv,
   loadEditorialConfig,
   reportsDir,
@@ -77,9 +78,14 @@ async function buildClusters(
       rows.map((row) => row.id),
     );
 
+    // Pregledi dana pokrivaju više nepovezanih događaja odjednom, pa bi svaku
+    // temu u koju uđu delom pogrešno predstavljali. Uživo blogovi ostaju.
+    const roundups = rows.filter((row) => isMultiEventTitle(row.title)).length;
+
     const items: ItemInput[] = rows
       .filter((row) => !alreadyClustered.has(row.id))
       .filter((row) => row.title.length >= editorial.clustering.minTitleChars)
+      .filter((row) => !isMultiEventTitle(row.title))
       .map((row) => ({
         id: row.id,
         sourceId: row.source_id,
@@ -166,6 +172,7 @@ async function buildClusters(
 
     const stats = {
       vestiUProzoru: rows.length,
+      preskocenoPregledaDana: roundups,
       novihVesti: items.length,
       novihTema: outcome.created,
       spojenoTema: outcome.merged,
