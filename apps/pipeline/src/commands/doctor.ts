@@ -244,16 +244,36 @@ async function checkAnthropic(): Promise<void> {
   try {
     // `models.list` je besplatan GET poziv — ne trosi tokene.
     const models = await client().models.list({ limit: 3 });
-    line('ok', 'Anthropic API', `kljuc vazi · dostupno modela u odgovoru: ${models.data.length}`);
+    line('ok', 'Anthropic kljuc', `vazi · dostupno modela u odgovoru: ${models.data.length}`);
   } catch (error) {
-    if (error instanceof Anthropic.AuthenticationError) {
-      line('fail', 'Anthropic API', 'kljuc je odbijen (401)');
-    } else if (error instanceof Anthropic.APIError) {
-      line('fail', 'Anthropic API', `greska ${error.status ?? ''} ${error.message}`.trim());
-    } else {
-      line('fail', 'Anthropic API', `nema veze — ${(error as Error).message}`);
-    }
+    line('fail', 'Anthropic kljuc', describeAnthropicError(error));
+    return;
   }
+
+  // Kljuc koji vazi jos ne znaci da generisanje radi: `models.list` prolazi i
+  // bez kredita na nalogu, a svaki poziv modelu tada pada. Zato ide i provera
+  // koja stvarno dodiruje naplativi deo API-ja — brojanje tokena, bez trosenja.
+  try {
+    await client().messages.countTokens({
+      model: 'claude-haiku-4-5',
+      messages: [{ role: 'user', content: 'test' }],
+    });
+    line('ok', 'Anthropic nalog', 'ima kredita — generisanje clanaka moze da radi');
+  } catch (error) {
+    line('fail', 'Anthropic nalog', describeAnthropicError(error));
+  }
+}
+
+function describeAnthropicError(error: unknown): string {
+  if (error instanceof Anthropic.AuthenticationError) return 'kljuc je odbijen (401)';
+
+  if (error instanceof Anthropic.APIError) {
+    if (/credit balance/i.test(String(error.message))) {
+      return 'nema kredita — dodaj sredstva na console.anthropic.com → Plans & Billing';
+    }
+    return `greska ${error.status ?? ''} ${error.message}`.trim().slice(0, 120);
+  }
+  return `nema veze — ${(error as Error).message}`;
 }
 
 function client(): Anthropic {

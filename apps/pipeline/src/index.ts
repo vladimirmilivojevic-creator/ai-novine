@@ -2,9 +2,11 @@
 import { Command } from 'commander';
 import { logger } from '@ai-novine/core';
 import { runCluster } from './commands/cluster.js';
+import { runCompare } from './commands/compare.js';
 import { runConfigCheck } from './commands/config-check.js';
 import { runDiscover } from './commands/discover.js';
 import { runDoctor } from './commands/doctor.js';
+import { runEditorial } from './commands/editorial.js';
 import { runIngest } from './commands/ingest.js';
 import { runMigrate } from './commands/migrate.js';
 import { runSweep } from './commands/sweep.js';
@@ -92,9 +94,26 @@ program
 
 program
   .command('editorial')
-  .description('Bira teme koje zasluzuju clanak i pise ih (Faza 5)')
-  .action(() => {
-    notYet('editorial', 5);
+  .description('Bira teme koje zasluzuju clanak i pise ih')
+  .option('--dry-run', 'samo prikazi koje bi teme dobile clanak, bez poziva modelu', false)
+  .option('--limit <broj>', 'najvise clanaka u ovom ciklusu')
+  .action(async (options: { dryRun: boolean; limit?: string }) => {
+    await runEditorial({
+      dryRun: options.dryRun,
+      ...(options.limit ? { limit: Math.max(1, Number.parseInt(options.limit, 10) || 1) } : {}),
+    });
+  });
+
+program
+  .command('compare')
+  .description('Pise istu temu sa dva modela i pravi izvestaj za poredjenje (kapija Faze 5)')
+  .option('--topics <broj>', 'koliko tema ide kroz oba modela (podrazumevano 2)', '2')
+  .option('--cluster <id>', 'poredi tacno odredjenu temu')
+  .action(async (options: { topics: string; cluster?: string }) => {
+    await runCompare({
+      topics: Math.max(1, Number.parseInt(options.topics, 10) || 2),
+      ...(options.cluster ? { clusterId: options.cluster } : {}),
+    });
   });
 
 program
@@ -104,11 +123,6 @@ program
   .action(async (options: { dryRun: boolean }) => {
     await runSweep({ dryRun: options.dryRun });
   });
-
-function notYet(command: string, phase: number): never {
-  logger.warn(`Komanda "${command}" jos nije implementirana — dolazi u Fazi ${phase}.`);
-  process.exit(0);
-}
 
 try {
   await program.parseAsync();

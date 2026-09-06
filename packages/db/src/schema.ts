@@ -78,3 +78,29 @@ export interface ClusterItemRow {
   similarity: number | null;
   added_at: string;
 }
+
+export interface ArticleRow {
+  id: string;
+  cluster_id: string | null;
+  slug: string;
+  title: string;
+  lead: string;
+  body: string;
+  category: string;
+  status: 'draft' | 'pending_review' | 'published' | 'rejected';
+  sensitive: boolean;
+  sensitivity_reason: string | null;
+  both_sides: Record<string, string> | null;
+  sources_diverge: boolean;
+  keywords: string[];
+  notes: string[];
+  word_count: number;
+  model: string;
+  usage: Record<string, number>;
+  cost_usd: number;
+  published_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export type NewArticle = Omit<ArticleRow, 'id' | 'created_at' | 'updated_at'>;

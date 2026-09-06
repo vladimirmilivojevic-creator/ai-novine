@@ -33,8 +33,8 @@
     "maxArticlesPerEditorialRun": 6
   },
   "models": {
-    "_comment": "Poredjenje kvaliteta na srpskom radi se u Fazi 5, pre nego sto se ovo zakljuca.",
-    "default": "claude-haiku-4-5-20251001",
+    "_comment": "Identifikatori bez datuma su zvanicni oblik; API ih sam razresava na tekucu verziju (claude-haiku-4-5 vodi na claude-haiku-4-5-20251001). Cenovnik u apps/pipeline/src/generate/cost.ts je vezan za ova imena. Poredjenje kvaliteta na srpskom radi se komandom `compare`.",
+    "default": "claude-haiku-4-5",
     "flagship": "claude-sonnet-5",
     "maxOutputTokens": 4000
   },

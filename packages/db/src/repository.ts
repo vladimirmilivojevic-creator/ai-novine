@@ -1,10 +1,12 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { Source } from '@ai-novine/core';
 import type {
+  ArticleRow,
   ClusterRow,
   FetchStateRow,
   NewRawItem,
   PipelineRunRow,
+  NewArticle,
   RawItemRow,
   SourceRow,
 } from './schema.js';
@@ -507,4 +509,115 @@ export async function deleteClusters(client: SupabaseClient, ids: string[]): Pro
   const { data, error } = await client.from('clusters').delete().in('id', ids).select('id');
   if (error) fail('Brisanje spojenih tema nije proslo', error);
   return (data as { id: string }[]).length;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// articles — Faza 5
+// ─────────────────────────────────────────────────────────────────────────────
+
+export interface ClusterCandidateRow {
+  id: string;
+  title_sample: string | null;
+  trending_score: number;
+  distinct_sources: number;
+  angles: string[];
+  size: number;
+}
+
+/** Teme koje jos nemaju clanak, najjace prve. */
+export async function clustersWithoutArticle(
+  client: SupabaseClient,
+  limit = 40,
+): Promise<ClusterCandidateRow[]> {
+  const { data, error } = await client
+    .from('clusters')
+    .select('id, title_sample, trending_score, distinct_sources, angles, size')
+    .eq('status', 'open')
+    .is('article_id', null)
+    .order('trending_score', { ascending: false })
+    .limit(limit);
+  if (error) fail('Citanje tema bez clanka nije proslo', error);
+  return data as ClusterCandidateRow[];
+}
+
+export interface ClusterSourceItem {
+  source_id: string;
+  title: string;
+  summary: string | null;
+  content: string | null;
+  published_at: string | null;
+  word_count: number;
+}
+
+/** Sirove vesti jedne teme — materijal koji ide modelu. */
+export async function clusterSourceItems(
+  client: SupabaseClient,
+  clusterId: string,
+): Promise<ClusterSourceItem[]> {
+  const { data: links, error } = await client
+    .from('cluster_items')
+    .select('raw_item_id')
+    .eq('cluster_id', clusterId);
+  if (error) fail('Citanje clanova teme nije proslo', error);
+
+  const ids = (links as { raw_item_id: string }[]).map((row) => row.raw_item_id);
+  if (ids.length === 0) return [];
+
+  const { data, error: itemError } = await client
+    .from('raw_items')
+    .select('source_id, title, summary, content, published_at, word_count')
+    .in('id', ids)
+    .order('word_count', { ascending: false });
+  if (itemError) fail('Citanje vesti u temi nije proslo', itemError);
+  return data as ClusterSourceItem[];
+}
+
+export async function insertArticle(client: SupabaseClient, article: NewArticle): Promise<string> {
+  const { data, error } = await client.from('articles').insert(article).select('id').single();
+  if (error) fail('Upis clanka nije prosao', error);
+  return (data as { id: string }).id;
+}
+
+/** Vezuje temu za clanak i sklanja je iz reda za pisanje. */
+export async function markClusterCovered(
+  client: SupabaseClient,
+  clusterId: string,
+  articleId: string,
+): Promise<void> {
+  const { error } = await client
+    .from('clusters')
+    .update({ status: 'covered', article_id: articleId })
+    .eq('id', clusterId);
+  if (error) fail(`Povezivanje teme ${clusterId} sa clankom nije proslo`, error);
+}
+
+/** Koliko je clanaka napisano od pocetka dana, ukupno i jacim modelom. */
+export async function articlesWrittenToday(
+  client: SupabaseClient,
+  flagshipModel: string,
+): Promise<{ total: number; flagship: number }> {
+  const since = new Date();
+  since.setUTCHours(0, 0, 0, 0);
+
+  const { data, error } = await client
+    .from('articles')
+    .select('model')
+    .gte('created_at', since.toISOString());
+  if (error) fail('Brojanje danasnjih clanaka nije proslo', error);
+
+  const rows = data as { model: string }[];
+  return {
+    total: rows.length,
+    flagship: rows.filter((row) => row.model === flagshipModel).length,
+  };
+}
+
+export async function latestArticles(client: SupabaseClient, limit: number): Promise<ArticleRow[]> {
+  const { data, error } = await client
+    .from('articles')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(limit);
+  if (error) fail('Citanje clanaka nije proslo', error);
+  return data as ArticleRow[];
 }

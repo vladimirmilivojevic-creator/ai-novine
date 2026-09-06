@@ -4,7 +4,7 @@
 > zašto, šta vlasnik treba da proveri, i status faze. Pun plan je u `docs/plan.md`.
 
 **Poslednje ažuriranje:** 6. septembar 2026.
-**Trenutno stanje:** Faza 4 gotova i pregledana; dve greške koje je vlasnik uhvatio su popravljene (vremenska zona u CI-ju, „pregled dana“ kao most između tema). Faza 5 (AI pisanje) je sledeća i to je kritična kapija projekta.
+**Trenutno stanje:** Faza 5 — kod za pisanje članaka je gotov i proveren, ali poređenje modela čeka kredite na Anthropic nalogu. Bez njih nijedan poziv modelu ne prolazi.
 
 ## Pregled faza
 
@@ -15,7 +15,7 @@
 | 2    | Engine 1 na 3 test izvora            | ✅ Gotovo, čeka potvrdu |
 | 3    | Engine 1 na sve izvore               | ✅ Gotovo, čeka potvrdu |
 | 4    | Klasterovanje i trending (Engine 2)  | ✅ Gotovo, čeka potvrdu |
-| 5    | AI generisanje teksta ⚠️ kritična kapija | 🔜 Sledeća       |
+| 5    | AI generisanje teksta ⚠️ kritična kapija | 🔄 U radu — čeka kredite |
 | 6    | Ažuriranje umesto dupliranja         | ⬜ Čeka             |
 | 7    | Telegram odobravanje                 | ⬜ Čeka             |
 | 8    | Slike                                | ⬜ Čeka             |
@@ -464,3 +464,81 @@ pa ostaju u temi; samo ne mogu da budu njen naslov.
 
 Rezultat: tema o Libanu ima 7 tekstova iz 5 izvora i svih sedam je stvarno o izraelskim napadima.
 Iranska priča stoji odvojeno, kako i treba.
+
+---
+
+## Faza 5 — AI generisanje teksta ⚠️ kritična kapija 🔄
+
+**Status:** kod je gotov i proveren; **poređenje modela čeka kredite na Anthropic nalogu.**
+
+### Blokada koju vlasnik rešava
+
+Anthropic ključ je ispravan, ali nalog nema kredita:
+
+```
+400 invalid_request_error: "Your credit balance is too low to access the Anthropic API."
+```
+
+Bez toga ne prolazi nijedan poziv modelu, pa ni poređenje Haiku ↔ Sonnet, koje je sama kapija ove
+faze. Rešenje: `console.anthropic.com` → Plans & Billing → dodati sredstva.
+
+`doctor` je dopunjen tako da ovo ubuduće hvata odmah: `models.list` prolazi i bez kredita, pa je
+ključ izgledao ispravno. Sada se posebno proverava i naplativi deo API-ja.
+
+### Šta je napravljeno
+
+**Urednička pravila kao fajl, ne kao kod** (`config/editorial-prompt.md`, 16.500 znakova).
+Sadrži sva pravila iz sekcije 5 brief-a i, što je jednako važno, **rađene primere**: dobro i loše
+prepričavanje, kako se ne pominju izvori, ograda kod brojeva oko kojih nema slaganja, inicijali i
+„osumnjičen" kod krivičnih tema, kada se dodaje prikaz „obe strane" a kada ne, i spisak čestih
+grešaka u srpskom novinarstvu koje se ne ponavljaju.
+
+Dužina prompta nije slučajna: **Haiku 4.5 kešira tek prefiks od 4096 tokena naviše.** Kraći prompt
+se ne kešira — bez greške, samo tiho — a cela procena mesečnog troška počiva na tome da se
+urednička pravila naplaćuju desetinom cene posle prvog poziva.
+
+**Generisanje** (`apps/pipeline/src/generate/`):
+
+- strukturisani izlaz kroz `messages.parse` i zod šemu — model ne vraća slobodan tekst nego
+  proveren oblik (naslov, uvod, telo, kategorija, osetljivost, „obe strane", ključne reči, napomene),
+- urednički prompt ide kao **keširan** sistem-prompt, materijal teme posle njega,
+- izveštaji se modelu daju označeni **uglom, nikad imenom medija** — model mora da zna ugao da bi
+  napisao „obe strane", a ime medija mu ne treba i ume da završi u tekstu, što je zabranjeno,
+- trošak se računa po cenovniku i upisuje **po članku** u bazu, pa se mesečni račun čita, ne procenjuje.
+
+**Izbor tema** (`select.ts`): kapije kvaliteta, dnevna granica, granica po ciklusu, i raspodela
+jačeg modela najjačim temama dana. Brief izričito kaže da nema fiksnog broja članaka po ciklusu —
+mera je kvalitet teme, ne kvota.
+
+**Komande:**
+
+- `npm run pipeline -- editorial --dry-run` — pokazuje koje bi teme dobile članak i kojim modelom,
+  bez ijednog poziva modelu
+- `npm run pipeline -- editorial` — piše članke i upisuje ih
+- `npm run pipeline -- compare` — ista tema kroz oba modela, izveštaj jedan pored drugog
+
+**Baza** (migracija 0004): `articles` i `article_revisions`. Članci se, za razliku od sirovih
+vesti, ne brišu — mali su i oni su proizvod sistema. Osetljiv članak se upisuje kao
+`pending_review` i čeka Telegram iz Faze 7; ostali ostaju `draft` dok sajt ne postoji.
+
+### Probni izbor tema (bez poziva modelu)
+
+```
+ 1. [claude-sonnet-5]   skor 214.31 · 16 tekstova iz 13 izvora — Požar na Suvoj planini
+ 2. [claude-sonnet-5]   skor 141.22 · 13 tekstova iz  9 izvora — Putin sa Vitkofom i Kušnerom
+ 3. [claude-sonnet-5]   skor 141.02 · 10 tekstova iz 10 izvora — Prijava za 6.000 dinara pomoći
+ 4. [claude-sonnet-5]   skor 100.00 · 10 tekstova iz  8 izvora — Odbojkašice Srbije za bronzu
+ 5. [claude-haiku-4-5]  skor  84.41 · 10 tekstova iz  8 izvora — Venčanje repera Cobija
+ 6. [claude-haiku-4-5]  skor  83.91 · 10 tekstova iz  9 izvora — Vučić o Marti Kos
+```
+
+Od 60 tema kandidata, 6 je izabrano, 54 odbijeno — najčešće zato što ih javlja premalo izvora ili
+iz samo jednog ugla. To je kapija iz sekcije 9 brief-a i radi kako treba.
+
+### Šta vlasnik radi
+
+1. Dodaje kredite na Anthropic nalog (`console.anthropic.com` → Plans & Billing).
+2. Javi mi, pa pokrećem `compare` — ista tema kroz Haiku 4.5 i Sonnet 5.
+3. **Čita oba teksta i odlučuje.** Pitanje je jedno: da li tekst zvuči kao novinarski članak ili
+   kao mašinski rerajt. Ako Haiku ne valja za srpski, prelazi se na Sonnet i trošak ide sa
+   ~$21 na ~$45 mesečno — to je odluka vlasnika, ne moja.
