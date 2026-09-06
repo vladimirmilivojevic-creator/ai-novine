@@ -71,10 +71,10 @@
       "name": "Politika",
       "homepage": "https://www.politika.rs",
       "angle": "provladin",
-      "enabled": true,
+      "enabled": false,
       "feeds": [],
       "scrape": null,
-      "notes": "Probno merenje: HTTP 403 (Cloudflare) i na /robots.txt. Kandidat za izbacivanje u Fazi 1."
+      "notes": "ISKLJUCEN 6.9.2026. odlukom vlasnika: odbija i sam robots.txt sa HTTP 403 (Cloudflare). Zaobilazenje te zastite bi bilo krsenje uslova koriscenja. Opcija za kasnije: zvanicno zatraziti pristup od redakcije."
     },
     {
       "id": "novosti",
@@ -113,10 +113,10 @@
       "name": "Prva",
       "homepage": "https://www.prva.rs",
       "angle": "provladin",
-      "enabled": true,
+      "enabled": false,
       "feeds": [],
       "scrape": null,
-      "notes": ""
+      "notes": "ISKLJUCEN 6.9.2026. odlukom vlasnika: nema ni RSS ni sitemap, a provladin ugao vec pokrivaju osam drugih izvora. Ukljucuje se nazad postavljanjem \"enabled\": true uz scrape blok."
     },
     {
       "id": "n1",
@@ -179,7 +179,8 @@
       "enabled": true,
       "feeds": [],
       "scrape": null,
-      "notes": "Istrazivacki medij — mali dnevni obim, ali visok kvalitet ugla."
+      "notes": "Nema RSS ni news sitemap, ali post-sitemap1.xml nosi 992 clanka sa datumom izmene. Istrazivacki medij — mali dnevni obim, visok kvalitet ugla.",
+      "newsSitemaps": ["https://birn.rs/post-sitemap1.xml"]
     },
     {
       "id": "juznevesti",
@@ -267,8 +268,18 @@
       "angle": "mejnstrim",
       "enabled": true,
       "feeds": [],
-      "scrape": null,
-      "notes": "Probno merenje: RSS postoji. Javni servis."
+      "scrape": {
+        "listingUrls": [
+          "https://www.rts.rs/vesti.html",
+          "https://www.rts.rs/vesti/politika.html",
+          "https://www.rts.rs/vesti/drustvo.html",
+          "https://www.rts.rs/vesti/ekonomija.html"
+        ],
+        "itemLinkSelector": "a[href]",
+        "linkPattern": "^/(vesti|sport|magazin)/[^/]+/\\d{4,}/",
+        "maxLinksPerRun": 30
+      },
+      "notes": "Javni servis. Nema ni RSS ni sitemap, pa se linkovi citaju sa rubrika. Adresa clanka ima stabilan oblik /vesti/<rubrika>/<broj>/<slug>.html, sto je pouzdanije sito od CSS selektora."
     },
     {
       "id": "euronews",
@@ -277,8 +288,18 @@
       "angle": "mejnstrim",
       "enabled": true,
       "feeds": [],
-      "scrape": null,
-      "notes": "Probno merenje: nema RSS autodiscovery — kandidat za sitemap/scraping fallback."
+      "scrape": {
+        "listingUrls": [
+          "https://www.euronews.rs/srbija",
+          "https://www.euronews.rs/svet",
+          "https://www.euronews.rs/biznis",
+          "https://www.euronews.rs/evropa"
+        ],
+        "itemLinkSelector": "a[href]",
+        "linkPattern": "^/[a-z-]+/[a-z-]+/\\d{4,}/[^/]+/(vest|video)$",
+        "maxLinksPerRun": 30
+      },
+      "notes": "Nema ni RSS ni sitemap. Adresa clanka ima oblik /<rubrika>/<podrubrika>/<broj>/<slug>/vest."
     },
     {
       "id": "tanjug",

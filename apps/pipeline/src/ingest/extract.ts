@@ -1,6 +1,6 @@
 import { Readability } from '@mozilla/readability';
 import { parseHTML } from 'linkedom';
-import { countWords, normalizeWhitespace, stripHtml } from './normalize.js';
+import { countWords, normalizeWhitespace, parseSerbianDate, stripHtml } from './normalize.js';
 
 /** Odakle je tekst na kraju izvucen. */
 export type ExtractionMethod = 'readability' | 'jsonld' | 'container' | 'none';
@@ -43,12 +43,13 @@ export function extractArticle(html: string, url: string): ExtractedArticle {
     author: metaContent(document, ['article:author', 'author', 'og:article:author']),
     imageUrl: absolute(metaContent(document, ['og:image', 'twitter:image']), url),
     language: document.documentElement?.getAttribute('lang')?.slice(0, 5) ?? null,
-    publishedAt: metaContent(document, [
-      'article:published_time',
-      'og:article:published_time',
-      'datePublished',
-      'pubdate',
-    ]),
+    publishedAt:
+      metaContent(document, [
+        'article:published_time',
+        'og:article:published_time',
+        'datePublished',
+        'pubdate',
+      ]) ?? readPublishedDate(document),
     canonicalUrl: absolute(
       document.querySelector('link[rel="canonical"]')?.getAttribute('href') ?? null,
       url,
@@ -129,6 +130,37 @@ function readArticleBody(document: MinimalDocument): string {
     }
   }
   return '';
+}
+
+/**
+ * Vreme objave kad ga nema u meta oznakama: prvo `datePublished` iz JSON-LD
+ * podataka, pa `<time datetime="...">`. RTS, na primer, nema nijednu meta
+ * oznaku sa datumom, a bez datuma clanak ne moze u vremenski prozor
+ * klasterovanja.
+ */
+function readPublishedDate(document: MinimalDocument): string | null {
+  for (const script of document.querySelectorAll('script[type="application/ld+json"]')) {
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(script.textContent ?? '');
+    } catch {
+      continue;
+    }
+
+    for (const node of flattenJsonLd(parsed)) {
+      for (const key of ['datePublished', 'dateCreated', 'uploadDate', 'dateModified']) {
+        const value = node[key];
+        if (typeof value === 'string' && value.trim()) return value.trim();
+      }
+    }
+  }
+
+  const time = document.querySelector('time[datetime]')?.getAttribute('datetime');
+  if (time?.trim()) return time.trim();
+
+  // Poslednji izlaz: vidljivi datum na strani, u srpskom zapisu.
+  const visible = normalizeWhitespace(document.body?.textContent ?? '').slice(0, 12000);
+  return parseSerbianDate(visible);
 }
 
 function flattenJsonLd(value: unknown): Record<string, unknown>[] {

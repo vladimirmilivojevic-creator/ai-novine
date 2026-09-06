@@ -94,3 +94,34 @@ export function toIsoDate(value: string | null | undefined): string | null {
   if (date.getTime() > Date.now() + 24 * 3600_000) return null;
   return date.toISOString();
 }
+
+/**
+ * Datum u srpskom zapisu — `6.9.2026.` ili `06.09.2026 14:30`.
+ *
+ * Poneki portal (RTS, na primer) nema nijednu masinski citljivu oznaku datuma,
+ * pa je vidljivi datum na strani jedino sto postoji. Prihvata se samo datum iz
+ * poslednjih 30 dana i ne iz buducnosti — tako se izbegava da se uhvati datum
+ * iz teksta clanka ili iz podnozja strane.
+ */
+export function parseSerbianDate(text: string, now = Date.now()): string | null {
+  const pattern = /(\d{1,2})\.\s?(\d{1,2})\.\s?(\d{4})\.?(?:[\s,]+(\d{1,2}):(\d{2}))?/g;
+
+  for (const match of text.matchAll(pattern)) {
+    const [, day, month, year, hour, minute] = match;
+    const date = new Date(
+      Number(year),
+      Number(month) - 1,
+      Number(day),
+      hour ? Number(hour) : 12,
+      minute ? Number(minute) : 0,
+    );
+
+    if (Number.isNaN(date.getTime())) continue;
+    if (date.getDate() !== Number(day) || date.getMonth() !== Number(month) - 1) continue;
+
+    const age = now - date.getTime();
+    if (age < -86_400_000 || age > 30 * 86_400_000) continue;
+    return date.toISOString();
+  }
+  return null;
+}

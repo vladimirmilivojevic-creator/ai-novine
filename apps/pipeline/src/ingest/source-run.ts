@@ -21,6 +21,7 @@ import {
   type NewRawItem,
 } from '@ai-novine/db';
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { parseHTML } from 'linkedom';
 import { extractArticle, MIN_ARTICLE_WORDS } from './extract.js';
 import {
   canonicalizeUrl,
@@ -43,7 +44,7 @@ export interface IngestOptions {
 export interface SourceIngestResult {
   sourceId: string;
   /** Odakle su stigli kandidati u ovom ciklusu. */
-  channel: 'feed' | 'sitemap' | 'nista';
+  channel: 'feed' | 'sitemap' | 'scrape' | 'nista';
   checked: number;
   unchanged: number;
   candidates: number;
@@ -80,8 +81,8 @@ export async function ingestSource(
     errors: [],
   };
 
-  if (source.feeds.length === 0 && source.newsSitemaps.length === 0) {
-    result.errors.push('Izvor nema ni feed ni news sitemap u config/sources.json.');
+  if (source.feeds.length === 0 && source.newsSitemaps.length === 0 && !source.scrape) {
+    result.errors.push('Izvor nema nijedan kanal u config/sources.json.');
     return result;
   }
 
@@ -89,14 +90,20 @@ export async function ingestSource(
   const fetchStates = await getFetchStates(client, [...source.feeds, ...source.newsSitemaps]);
   const candidates = new Map<string, Candidate>();
 
-  // RSS je prvi izbor. News sitemap ulazi u igru kad izvor nema feed, ili kad
-  // feed tog ciklusa nije dao nista — tako pad jednog kanala ne gasi izvor.
+  // Redosled kanala ide od najurednijeg ka najkrhkijem: RSS, pa sitemap, pa
+  // citanje linkova sa rubrika. Sledeci se koristi samo ako prethodni nije dao
+  // nista — tako pad jednog kanala ne gasi izvor, a ne udvostrucuje se saobracaj.
   await collectFromFeeds(client, source, fetchStates, candidates, result);
   if (candidates.size > 0) result.channel = 'feed';
 
   if (candidates.size === 0 && source.newsSitemaps.length > 0) {
     await collectFromSitemaps(client, source, robots, fetchStates, candidates, result);
     if (candidates.size > 0) result.channel = 'sitemap';
+  }
+
+  if (candidates.size === 0 && source.scrape) {
+    await collectFromListings(client, source, robots, fetchStates, candidates, result);
+    if (candidates.size > 0) result.channel = 'scrape';
   }
 
   result.candidates = candidates.size;
@@ -281,6 +288,64 @@ async function followSitemapIndex(
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Citanje linkova sa rubrika — poslednji izlaz, za izvore bez RSS-a i sitemap-a
+// ─────────────────────────────────────────────────────────────────────────────
+
+async function collectFromListings(
+  client: SupabaseClient,
+  source: Source,
+  robots: RobotsInfo,
+  states: Map<string, FetchStateRow>,
+  candidates: Map<string, Candidate>,
+  result: SourceIngestResult,
+): Promise<void> {
+  const scrape = source.scrape;
+  if (!scrape) return;
+
+  let pattern: RegExp;
+  try {
+    pattern = new RegExp(scrape.linkPattern);
+  } catch {
+    result.errors.push(`linkPattern nije ispravan regularni izraz: ${scrape.linkPattern}`);
+    return;
+  }
+
+  for (const listingUrl of scrape.listingUrls) {
+    if (candidates.size >= scrape.maxLinksPerRun) break;
+    result.checked += 1;
+
+    if (!robots.isAllowed(listingUrl)) {
+      result.errors.push(`${listingUrl}: robots.txt zabranjuje`);
+      continue;
+    }
+
+    const response = await conditionalGet(client, source, listingUrl, states, result, {
+      accept: 'text/html',
+    });
+    if (!response) continue;
+
+    const { document } = parseHTML(response.body);
+    for (const anchor of document.querySelectorAll(scrape.itemLinkSelector)) {
+      if (candidates.size >= scrape.maxLinksPerRun) break;
+
+      const href = anchor.getAttribute('href');
+      if (!href) continue;
+
+      const canonical = canonicalizeUrl(href, listingUrl);
+      if (!canonical) continue;
+      if (!pattern.test(new URL(canonical).pathname)) continue;
+
+      addCandidate(candidates, source, listingUrl, {
+        link: canonical,
+        title: anchor.textContent ?? '',
+        summary: null,
+        publishedAt: null,
+      });
+    }
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Zajednicko
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -408,9 +473,12 @@ async function buildRow(
     }
   }
 
-  // Bez teksta ostaje ono sto je kanal dao — naslov i kratak opis.
+  // Bez teksta ostaje ono sto je kanal dao — naslov i kratak opis. Ali red bez
+  // teksta i sa kratkim naslovom nije vest nego ostatak strane („Vise", „Foto"),
+  // i takav se ne upisuje.
   if (!text) text = summary ?? '';
   if (!title) return null;
+  if (!text && title.length < 15) return null;
 
   return {
     source_id: source.id,

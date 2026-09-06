@@ -13,9 +13,15 @@ export type Angle = z.infer<typeof angleSchema>;
 
 /** Fallback za izvore bez RSS-a — popunjava se u Fazi 3. */
 export const scrapeConfigSchema = z.object({
+  /** Strane sa kojih se skupljaju linkovi ka clancima (rubrike, ne pocetna). */
   listingUrls: z.array(urlString).min(1),
-  itemLinkSelector: z.string().min(1),
-  linkPattern: z.string().optional(),
+  /** CSS selektor; podrazumevano svi linkovi, jer odabir radi `linkPattern`. */
+  itemLinkSelector: z.string().min(1).default('a[href]'),
+  /**
+   * Regularni izraz nad putanjom URL-a. Ovo je glavno sito: oblik adrese
+   * clanka je stabilniji od bilo kog CSS selektora, koji se menja sa dizajnom.
+   */
+  linkPattern: z.string().min(1),
   maxLinksPerRun: z.number().int().positive().default(30),
 });
 export type ScrapeConfig = z.infer<typeof scrapeConfigSchema>;

@@ -3,6 +3,7 @@ import {
   canonicalizeUrl,
   contentHash,
   countWords,
+  parseSerbianDate,
   stripHtml,
   toIsoDate,
   urlHash,
@@ -104,5 +105,32 @@ describe('toIsoDate', () => {
   it('odbija prazno i neupotrebljivo', () => {
     expect(toIsoDate(null)).toBeNull();
     expect(toIsoDate('juce oko podne')).toBeNull();
+  });
+});
+
+describe('parseSerbianDate', () => {
+  const now = new Date('2026-09-06T12:00:00Z').getTime();
+
+  it('cita datum i vreme razdvojene zarezom, kako ih RTS ispisuje', () => {
+    const iso = parseSerbianDate('nedelja, 06.09.2026, 09:07 -> 13:48 Izvor', now);
+    expect(iso?.slice(0, 10)).toBe('2026-09-06');
+    expect(new Date(iso!).getUTCHours()).toBe(7);
+  });
+
+  it('cita datum bez vremena i bez vodece nule', () => {
+    expect(parseSerbianDate('Objavljeno 5.9.2026.', now)?.slice(0, 10)).toBe('2026-09-05');
+  });
+
+  it('preskace datume starije od trideset dana i one iz buducnosti', () => {
+    expect(parseSerbianDate('01.01.2020.', now)).toBeNull();
+    expect(parseSerbianDate('01.01.2030.', now)).toBeNull();
+  });
+
+  it('preskace nepostojeci datum i uzima sledeci ispravan', () => {
+    expect(parseSerbianDate('32.13.2026. pa 04.09.2026.', now)?.slice(0, 10)).toBe('2026-09-04');
+  });
+
+  it('vraca null kad datuma nema', () => {
+    expect(parseSerbianDate('Nema datuma u ovom tekstu', now)).toBeNull();
   });
 });

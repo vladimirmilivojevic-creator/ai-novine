@@ -4,7 +4,7 @@
 > zašto, šta vlasnik treba da proveri, i status faze. Pun plan je u `docs/plan.md`.
 
 **Poslednje ažuriranje:** 6. septembar 2026.
-**Trenutno stanje:** 418 vesti u bazi sa 21 izvora, dva GitHub Actions workflow-a spremna. Čeka se odluka o pet izvora bez kanala (Politika, Prva, BIRN, RTS, Euronews) i dodavanje GitHub Secrets.
+**Trenutno stanje:** Faza 3 gotova — 636 vesti u bazi sa 24 izvora kroz tri kanala, GitHub Secrets podešeni, zakazani ciklusi uključeni. Faza 4 sledeća.
 
 ## Pregled faza
 
@@ -13,8 +13,8 @@
 | 0    | Priprema i kostur                    | ✅ Gotovo, potvrđeno |
 | 1    | RSS discovery izveštaj               | ✅ Gotovo, čeka potvrdu |
 | 2    | Engine 1 na 3 test izvora            | ✅ Gotovo, čeka potvrdu |
-| 3    | Engine 1 na sve izvore               | 🔄 U radu           |
-| 4    | Klasterovanje i trending (Engine 2)  | ⬜ Čeka             |
+| 3    | Engine 1 na sve izvore               | ✅ Gotovo, čeka potvrdu |
+| 4    | Klasterovanje i trending (Engine 2)  | 🔜 Sledeća          |
 | 5    | AI generisanje teksta ⚠️ kritična kapija | ⬜ Čeka          |
 | 6    | Ažuriranje umesto dupliranja         | ⬜ Čeka             |
 | 7    | Telegram odobravanje                 | ⬜ Čeka             |
@@ -250,9 +250,9 @@ poznate i preskočio ih pre nego što je otvorio ijednu stranicu. To je dokaz da
 
 ---
 
-## Faza 3 — Engine 1 na sve izvore 🔄
+## Faza 3 — Engine 1 na sve izvore ✅
 
-**Status:** urađeno sve što ne zavisi od odluke o izvorima; scraping adapteri čekaju tvoju odluku.
+**Status:** gotovo, čeka potvrdu vlasnika.
 
 ### Šta je urađeno
 
@@ -289,26 +289,52 @@ Po uglu: kritički 178, provladin 155, mejnstrim 60, agencije 25. Sva četiri ug
 | Link se prihvata i sa domena kanala, ne samo sa domena iz konfiguracije | Srbija Danas preusmerava `srbijadanas.com` na `sd.rs`. Poređenje samo sa konfiguracijom je odbacivalo sve njegove članke i izvor je padao u prekidač. |
 | Greška na pojedinačnom članku ne ruši izvor | Portali povlače tekstove (404) i ponekad odbiju bota na pojedinim stranama (403). Takav članak se upiše sa naslovom i opisom iz feeda, ciklus ide dalje. |
 
-### Blokirano tvojom odlukom iz Faze 1
+### Odluka o pet izvora bez kanala (vlasnik, 6. septembra 2026)
 
-Pet izvora nema nijedan kanal podataka:
-
-| Izvor | Stanje | Opcija |
+| Izvor | Odluka | Kako je rešeno |
 | --- | --- | --- |
-| Politika | Blokira botove (HTTP 403 i na `robots.txt`) | Izbaciti, ili im zvanično tražiti pristup |
-| RTS | Nema ni RSS ni sitemap | Scraping po predlogu iz `reports/rss-discovery.md` |
-| Euronews Srbija | Nema ni RSS ni sitemap | Scraping |
-| BIRN Srbija | Nema news sitemap, ali ima `post-sitemap1.xml` sa 992 članka | Običan sitemap kao kanal |
-| Prva | Nema ni RSS ni sitemap | Scraping, ili izbaciti |
+| Politika | Izbačen | `"enabled": false`. Odbija i sam `robots.txt` sa HTTP 403; zaobilaženje Cloudflare zaštite bi bilo kršenje uslova korišćenja. |
+| Prva | Izbačen | `"enabled": false`. Nema ni RSS ni sitemap, a provladin ugao pokrivaju drugi izvori. |
+| BIRN | Uključen | `post-sitemap1.xml` sa 992 članka, 991 sa datumom izmene. Nije news sitemap, ali radi isti posao. |
+| RTS | Uključen | Čitanje linkova sa četiri rubrike, sito je oblik adrese `/vesti/<rubrika>/<broj>/<slug>.html`. |
+| Euronews Srbija | Uključen | Isto, oblik adrese `/<rubrika>/<podrubrika>/<broj>/<slug>/vest`. |
+
+Izbačeni izvori se ne brišu iz `config/sources.json` — samo im je `enabled` na `false`, uz belešku
+zašto i kako se vraćaju. Time istorija u bazi ostaje čitljiva.
+
+### Treći kanal: čitanje linkova sa rubrika
+
+Za RTS i Euronews nema ni RSS-a ni sitemap-a, pa se linkovi čitaju sa stranica rubrika. Odabir
+članaka radi **regularni izraz nad putanjom adrese**, ne CSS selektor — oblik adrese članka je
+mnogo stabilniji od strukture stranice, koja se menja sa svakim redizajnom. Na RTS-u je selektor
+`article a, h2 a, h3 a` hvatao 36 od 122 članka; obrazac adrese hvata sve.
+
+Redosled kanala je od najurednijeg ka najkrhkijem: **RSS → sitemap → čitanje rubrika.** Sledeći se
+koristi samo ako prethodni nije dao ništa.
+
+### Dve popravke iz ovog dela faze
+
+1. **RTS nema nijednu mašinski čitljivu oznaku datuma** — ni `article:published_time`, ni JSON-LD,
+   ni `<time datetime>`. Jedino postoji vidljiv datum na strani („nedelja, 06.09.2026, 09:07").
+   Dodato je čitanje srpskog zapisa datuma kao poslednji izlaz, sa ogradom: prihvata se samo datum
+   iz poslednjih 30 dana i ne iz budućnosti, da se ne uhvati datum iz teksta članka.
+2. **Red bez teksta i sa naslovom kraćim od 15 znakova se ne upisuje.** Čitanje rubrika povuče i
+   linkove tipa „Više" i „Foto", koji nisu vesti.
+
+### Rezultat posle uključivanja sva tri kanala
+
+| Mera | Vrednost |
+| --- | --- |
+| Redova u `raw_items` | 636 |
+| Izvora sa podacima | 24 (16 RSS, 6 sitemap, 2 čitanje rubrika) |
+| Pun tekst izvučen | 621 od 636 |
+| Po uglu | kritički 233, provladin 224, mejnstrim 141, agencije 38 |
+| Trajanje punog ciklusa | 55 sekundi za 24 izvora |
 
 ### Šta vlasnik radi i proverava
 
-1. **Dodaje tri GitHub Secrets** (bez njih zakazani ciklusi padaju):
-   GitHub → repo → Settings → Secrets and variables → Actions → New repository secret.
-   Imena: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`.
-   Vrednosti su iste kao u `.env`. `SUPABASE_DB_URL` se **ne** dodaje — migracije se ne pokreću iz
-   Actions-a.
-2. Actions tab → workflow „Prikupljanje vesti" → „Run workflow" za ručnu probu, pa proverava da je
-   run zelen.
+1. ✅ Tri GitHub Secrets dodata 6. septembra 2026 (`SUPABASE_URL`, `SUPABASE_ANON_KEY`,
+   `SUPABASE_SERVICE_ROLE_KEY`). `SUPABASE_DB_URL` namerno nije tamo — migracije se ne pokreću iz
+   Actions-a, pa lozinka baze ne mora da postoji na GitHub-u.
+2. Actions tab → workflow „Prikupljanje vesti" → proverava da je zakazani run zelen.
 3. Supabase Table Editor → `raw_items` raste ravnomerno kroz sve izvore.
-4. Odlučuje šta sa pet izvora iz tabele iznad.

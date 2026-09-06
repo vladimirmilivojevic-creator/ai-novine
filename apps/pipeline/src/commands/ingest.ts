@@ -120,7 +120,7 @@ export async function runIngest(options: IngestCommandOptions): Promise<void> {
 
 function pickSources(only?: string[]): Source[] {
   const sources = activeSources().filter(
-    (source) => source.feeds.length > 0 || source.newsSitemaps.length > 0,
+    (source) => source.feeds.length > 0 || source.newsSitemaps.length > 0 || source.scrape !== null,
   );
   if (!only?.length) return sources;
   return sources.filter((source) => only.includes(source.id));
